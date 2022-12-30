@@ -1,5 +1,5 @@
 import React from "react";
-import { Home } from "./pages";
+import { Home, Programming, Blogs, Articles } from "./pages";
 import {
     Admin,
     AdminProgramming,
@@ -14,6 +14,9 @@ const App = () => {
             <Router>
                 <Routes>
                     <Route path="/" exact element={<Home />} />
+                    <Route path="/programming" element={<Programming />} />
+                    <Route path="/blogs" element={<Blogs />} />
+                    <Route path="/articles" element={<Articles />} />
                     <Route path="/admin" element={<Admin />} />
                     <Route
                         path="/admin/programming"

@@ -1,9 +1,8 @@
 import React from "react";
-import { darkTheme } from "../../assets/Constants";
 import { AdminNavbar } from "../../components";
 import { BsFileEarmarkSpreadsheet } from "react-icons/bs";
 import Modal from "react-awesome-modal";
-import Editor, { DiffEditor, useMonaco, loader } from "@monaco-editor/react";
+import Editor from "@monaco-editor/react";
 import { AiOutlineClose } from "react-icons/ai";
 import "../../assets/CSS/index.css";
 

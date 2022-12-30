@@ -1,13 +1,13 @@
 import React from "react";
 import { Navbar } from "../components";
+import "../assets/CSS/index.css";
 
-const Home = () => {
+const Articles = () => {
     return (
-        <div className="bg-[#202128] min-h-[100vh] w-full">
+        <div className="back">
             <Navbar />
-            
         </div>
     );
 };
 
-export default Home;
+export default Articles;
