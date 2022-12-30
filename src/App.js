@@ -1,16 +1,19 @@
 import React from "react";
-import Navbar from "./components/Navbar"
-import CardContainer from "./components/CardContainer"
-import QuestionList from "./components/QuestionList";
+import HomePage from "./Pages/HomePage";
+import Navbar from "./components/Navbar";
+import QuestionsPage from "./Pages/QuestionsPage";
+import { Routes, Route } from "react-router-dom";
 
-const App = () => {
-    return (
-    <div>
-        <Navbar/>
-        <CardContainer/>
-        <QuestionList/>
+function App() {
+  return (
+    <div className="App">
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/programming-questions/:id" element={<QuestionsPage/>}/>
+      </Routes>
     </div>
-    );
-};
+  );
+}
 
 export default App;
