@@ -2,14 +2,17 @@ import React from "react";
 
 const SearchBox = () => {
   return (
-    <div class="pt-20 w-screen flex justify-center">
-      <h2 class="font-medium leading-tight text-4xl mt-0 mb-2 text-blue-600">
-        /Programming/Arrays
-      </h2>
-      <div class="mb-3 xl:w-96">
+    <div className="pt-20 flex justify-between items-strech">
+      <div>
+        <p className="flex font-medium  flex text-4xl mt-0 mb-2 text-blue-600">
+          /Programming/Arrays
+        </p>
+      </div>
+      <div className="mb-3 xl:w-96">
         <input
           type="search"
-          class="
+          className="
+        flex
         form-control
         block
         w-full
