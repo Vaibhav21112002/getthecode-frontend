@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AiOutlineClose, AiOutlineMenu, AiOutlineHome } from "react-icons/ai";
+import { BiShieldQuarter } from "react-icons/bi";
 
 function Navbar() {
     const [open, setOpen] = useState(false);
@@ -41,6 +42,10 @@ function Navbar() {
                                 </li>
                             );
                         })}
+                        <BiShieldQuarter
+                            className="text-[#BDA9A9] text-2xl hover:text-white cursor-pointer"
+                            onClick={() => navigate("/admin")}
+                        />
                     </ul>
                 </div>
                 <div className="w-full flex justify-end items-center px-4 sm:hidden flex">

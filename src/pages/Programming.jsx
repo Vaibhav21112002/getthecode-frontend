@@ -1,10 +1,11 @@
 import React from "react";
 import { Navbar } from "../components";
 import { BsFileEarmarkSpreadsheet } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 import "../assets/CSS/index.css";
 
 const Programming = () => {
-    const [detailOpen, setDetailOpen] = React.useState(false);
+    const navigate = useNavigate();
     const [solutionOpen, setSolutionOpen] = React.useState(false);
     const topics = [
         { title: "All Questions" },
@@ -37,7 +38,7 @@ const Programming = () => {
                 <th
                     scope="row"
                     className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white hover:text-blue-600 dark:hover:text-blue-500 cursor-pointer"
-                    onClick={() => setDetailOpen(true)}
+                    onClick={() => navigate("/programming/question")}
                 >
                     Two Sum
                 </th>
