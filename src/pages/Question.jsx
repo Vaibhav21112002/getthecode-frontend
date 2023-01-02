@@ -1,9 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Navbar } from "../components";
 import "../assets/CSS/index.css";
+import { useParams } from "react-router-dom";
+import CodeContext from "../context/CodeContext";
+import { Media, Player, controls } from "react-media-player";
 
 const Question = () => {
+    const { PlayPause, MuteUnmute } = controls;
+    const { question, getQuestion } = useContext(CodeContext);
+    const { id } = useParams();
     const [sol, setSol] = useState(false);
+    const [data, setData] = useState({});
+    useEffect(() => {
+        getQuestion(id);
+        setData(question);
+        console.log(question);
+    }, []);
     const TopicTags = [
         "Arrays",
         "Strings",
@@ -36,7 +48,7 @@ const Question = () => {
         <div className="back">
             <Navbar />
             <div className="w-full flex">
-                <div className="w-9/12 flex justify-center py-8 text-[#BDA9A9]">
+                <div className="w-9/12 flex sm:flex-row flex-col justify-center py-8 text-[#BDA9A9]">
                     {sol ? (
                         <div className="w-[80%]">
                             <div className="flex px-24 justify-center">
@@ -55,6 +67,20 @@ const Question = () => {
                                     </button>
                                 </div>
                             </div>
+                            <Media>
+                                <div className="w-full flex justify-center items-center">
+                                    <div className="media-player">
+                                        <Player
+                                            src={
+                                                question.videoLink
+                                                    ? question.videoLink
+                                                    : "https://www.youtube.com/watch?v=2gQmYDm0vq4 "
+                                            }
+                                        />
+                                    </div>
+                                </div>
+                            </Media>
+                            <div className="w-full px-4"></div>
                         </div>
                     ) : (
                         <div className="w-[80%]">
@@ -75,19 +101,15 @@ const Question = () => {
                                 </div>
                             </div>
                             <h1 className="text-3xl font-bold text-[#BDA9A9] ">
-                                Two Sum
+                                {question.title ? question.title : "Two Sum"}
                             </h1>
                             <h1 className="mt-12 text-xl font-bold text-[#BDA9A9] underline">
                                 Problem Definition
                             </h1>
                             <h1 className="py-4 text-justify ">
-                                Given an array of integers nums and an integer
-                                target, return indices of the two numbers such
-                                that they add up to target. <br />
-                                You may assume that each input would have
-                                exactly one solution, and you may not use the
-                                same element twice. <br />
-                                You can return the answer in any order.
+                                {question.description
+                                    ? question.description
+                                    : "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target."}
                             </h1>
                             <h1 className="font-bold">Test Case</h1>
                             <br />
@@ -105,7 +127,7 @@ const Question = () => {
                             Topic Tags
                         </h1>
                         <div className="flex flex-wrap py-4">
-                            {TopicTags.map((tag) => {
+                            {question.topicTag?.map((tag) => {
                                 return (
                                     <div className="flex items-center gap-2 p-2">
                                         <div className="px-4 py-2 min-w-4 min-h-4 bg-[#BDA9A9] text-[#FFF] rounded-full">
@@ -123,7 +145,7 @@ const Question = () => {
                             Company Tags
                         </h1>
                         <div className="flex flex-wrap py-4">
-                            {CompanyTags.map((tag) => {
+                            {question.companyTag?.map((tag) => {
                                 return (
                                     <div className="flex items-center gap-2 p-2">
                                         <div className="px-4 py-2 min-w-4 min-h-4 bg-[#BDA9A9] text-[#FFF] rounded-full">

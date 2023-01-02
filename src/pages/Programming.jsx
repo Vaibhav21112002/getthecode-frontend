@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Navbar } from "../components";
 import { BsFileEarmarkSpreadsheet } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import "../assets/CSS/index.css";
+import CodeContext from "../context/CodeContext";
 
 const Programming = () => {
+    const { questions, getQuestions } = useContext(CodeContext);
     const navigate = useNavigate();
-    const [solutionOpen, setSolutionOpen] = React.useState(false);
+    const [solutionOpen, setSolutionOpen] = useState(false);
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        getQuestions();
+        setData(questions);
+        console.log(questions);
+    }, []);
     const topics = [
         { title: "All Questions" },
         { title: "Arrays" },
@@ -32,15 +40,15 @@ const Programming = () => {
             </div>
         );
     };
-    const TableComponent = () => {
+    const TableComponent = ({ title, id }) => {
         return (
             <tr className="bg-white border-b dark:bg-gray-800">
                 <th
                     scope="row"
                     className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white hover:text-blue-600 dark:hover:text-blue-500 cursor-pointer"
-                    onClick={() => navigate("/programming/question")}
+                    onClick={() => navigate("/programming/" + id)}
                 >
-                    Two Sum
+                    {title}
                 </th>
                 <td className="py-4 px-6">
                     <BsFileEarmarkSpreadsheet
@@ -94,12 +102,16 @@ const Programming = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <TableComponent />
-
-                                    <TableComponent />
-                                    <TableComponent />
-                                    <TableComponent />
-                                    <TableComponent />
+                                    {data.length &&
+                                        data.map((item, index) => {
+                                            return (
+                                                <TableComponent
+                                                    key={index}
+                                                    title={item.title}
+                                                    id={item._id}
+                                                />
+                                            );
+                                        })}
                                 </tbody>
                             </table>
                         </div>

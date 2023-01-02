@@ -23,7 +23,7 @@ const AdminNav = () => {
     ];
     return (
         <div
-            className={`flex flex-col py-4 items-center w-full min-h-[100vh] bg-[${darkTheme.bgPrimary}] `}
+            className={`sm:flex hidden flex-col py-4 items-center w-full min-h-[100vh] bg-[${darkTheme.bgPrimary}] `}
         >
             <div
                 className={`w-[90%] h-[4rem] bg-[#25272E] rounded-lg flex justify-center items-center text-[#BDA9A9] gap-2 cursor-pointer`}
