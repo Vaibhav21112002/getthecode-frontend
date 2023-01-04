@@ -47,6 +47,7 @@ const CodeState = (props) => {
     const editQuestion = async (id, question) => {
         try {
             setLoading(true);
+            // eslint-disable-next-line
             const res = await api.put(`/problems/${id}`, question);
             setLoading(false);
         } catch (err) {

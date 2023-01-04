@@ -8,12 +8,13 @@ import CodeContext from "../context/CodeContext";
 const Programming = () => {
     const { questions, getQuestions } = useContext(CodeContext);
     const navigate = useNavigate();
-    const [solutionOpen, setSolutionOpen] = useState(false);
+    // const [solutionOpen, setSolutionOpen] = useState(false);
     const [data, setData] = useState([]);
     useEffect(() => {
         getQuestions();
         setData(questions);
         console.log(questions);
+        // eslint-disable-next-line
     }, []);
     const topics = [
         { title: "All Questions" },
@@ -40,25 +41,31 @@ const Programming = () => {
             </div>
         );
     };
-    const TableComponent = ({ title, id }) => {
+    const TableComponent = ({ item }) => {
         return (
             <tr className="bg-white border-b dark:bg-gray-800">
                 <th
                     scope="row"
                     className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white hover:text-blue-600 dark:hover:text-blue-500 cursor-pointer"
-                    onClick={() => navigate("/programming/" + id)}
+                    onClick={() => navigate("/programming/" + item._id)}
                 >
-                    {title}
+                    {item.title}
                 </th>
                 <td className="py-4 px-6">
                     <BsFileEarmarkSpreadsheet
                         className="text-2xl cursor-pointer hover:text-blue-600 dark:hover:text-blue-500
                         
                     "
-                        onClick={() => setSolutionOpen(true)}
+                        // onClick={() => setSolutionOpen(true)}
                     />
                 </td>
-                <td className="py-4 px-6 text-[#008000]">Easy</td>
+                {item.difficulty === "Easy" ? (
+                    <td className="py-4 px-6 text-[#008000]">Easy</td>
+                ) : item.difficulty === "medium" ? (
+                    <td className="py-4 px-6 text-[#FFA500]">Medium</td>
+                ) : (
+                    <td className="py-4 px-6 text-[#FF0000]">Hard</td>
+                )}
                 <td className="py-4 px-6">10</td>
             </tr>
         );
@@ -109,6 +116,7 @@ const Programming = () => {
                                                     key={index}
                                                     title={item.title}
                                                     id={item._id}
+                                                    item={item}
                                                 />
                                             );
                                         })}

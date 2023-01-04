@@ -114,10 +114,11 @@ const AdminProgramming = () => {
     const inputStyle = `w-full border rounded-md p-2`;
     const activeClass = `bg-[#3A355C] text-white px-4 py-2 rounded-xl cursor-pointer`;
     const unactiveClass = `bg-[#F2F2F2] text-[#3A355C] px-4 py-2 rounded-xl cursor-pointer`;
-    const buttonStyle = `w-full flex justify-center items-center gap-2`;
+    // const buttonStyle = `w-full flex justify-center items-center gap-2`;
     useEffect(() => {
         getQuestions();
         setData(questions);
+        // eslint-disable-next-line
     }, []);
     const handleUpload = () => {
         if (
@@ -226,7 +227,7 @@ const AdminProgramming = () => {
                                             width={`90%`}
                                             theme="vs-dark"
                                             defaultLanguage={62}
-                                            defaultValue={`function add(a, b) {\n  return a + b;\n}`}
+                                            defaultValue={code}
                                             onChange={(value, event) => {
                                                 console.log(value);
                                                 setCode(value);

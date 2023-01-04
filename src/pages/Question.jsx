@@ -3,10 +3,9 @@ import { Navbar } from "../components";
 import "../assets/CSS/index.css";
 import { useParams } from "react-router-dom";
 import CodeContext from "../context/CodeContext";
-import { Media, Player, controls } from "react-media-player";
+import { Media, Player } from "react-media-player";
 
 const Question = () => {
-    const { PlayPause, MuteUnmute } = controls;
     const { question, getQuestion } = useContext(CodeContext);
     const { id } = useParams();
     const [sol, setSol] = useState(false);
@@ -14,36 +13,37 @@ const Question = () => {
     useEffect(() => {
         getQuestion(id);
         setData(question);
-        console.log(question);
+        console.log(question, data);
+        // eslint-disable-next-line
     }, []);
-    const TopicTags = [
-        "Arrays",
-        "Strings",
-        "Linked List",
-        "Stacks",
-        "Queues",
-        "Trees",
-        "Graphs",
-        "Sorting",
-        "Searching",
-        "Dynamic Programming",
-        "Greedy",
-        "Backtracking",
-        "Bit Manipulation",
-        "Math",
-        "Miscellaneous",
-    ];
+    // const TopicTags = [
+    //     "Arrays",
+    //     "Strings",
+    //     "Linked List",
+    //     "Stacks",
+    //     "Queues",
+    //     "Trees",
+    //     "Graphs",
+    //     "Sorting",
+    //     "Searching",
+    //     "Dynamic Programming",
+    //     "Greedy",
+    //     "Backtracking",
+    //     "Bit Manipulation",
+    //     "Math",
+    //     "Miscellaneous",
+    // ];
 
-    const CompanyTags = [
-        "Amazon",
-        "Apple",
-        "Facebook",
-        "Google",
-        "Microsoft",
-        "Oracle",
-        "Uber",
-        "Miscellaneous",
-    ];
+    // const CompanyTags = [
+    //     "Amazon",
+    //     "Apple",
+    //     "Facebook",
+    //     "Google",
+    //     "Microsoft",
+    //     "Oracle",
+    //     "Uber",
+    //     "Miscellaneous",
+    // ];
     return (
         <div className="back">
             <Navbar />
