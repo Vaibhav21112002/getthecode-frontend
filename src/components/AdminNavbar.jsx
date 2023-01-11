@@ -23,13 +23,13 @@ const AdminNav = () => {
     ];
     return (
         <div
-            className={`sm:flex hidden flex-col py-4 items-center w-full min-h-[100vh] bg-[${darkTheme.bgPrimary}] `}
+            className={`sm:flex hidden flex-col py-4 items-center w-full h-[100vh] bg-[${darkTheme.bgPrimary}] `}
         >
             <div
-                className={`w-[90%] h-[4rem] bg-[#25272E] rounded-lg flex justify-center items-center text-[#BDA9A9] gap-2 cursor-pointer`}
+                className={`w-[90%] h-[2rem] bg-[#25272E] rounded-lg flex justify-center items-center text-[#BDA9A9] gap-2 cursor-pointer`}
                 onClick={() => navigate("/")}
             >
-                <BsFillPersonFill className=" text-[1.5rem]" />
+                <BsFillPersonFill className=" text-[1.2rem]" />
                 <h1>Vaibhav Gupta</h1>
             </div>
             <div className="w-[90%] h-[0.5px] bg-[#33343B] my-4"></div>
@@ -39,7 +39,7 @@ const AdminNav = () => {
                         return (
                             <div key={index}>
                                 <button
-                                    className="flex items-center gap-2 text-[16px] text-[#BDA9A9] hover:text-black hover:bg-white py-2 px-6 rounded-xl"
+                                    className="flex items-center gap-2 text-[16px] text-[#BDA9A9] hover:text-black hover:bg-white py-2 px-6 rounded-xl text-sm"
                                     onClick={() => navigate(`${link.path}`)}
                                 >
                                     {link.icon}

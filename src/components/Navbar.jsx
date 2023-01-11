@@ -20,7 +20,7 @@ function Navbar() {
                 <div className="w-full flex items-center py-4">
                     <div className="flex w-full px-4">
                         <AiOutlineHome
-                            className="text-[#BDA9A9] text-[2rem] cursor-pointer"
+                            className="text-[#BDA9A9] text-[1.6rem] cursor-pointer"
                             onClick={() => navigate("/")}
                         />
                     </div>
@@ -29,7 +29,7 @@ function Navbar() {
                             return (
                                 <li key={index}>
                                     <button
-                                        className="px-4 py-2 text-[#BDA9A9] hover:bg-[#BDA9A9] hover:text-[#202128] rounded-md"
+                                        className="px-4 py-2 text-[#BDA9A9] hover:bg-[#BDA9A9] hover:text-[#202128] rounded-md text-sm"
                                         onClick={() => navigate(`${link.path}`)}
                                     >
                                         {link.title}
