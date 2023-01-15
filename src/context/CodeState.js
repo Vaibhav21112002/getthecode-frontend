@@ -12,7 +12,7 @@ const CodeState = (props) => {
             setLoading(true);
             const res = await api.get("/problems");
             setQuestions(res.data);
-            console.log(res.data);
+            // console.log(res.data);
             setLoading(false);
         } catch (err) {
             console.log(err);

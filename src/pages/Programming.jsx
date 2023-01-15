@@ -8,20 +8,48 @@ import Void from "../assets/Images/Void.svg";
 import Modal from "react-awesome-modal";
 import Editor from "@monaco-editor/react";
 import { AiOutlineClose } from "react-icons/ai";
+import load from "../assets/Images/question_mark.png"
+import { IoMdReturnRight } from "react-icons/io";
 
 const Programming = () => {
     const { questions, getQuestions } = useContext(CodeContext);
+    const [activeFilter, setActiveFilter] = useState('All Questions');
+
+
+    const handleTopicFilter = (topic) => {
+        if (activeFilter === topic) return;
+        setActiveFilter(topic);
+        if (topic === "All Questions") {
+            setData(questions);
+            // console.log(questions);
+        }
+        else {
+            const newData = questions.filter((item) =>
+                item.topicTag.includes(topic)
+            );
+            setData(newData);
+            // console.log(newData);
+        }
+
+    }
     const navigate = useNavigate();
     // const [solutionOpen, setSolutionOpen] = useState(false);
     const [data, setData] = useState([]);
     const [editData, setEditData] = useState({});
     const [solutionOpen, setSolutionOpen] = React.useState(false);
     useEffect(() => {
+        if(activeFilter!=="All Questions") return;
         getQuestions();
         setData(questions);
         console.log(questions);
         // eslint-disable-next-line
-    }, []);
+    }, [questions]);
+    // while(data.length===0){
+    //     // getQuestions();
+    //     setData(questions);
+    // }
+
+    // console.log(data);
     const topics = [
         { title: "All Questions" },
         { title: "Arrays" },
@@ -44,16 +72,7 @@ const Programming = () => {
         return (
             <div
                 className="sm:w-[16rem] w-[10rem]  flex justify-center items-center sm:px-6 px-4 py-2 bg-[#6B5DD3] border border-[#6B5DD3] rounded-lg shadow-xl cursor-pointer hover:bg-[#202128] hover:text-[#6B5DD3]"
-                onClick={() => {
-                    if (title === "All Questions") {
-                        setData(questions);
-                    } else {
-                        const newData = questions.filter((item) =>
-                            item.topicTag.includes(title)
-                        );
-                        setData(newData);
-                    }
-                }}
+                onClick={() => handleTopicFilter(title)}
             >
                 <h1 className="sm:text-sm text-xs text-center">{title}</h1>
             </div>
@@ -129,6 +148,7 @@ const Programming = () => {
                                         </th>
                                     </tr>
                                 </thead>
+
                                 {data.length > 0 ? (
                                     <tbody>
                                         {data.map((item, index) => {
@@ -143,8 +163,9 @@ const Programming = () => {
                                         })}
                                     </tbody>
                                 ) : (
-                                    <div></div>
+                                    <></>
                                 )}
+
                             </table>
                         </div>
                         {data.length === 0 && (
