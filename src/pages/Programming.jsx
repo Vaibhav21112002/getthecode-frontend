@@ -37,13 +37,19 @@ const Programming = () => {
     const [data, setData] = useState([]);
     const [editData, setEditData] = useState({});
     const [solutionOpen, setSolutionOpen] = React.useState(false);
+    let count = 0;
     useEffect(() => {
         if(activeFilter!=="All Questions") return;
         getQuestions();
-        setData(questions);
         console.log(questions);
         // eslint-disable-next-line
-    }, [questions]);
+    }, []);
+    
+    useEffect(()=>{
+        if(activeFilter!=="All Questions") return;
+        setData(questions);
+        console.log(questions);
+    },[questions]);
     // while(data.length===0){
     //     // getQuestions();
     //     setData(questions);
