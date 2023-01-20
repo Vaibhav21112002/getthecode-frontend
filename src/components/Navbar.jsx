@@ -16,7 +16,7 @@ function Navbar() {
 
     return (
         <div>
-            <div className="flex w-full bg-[#202128] z-[10]">
+            <div style={{position:'fixed'}} className="flex w-full bg-[#202128] z-[10]">
                 <div className="w-full flex items-center py-4">
                     <div className="flex w-full px-4">
                         <AiOutlineHome

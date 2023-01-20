@@ -229,8 +229,10 @@ const Question = () => {
                     </div>
                 </div>
                 <div className="min-h-[100vh] border-r"></div>
-                <div className="w-3/12 flex flex-col gap-4 p-4 ">
-                    <div className="bg-[#25272E] rounded-xl py-4">
+                <div className="w-3/12 flex flex-col gap-4 p-4 mt-20">
+                <div style={{position:'fixed'}}>
+
+                    <div className="bg-[#25272E] rounded-xl py-4 mb-5" >
                         <h1 className="text-base font-bold text-center text-[#BDA9A9]">
                             Topic Tags
                         </h1>
@@ -266,6 +268,7 @@ const Question = () => {
                             })}
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
         </div>
