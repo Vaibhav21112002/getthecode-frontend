@@ -152,6 +152,7 @@ const AdminProgramming = () => {
             uploadData.testCases.testCase2.output === "" ||
             uploadData.testCases.testCase2.explaination === ""
         ) {
+            console.log(uploadData);
             swal({
                 title: "Error",
                 text: "Please fill all the fields",
@@ -385,17 +386,20 @@ const AdminProgramming = () => {
                                             <label className={labelStyle}>
                                                 Problem Description
                                             </label>
-                                            <ReactQuill
-                                                theme="snow"
-                                                value={uploadData.description}
-                                                placeholder="Problem Description"
-                                                onChange={(e) => {
-                                                    console.log(e);
+                                            <Editor
+                                                height="60vh"
+                                                width={`90%`}
+                                                theme="vs-light"
+                                                defaultLanguage="java"
+                                                defaultValue={`function add(a, b) {\n  return a + b;\n}`}
+                                                onChange={(value, event) => {
+                                                    console.log(value);
                                                     setUploadData({
                                                         ...uploadData,
-                                                        description: e,
+                                                        description: value,
                                                     });
                                                 }}
+                                                tabIndex={4}
                                             />
                                         </div>
                                         <div className={divStyle}>
