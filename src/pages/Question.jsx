@@ -27,7 +27,7 @@ const Question = () => {
                 <h1 className="text-4xl font-bold text-[#BDA9A9]  ">
                     {question.title ? question.title : "Two Sum"}
                 </h1>
-                <h1 className="py-4 text-justify py-4">
+                <h1 className="py-4 text-justify">
                     {question.description
                         ? Parser(question.description)
                         : "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target."}

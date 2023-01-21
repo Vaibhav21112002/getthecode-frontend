@@ -48,7 +48,7 @@ function Navbar() {
                         />
                     </ul>
                 </div>
-                <div className="w-full flex justify-end items-center px-4 sm:hidden flex">
+                <div className="w-full flex justify-end items-center px-4 sm:hidden">
                     {!open && (
                         <AiOutlineMenu
                             className="text-[30px] text-white mr-2"
