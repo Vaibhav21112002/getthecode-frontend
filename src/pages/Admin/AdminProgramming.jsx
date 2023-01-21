@@ -624,7 +624,7 @@ const AdminProgramming = () => {
                                                 <label className={labelStyle}>
                                                     Test Case 1
                                                 </label>
-                                                <input
+                                                <textarea
                                                     className={inputStyle}
                                                     value={
                                                         uploadData.testCases
@@ -648,7 +648,7 @@ const AdminProgramming = () => {
                                                         })
                                                     }
                                                 />
-                                                <input
+                                                <textarea
                                                     className={inputStyle}
                                                     value={
                                                         uploadData.testCases
@@ -734,7 +734,7 @@ const AdminProgramming = () => {
                                                 <label className={labelStyle}>
                                                     Test Case 2
                                                 </label>
-                                                <input
+                                                <textarea
                                                     className={inputStyle}
                                                     value={
                                                         uploadData.testCases
@@ -758,7 +758,7 @@ const AdminProgramming = () => {
                                                         })
                                                     }
                                                 />
-                                                <input
+                                                <textarea
                                                     className={inputStyle}
                                                     value={
                                                         uploadData.testCases
@@ -1261,7 +1261,7 @@ const AdminProgramming = () => {
                                                     >
                                                         Test Case 1
                                                     </label>
-                                                    <input
+                                                    <textarea
                                                         className={inputStyle}
                                                         value={
                                                             editData.testCases
@@ -1285,7 +1285,7 @@ const AdminProgramming = () => {
                                                             })
                                                         }
                                                     />
-                                                    <input
+                                                    <textarea
                                                         className={inputStyle}
                                                         value={
                                                             editData.testCases
@@ -1341,8 +1341,6 @@ const AdminProgramming = () => {
                                                                             .testCase1,
                                                                         explaination:
                                                                             e
-                                                                                .target
-                                                                                .value,
                                                                     },
                                                                 },
                                                             })
@@ -1381,7 +1379,7 @@ const AdminProgramming = () => {
                                                     >
                                                         Test Case 2
                                                     </label>
-                                                    <input
+                                                    <textarea
                                                         className={inputStyle}
                                                         value={
                                                             editData.testCases
@@ -1405,7 +1403,7 @@ const AdminProgramming = () => {
                                                             })
                                                         }
                                                     />
-                                                    <input
+                                                    <textarea
                                                         className={inputStyle}
                                                         value={
                                                             editData.testCases
@@ -1460,8 +1458,6 @@ const AdminProgramming = () => {
                                                                             .testCase2,
                                                                         explaination:
                                                                             e
-                                                                                .target
-                                                                                .value,
                                                                     },
                                                                 },
                                                             })
