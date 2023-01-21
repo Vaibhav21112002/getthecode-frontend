@@ -631,7 +631,8 @@ const AdminProgramming = () => {
                                                             .testCase1.input
                                                     }
                                                     placeholder="Input"
-                                                    onChange={(e) =>
+                                                    onChange={(e) =>{
+                                                        console.log(e.target.value);
                                                         setUploadData({
                                                             ...uploadData,
                                                             testCases: {
@@ -646,6 +647,7 @@ const AdminProgramming = () => {
                                                                 },
                                                             },
                                                         })
+                                                    }
                                                     }
                                                 />
                                                 <textarea
@@ -742,6 +744,8 @@ const AdminProgramming = () => {
                                                     }
                                                     placeholder="Input"
                                                     onChange={(e) =>
+                                                    {
+                                                        console.log(e.target.value);
                                                         setUploadData({
                                                             ...uploadData,
                                                             testCases: {
@@ -757,6 +761,7 @@ const AdminProgramming = () => {
                                                             },
                                                         })
                                                     }
+                                                    }
                                                 />
                                                 <textarea
                                                     className={inputStyle}
@@ -765,7 +770,8 @@ const AdminProgramming = () => {
                                                             .testCase2.output
                                                     }
                                                     placeholder="Output"
-                                                    onChange={(e) =>
+                                                    onChange={(e) => {
+                                                        console.log(e.target.value);
                                                         setUploadData({
                                                             ...uploadData,
                                                             testCases: {
@@ -780,6 +786,7 @@ const AdminProgramming = () => {
                                                                 },
                                                             },
                                                         })
+                                                    }
                                                     }
                                                 />
 
@@ -1269,6 +1276,8 @@ const AdminProgramming = () => {
                                                         }
                                                         placeholder="Input"
                                                         onChange={(e) =>
+                                                        {
+                                                            console.log(e.target.value);
                                                             setEditData({
                                                                 ...editData,
                                                                 testCases: {
@@ -1283,6 +1292,7 @@ const AdminProgramming = () => {
                                                                     },
                                                                 },
                                                             })
+                                                        }
                                                         }
                                                     />
                                                     <textarea
@@ -1387,7 +1397,9 @@ const AdminProgramming = () => {
                                                         }
                                                         placeholder="Input"
                                                         onChange={(e) =>
-                                                            setEditData({
+                                                        { 
+                                                            console.log(e.target.value);
+                                                               setEditData({
                                                                 ...editData,
                                                                 testCases: {
                                                                     ...editData.testCases,
@@ -1400,7 +1412,7 @@ const AdminProgramming = () => {
                                                                             .value,
                                                                     },
                                                                 },
-                                                            })
+                                                            })}
                                                         }
                                                     />
                                                     <textarea

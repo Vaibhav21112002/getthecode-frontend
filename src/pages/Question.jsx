@@ -24,48 +24,54 @@ const Question = () => {
     const QuestionComponent = ({ question }) => {
         return (
             <div>
-                <h1 className="text-4xl font-bold text-[#BDA9A9]  ">
+                <h1 className="text-4xl font-bold text-[white]  ">
                     {question.title ? question.title : "Two Sum"}
                 </h1>
-                <h1 className="py-4 text-justify">
+                <h1 className="py-4 text-justify text-base">
                     {question.description
                         ? Parser(question.description)
                         : "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target."}
                 </h1>
-                <h1 className="font-bold mt-8 text-lg">Test Case</h1>
+                <h1 className="font-bold mt-8 text-xl">Test Case</h1>
                 <br />
                 {question.testCases && (
                     <div>
-                        <h1>Example 1</h1>
+                        <h1 className="text-base">Example 1</h1>
                         <div className={testStyle}>
-                            <h1 className="font-bold">Input : </h1>
-                            <h1>{question.testCases.testCase1.input}</h1>
-                        </div>
-                        <div className={testStyle}>
-                            <h1 className="font-bold">Output : </h1>
-                            <h1>{question.testCases.testCase1.output}</h1>
-                        </div>
-                        <div className="mt-4">
-                            <h1 className="font-bold">Explaination : </h1>
-                            <h1>{Parser(question.testCases.testCase1.explaination)}</h1>
+
+                            <div className={testStyle} >
+                                <h1 className="font-bold text-xl">Input </h1>
+                                <h1 className="input">{question.testCases.testCase1.input}</h1>
+                            </div>
+                            <div className={testStyle}>
+                                <h1 className="font-bold text-xl">Output </h1>
+                                <h1 className="output">{question.testCases.testCase1.output}</h1>
+                            </div>
+                            <div className={`${testStyle} mt-4`}>
+                                <h1 className="font-bold text-xl">Explaination</h1>
+                                <h1>{Parser(question.testCases.testCase1.explaination)}</h1>
+                            </div>
                         </div>
                     </div>
                 )}
                 <br />
                 {question.testCases && (
                     <div>
-                        <h1>Example 2</h1>
+                        <h1 className="text-base">Example 2</h1>
                         <div className={testStyle}>
-                            <h1 className="font-bold">Input : </h1>
-                            <h1>{question.testCases.testCase2.input}</h1>
-                        </div>
-                        <div className={testStyle}>
-                            <h1 className="font-bold">Output : </h1>
-                            <h1>{question.testCases.testCase2.output}</h1>
-                        </div>
-                        <div className="mt-4">
-                            <h1 className="font-bold">Explaination : </h1>
-                            <h1>{Parser(question.testCases.testCase2.explaination)}</h1>
+
+                            <div className={testStyle} >
+                                <h1 className="font-bold text-xl">Input </h1>
+                                <h1 className="input">{question.testCases.testCase2.input}</h1>
+                            </div>
+                            <div className={testStyle}>
+                                <h1 className="font-bold text-xl">Output </h1>
+                                <h1 className="output">{question.testCases.testCase2.output}</h1>
+                            </div>
+                            <div className={`${testStyle} mt-4`}>
+                                <h1 className="font-bold text-xl">Explaination</h1>
+                                <h1>{Parser(question.testCases.testCase2.explaination)}</h1>
+                            </div>
                         </div>
                     </div>
                 )}
@@ -176,7 +182,7 @@ const Question = () => {
         <div className="back">
             <Navbar />
             <div className="w-full flex">
-                <div className="w-9/12 flex flex-col py-8 text-[#BDA9A9] px-20">
+                <div className="w-9/12 flex flex-col py-8 text-[white] px-20">
                     <div className="flex justify-start">
                         <div className="bg-[#25272E] flex p-2 rounded-xl gap-2 my-8 ">
                             <button
@@ -230,45 +236,45 @@ const Question = () => {
                 </div>
                 <div className="min-h-[100vh] border-r"></div>
                 <div className="w-3/12 flex flex-col gap-4 p-4 mt-20">
-                <div style={{position:'fixed'}}>
+                    <div style={{ position: 'fixed' }}>
 
-                    <div className="bg-[#25272E] rounded-xl py-4 mb-5" >
-                        <h1 className="text-base font-bold text-center text-[#BDA9A9]">
-                            Topic Tags
-                        </h1>
-                        <div className="flex flex-wrap py-2">
-                            {question.topicTag?.map((tag) => {
-                                return (
-                                    <div className="flex items-center gap-2 p-2">
-                                        <div className="px-4 py-1 min-w-4 min-h-4 bg-[#6B5DD3] text-[#FFF] rounded-lg">
-                                            <h1 className="text-[10px]">
-                                                {tag}
-                                            </h1>
+                        <div className="bg-[#25272E] rounded-xl py-4 mb-5" >
+                            <h1 className="text-base font-bold text-center text-[white]">
+                                Topic Tags
+                            </h1>
+                            <div className="flex flex-wrap py-2">
+                                {question.topicTag?.map((tag) => {
+                                    return (
+                                        <div className="flex items-center gap-2 p-2">
+                                            <div className="px-4 py-1 min-w-4 min-h-4 bg-[#6B5DD3] text-[#FFF] rounded-lg">
+                                                <h1 className="text-[10px]">
+                                                    {tag}
+                                                </h1>
+                                            </div>
                                         </div>
-                                    </div>
-                                );
-                            })}
+                                    );
+                                })}
+                            </div>
+                        </div>
+                        <div className="bg-[#25272E] rounded-xl py-4">
+                            <h1 className="text-base font-bold text-center text-[white]">
+                                Company Tags
+                            </h1>
+                            <div className="flex flex-wrap py-2">
+                                {question.companyTag?.map((tag) => {
+                                    return (
+                                        <div className="flex items-center gap-2 p-2">
+                                            <div className="px-4 py-1 min-w-4 min-h-4 bg-[#6B5DD3] text-[#FFF] rounded-lg">
+                                                <h1 className="text-[10px]">
+                                                    {tag}
+                                                </h1>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
                         </div>
                     </div>
-                    <div className="bg-[#25272E] rounded-xl py-4">
-                        <h1 className="text-base font-bold text-center text-[#BDA9A9]">
-                            Company Tags
-                        </h1>
-                        <div className="flex flex-wrap py-2">
-                            {question.companyTag?.map((tag) => {
-                                return (
-                                    <div className="flex items-center gap-2 p-2">
-                                        <div className="px-4 py-1 min-w-4 min-h-4 bg-[#6B5DD3] text-[#FFF] rounded-lg">
-                                            <h1 className="text-[10px]">
-                                                {tag}
-                                            </h1>
-                                        </div>
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </div>
-                </div>
                 </div>
             </div>
         </div>

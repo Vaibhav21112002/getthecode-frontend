@@ -29,3 +29,7 @@ backdrop-filter: blur(6.9px);
 -webkit-backdrop-filter: blur(6.9px);
 border: 1px solid rgba(255, 255, 255, 0.04);
 }
+
+.input,.output{
+  white-space:pre-wrap;
+}
