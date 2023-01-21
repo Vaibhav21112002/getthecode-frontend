@@ -47,7 +47,7 @@ const Question = () => {
                         </div>
                         <div className="mt-4">
                             <h1 className="font-bold">Explaination : </h1>
-                            <h1>{question.testCases.testCase1.explaination}</h1>
+                            <h1>{Parser(question.testCases.testCase1.explaination)}</h1>
                         </div>
                     </div>
                 )}
@@ -65,7 +65,7 @@ const Question = () => {
                         </div>
                         <div className="mt-4">
                             <h1 className="font-bold">Explaination : </h1>
-                            <h1>{question.testCases.testCase2.explaination}</h1>
+                            <h1>{Parser(question.testCases.testCase2.explaination)}</h1>
                         </div>
                     </div>
                 )}

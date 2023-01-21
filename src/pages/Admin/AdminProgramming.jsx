@@ -672,7 +672,39 @@ const AdminProgramming = () => {
                                                         })
                                                     }
                                                 />
-                                                <input
+                                                <ReactQuill
+                                                    theme="snow"
+                                                    value={uploadData.testCases.testCase1.explaination}
+                                                    placeholder="Explanation"
+                                                    modules={{
+                                                        toolbar: {
+                                                            container: [
+                                                                [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                                                                ['bold', 'italic', 'underline'],
+                                                                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                                                                [{ 'align': [] }],
+                                                                ['link', 'image'],
+                                                                ['clean'],
+                                                                [{ 'color': [] }]
+                                                            ]
+                                                        }
+                                                    }}
+                                                    onChange={(e) => {
+                                                        console.log(uploadData.testCases.testCase1.explaination)
+                                                        console.log(e);
+                                                        setUploadData({
+                                                            ...uploadData,
+                                                            testCases: {
+                                                                ...uploadData.testCases,
+                                                                testCase1: {
+                                                                    ...uploadData.testCases.testCase1,
+                                                                    explaination: e
+                                                                }
+                                                            }
+                                                        });
+                                                    }}
+                                                />
+                                                {/* <input
                                                     className={inputStyle}
                                                     value={
                                                         uploadData.testCases
@@ -696,7 +728,7 @@ const AdminProgramming = () => {
                                                             },
                                                         })
                                                     }
-                                                />
+                                                /> */}
                                             </div>
                                             <div className="w-full flex flex-col gap-2 border p-4 rounded-lg mt-2">
                                                 <label className={labelStyle}>
@@ -750,7 +782,39 @@ const AdminProgramming = () => {
                                                         })
                                                     }
                                                 />
-                                                <input
+
+                                                <ReactQuill
+                                                    theme="snow"
+                                                    value={uploadData.testCases.testCase2.explaination}
+                                                    placeholder="Explanation"
+                                                    modules={{
+                                                        toolbar: {
+                                                            container: [
+                                                                [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                                                                ['bold', 'italic', 'underline'],
+                                                                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                                                                [{ 'align': [] }],
+                                                                ['link', 'image'],
+                                                                ['clean'],
+                                                                [{ 'color': [] }]
+                                                            ]
+                                                        }
+                                                    }}
+                                                    onChange={(e) => {
+                                                        console.log(e);
+                                                        setUploadData({
+                                                            ...uploadData,
+                                                            testCases: {
+                                                                ...uploadData.testCases,
+                                                                testCase2: {
+                                                                    ...uploadData.testCases.testCase2,
+                                                                    explaination: e
+                                                                }
+                                                            }
+                                                        });
+                                                    }}
+                                                />
+                                                {/* <input
                                                     className={inputStyle}
                                                     value={
                                                         uploadData.testCases
@@ -774,7 +838,7 @@ const AdminProgramming = () => {
                                                             },
                                                         })
                                                     }
-                                                />
+                                                /> */}
                                             </div>
                                         </div>
                                         <div className={divStyle}>
@@ -864,11 +928,11 @@ const AdminProgramming = () => {
                                                     </span>
                                                     {editData.difficulty
                                                         ? editData.difficulty
-                                                              .slice(0, 1)
-                                                              .toUpperCase() +
-                                                          editData.difficulty
-                                                              .slice(1)
-                                                              .toLowerCase()
+                                                            .slice(0, 1)
+                                                            .toUpperCase() +
+                                                        editData.difficulty
+                                                            .slice(1)
+                                                            .toLowerCase()
                                                         : "Easy"}
                                                 </h1>
                                                 <h1>
@@ -1246,7 +1310,45 @@ const AdminProgramming = () => {
                                                             })
                                                         }
                                                     />
-                                                    <input
+
+                                                    <ReactQuill
+                                                        theme="snow"
+                                                        value={editData.testCases
+                                                            .testCase1
+                                                            .explaination}
+                                                        placeholder="Explanation"
+                                                        modules={{
+                                                            toolbar: {
+                                                                container: [
+                                                                    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                                                                    ['bold', 'italic', 'underline'],
+                                                                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                                                                    [{ 'align': [] }],
+                                                                    ['link', 'image'],
+                                                                    ['clean'],
+                                                                    [{ 'color': [] }]
+                                                                ]
+                                                            }
+                                                        }}
+                                                        onChange={(e) =>
+                                                            setEditData({
+                                                                ...editData,
+                                                                testCases: {
+                                                                    ...editData.testCases,
+                                                                    testCase1: {
+                                                                        ...editData
+                                                                            .testCases
+                                                                            .testCase1,
+                                                                        explaination:
+                                                                            e
+                                                                                .target
+                                                                                .value,
+                                                                    },
+                                                                },
+                                                            })
+                                                        }
+                                                    />
+                                                    {/* <input
                                                         className={inputStyle}
                                                         value={
                                                             editData.testCases
@@ -1271,7 +1373,7 @@ const AdminProgramming = () => {
                                                                 },
                                                             })
                                                         }
-                                                    />
+                                                    /> */}
                                                 </div>
                                                 <div className="w-full flex flex-col gap-2 border p-4 rounded-lg mt-2">
                                                     <label
@@ -1328,7 +1430,44 @@ const AdminProgramming = () => {
                                                             })
                                                         }
                                                     />
-                                                    <input
+                                                    <ReactQuill
+                                                        theme="snow"
+                                                        value={editData.testCases
+                                                            .testCase2
+                                                            .explaination}
+                                                        placeholder="Explanation"
+                                                        modules={{
+                                                            toolbar: {
+                                                                container: [
+                                                                    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                                                                    ['bold', 'italic', 'underline'],
+                                                                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                                                                    [{ 'align': [] }],
+                                                                    ['link', 'image'],
+                                                                    ['clean'],
+                                                                    [{ 'color': [] }]
+                                                                ]
+                                                            }
+                                                        }}
+                                                        onChange={(e) =>
+                                                            setEditData({
+                                                                ...editData,
+                                                                testCases: {
+                                                                    ...editData.testCases,
+                                                                    testCase2: {
+                                                                        ...editData
+                                                                            .testCases
+                                                                            .testCase2,
+                                                                        explaination:
+                                                                            e
+                                                                                .target
+                                                                                .value,
+                                                                    },
+                                                                },
+                                                            })
+                                                        }
+                                                    />
+                                                    {/* <input
                                                         className={inputStyle}
                                                         value={
                                                             editData.testCases
@@ -1353,7 +1492,7 @@ const AdminProgramming = () => {
                                                                 },
                                                             })
                                                         }
-                                                    />
+                                                    /> */}
                                                 </div>
                                             </div>
                                             <div className={divStyle}>
