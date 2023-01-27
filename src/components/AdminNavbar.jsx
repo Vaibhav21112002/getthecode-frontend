@@ -26,7 +26,7 @@ const AdminNav = () => {
             className={`sm:flex hidden flex-col py-4 items-center w-full h-[100vh] bg-[${darkTheme.bgPrimary}] `}
         >
             <div
-                className={`w-[90%] h-[2rem] bg-[#25272E] rounded-lg flex justify-center items-center text-[#BDA9A9] gap-2 cursor-pointer`}
+                className={`w-[90%] h-[2rem] bg-[#222629] rounded-lg flex justify-center items-center text-[#BDA9A9] gap-2 cursor-pointer`}
                 onClick={() => navigate("/")}
             >
                 <BsFillPersonFill className=" text-[1.2rem]" />

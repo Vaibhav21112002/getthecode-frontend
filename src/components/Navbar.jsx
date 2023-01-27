@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AiOutlineClose, AiOutlineMenu, AiOutlineHome } from "react-icons/ai";
+import { BiArrowBack } from "react-icons/bi"
 import { BiShieldQuarter } from "react-icons/bi";
 
-function Navbar() {
+function Navbar({ question }) {
     const [open, setOpen] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
@@ -15,21 +16,25 @@ function Navbar() {
     ];
 
     return (
-        <div>
-            <div style={{position:'fixed'}} className="flex w-full bg-[#202128] z-[10]">
+
+        <div className="mb-10">
+            <div style={{ position: 'fixed' }} className="flex w-full bg-[#222629] z-[10]">
                 <div className="w-full flex items-center py-4">
                     <div className="flex w-full px-4">
+                        {question && <BiArrowBack className="text-[white] text-[1.6rem] mr-3 cursor-pointer"
+                            onClick={() => navigate("/programming")} />}
                         <AiOutlineHome
-                            className="text-[#BDA9A9] text-[1.6rem] cursor-pointer"
+                            className="text-[white] text-[1.6rem] cursor-pointer"
                             onClick={() => navigate("/")}
                         />
+
                     </div>
                     <ul className="sm:flex hidden gap-4 w-full justify-end items-center px-8">
                         {navLinks.map((link, index) => {
                             return (
                                 <li key={index}>
                                     <button
-                                        className="px-4 py-2 text-[#BDA9A9] hover:bg-[#BDA9A9] hover:text-[#202128] rounded-md text-sm"
+                                        className="px-4 py-2 text-[white] hover:bg-[#BDA9A9] hover:text-[#202128] rounded-md text-sm"
                                         onClick={() => navigate(`${link.path}`)}
                                     >
                                         {link.title}

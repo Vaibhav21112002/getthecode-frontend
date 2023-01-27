@@ -180,7 +180,7 @@ const Question = () => {
     };
     return (
         <div className="back">
-            <Navbar />
+            <Navbar  question/>
             <div className="w-full flex">
                 <div className="w-9/12 flex flex-col py-8 text-[white] px-20">
                     <div className="flex justify-start">
@@ -236,10 +236,10 @@ const Question = () => {
                 </div>
                 <div className="min-h-[100vh] border-r"></div>
                 <div className="w-3/12 flex flex-col gap-4 p-4 mt-20">
-                    <div style={{ position: 'fixed' }}>
+                    <div style={{ position: 'fixed' ,width:'25%'}}>
 
-                        <div className="bg-[#25272E] rounded-xl py-4 mb-5" >
-                            <h1 className="text-base font-bold text-center text-[white]">
+                        <div className="bg-[#25272E] rounded-xl py-4 mb-5" style={{width:'90%'}} >
+                            <h1 className="text-base font-bold text-center text-[white] h-10">
                                 Topic Tags
                             </h1>
                             <div className="flex flex-wrap py-2">
@@ -256,7 +256,7 @@ const Question = () => {
                                 })}
                             </div>
                         </div>
-                        <div className="bg-[#25272E] rounded-xl py-4">
+                        <div className="bg-[#25272E] rounded-xl py-4" style={{width:'90%'}}>
                             <h1 className="text-base font-bold text-center text-[white]">
                                 Company Tags
                             </h1>

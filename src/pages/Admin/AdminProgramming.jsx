@@ -195,7 +195,7 @@ const AdminProgramming = () => {
         });
     };
     return (
-        <div className={`w-full flex bg-[#202128]`}>
+        <div className={`w-full flex bg-[#222629]`}>
             <div className="w-2/12">
                 <AdminNavbar />
             </div>
@@ -210,11 +210,11 @@ const AdminProgramming = () => {
                         </h1>
                         <div className="flex flex-col ">
                             <div className="flex w-full items-center justify-between mt-8 px-[3rem]">
-                                <h1 className="text-left text-[#BDA9A9] text-base font-normal px-4">
+                                <h1 className="text-left text-[white] text-base font-normal px-4">
                                     Your Programming Questions
                                 </h1>
                                 <button
-                                    className="text-sm bg-[#3A355C] px-4 py-2 rounded-xl text-white border-[#3A355C] hover:shadow-2xl"
+                                    className="text-sm bg-[#E97500] px-4 py-2 rounded-xl text-white border-[#E97500] hover:shadow-2xl"
                                     onClick={() => setUploadOpen(true)}
                                 >
                                     Upload{" "}
@@ -348,7 +348,19 @@ const AdminProgramming = () => {
                             {/* Upload Modal */}
                             <Modal
                                 visible={uploadOpen}
-                                onClickAway={() => setUploadOpen(false)}
+                                onClickAway={() => {
+                                    swal({
+                                        title: "Do you want to discard your changes?",
+                                        icon: "warning",
+                                        buttons: true,
+                                    }).then(res => {
+                                        if (res) {
+                                            setUploadOpen(false);
+                                        }
+                                    })
+
+                                }}
+
                                 title="Solution"
                                 width="90%"
                                 height="90%"
@@ -357,7 +369,15 @@ const AdminProgramming = () => {
                                     <div className="flex w-full justify-end px-4 py-4">
                                         <AiOutlineClose
                                             className="text-black hover:font-bold text-[20px] cursor-pointer"
-                                            onClick={() => setUploadOpen(false)}
+                                            onClick={() => swal({
+                                                title: "Do you want to discard your changes?",
+                                                icon: "warning",
+                                                buttons: true,
+                                            }).then(res => {
+                                                if (res) {
+                                                    setUploadOpen(false);
+                                                }
+                                            })}
                                         />
                                     </div>
                                     <h1 className="text-center text-2xl py-4 text-[#202128]">
@@ -631,7 +651,7 @@ const AdminProgramming = () => {
                                                             .testCase1.input
                                                     }
                                                     placeholder="Input"
-                                                    onChange={(e) =>{
+                                                    onChange={(e) => {
                                                         console.log(e.target.value);
                                                         setUploadData({
                                                             ...uploadData,
@@ -743,8 +763,7 @@ const AdminProgramming = () => {
                                                             .testCase2.input
                                                     }
                                                     placeholder="Input"
-                                                    onChange={(e) =>
-                                                    {
+                                                    onChange={(e) => {
                                                         console.log(e.target.value);
                                                         setUploadData({
                                                             ...uploadData,
@@ -977,7 +996,15 @@ const AdminProgramming = () => {
                             {editData.title && (
                                 <Modal
                                     visible={editOpen}
-                                    onClickAway={() => setEditOpen(false)}
+                                    onClickAway={() => swal({
+                                        title: "Do you want to discard your changes?",
+                                        icon: "warning",
+                                        buttons: true,
+                                    }).then(res => {
+                                        if (res) {
+                                            setEditOpen(false);
+                                        }
+                                    })}
                                     title="Solution"
                                     width="90%"
                                     height="90%"
@@ -987,7 +1014,15 @@ const AdminProgramming = () => {
                                             <AiOutlineClose
                                                 className="text-black hover:font-bold text-[20px] cursor-pointer"
                                                 onClick={() =>
-                                                    setEditOpen(false)
+                                                    swal({
+                                                        title: "Do you want to discard your changes?",
+                                                        icon: "warning",
+                                                        buttons: true,
+                                                    }).then(res => {
+                                                        if (res) {
+                                                            setEditOpen(false);
+                                                        }
+                                                    })
                                                 }
                                             />
                                         </div>
@@ -1275,8 +1310,7 @@ const AdminProgramming = () => {
                                                                 .testCase1.input
                                                         }
                                                         placeholder="Input"
-                                                        onChange={(e) =>
-                                                        {
+                                                        onChange={(e) => {
                                                             console.log(e.target.value);
                                                             setEditData({
                                                                 ...editData,
@@ -1396,10 +1430,9 @@ const AdminProgramming = () => {
                                                                 .testCase2.input
                                                         }
                                                         placeholder="Input"
-                                                        onChange={(e) =>
-                                                        { 
+                                                        onChange={(e) => {
                                                             console.log(e.target.value);
-                                                               setEditData({
+                                                            setEditData({
                                                                 ...editData,
                                                                 testCases: {
                                                                     ...editData.testCases,
@@ -1412,7 +1445,8 @@ const AdminProgramming = () => {
                                                                             .value,
                                                                     },
                                                                 },
-                                                            })}
+                                                            })
+                                                        }
                                                         }
                                                     />
                                                     <textarea
