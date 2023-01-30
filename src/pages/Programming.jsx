@@ -77,7 +77,7 @@ const Programming = () => {
     const TopicCard = ({ title }) => {
         return (
             <div
-                className="sm:w-[16rem] w-[10rem] text-[white]  flex justify-center items-center sm:px-6 px-4 py-2  bg-[#E97500] border border-[#E97500] rounded-lg shadow-xl cursor-pointer hover:bg-[#202128] hover:text-[white]"
+                className="sm:w-[16rem] w-[10rem] text-[white]  flex justify-center items-center sm:px-6 px-4 py-2 rounded-lg shadow-xl cursor-pointer bg-[#E97500] border border-[#E97500] hover:bg-[#202128] hover:text-[white]"
                 onClick={() => handleTopicFilter(title)}
             >
                 <h1 className="sm:text-sm text-xs text-center  hover:text-[white]">{title}</h1>

@@ -13,7 +13,7 @@ const Question = () => {
     const [sol, setSol] = useState(0);
     const [data, setData] = useState({});
     const questionTab =
-        "w-36 py-2 bg-[#6B5DD3] border border-[#6B5DD3] rounded-lg text-white hover:text-[#6B5DD3] hover:bg-[#202128] text-sm";
+        "w-36 py-2  border rounded-lg text-white bg-[#E97500] border border-[#E97500] hover:bg-[#202128] hover:text-[white] text-sm";
     useEffect(() => {
         getQuestion(id);
         setData(question);
@@ -179,9 +179,9 @@ const Question = () => {
         );
     };
     return (
-        <div className="back">
+        <div className="back ">
             <Navbar  question/>
-            <div className="w-full flex">
+            <div className="w-full flex bg-[#222629]">
                 <div className="w-9/12 flex flex-col py-8 text-[white] px-20">
                     <div className="flex justify-start">
                         <div className="bg-[#25272E] flex p-2 rounded-xl gap-2 my-8 ">
@@ -246,7 +246,7 @@ const Question = () => {
                                 {question.topicTag?.map((tag) => {
                                     return (
                                         <div className="flex items-center gap-2 p-2">
-                                            <div className="px-4 py-1 min-w-4 min-h-4 bg-[#6B5DD3] text-[#FFF] rounded-lg">
+                                            <div className="px-4 py-1 min-w-4 min-h-4 bg-[#E97500] border border-[#E97500] text-white rounded-lg">
                                                 <h1 className="text-[10px]">
                                                     {tag}
                                                 </h1>
@@ -264,7 +264,7 @@ const Question = () => {
                                 {question.companyTag?.map((tag) => {
                                     return (
                                         <div className="flex items-center gap-2 p-2">
-                                            <div className="px-4 py-1 min-w-4 min-h-4 bg-[#6B5DD3] text-[#FFF] rounded-lg">
+                                            <div className="px-4 py-1 min-w-4 min-h-4 bg-[#E97500] border border-[#E97500] text-[white] rounded-lg">
                                                 <h1 className="text-[10px]">
                                                     {tag}
                                                 </h1>
