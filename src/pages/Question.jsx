@@ -35,45 +35,29 @@ const Question = () => {
                 <h1 className="font-bold mt-8 text-xl">Test Case</h1>
                 <br />
                 {question.testCases && (
-                    <div>
-                        <h1 className="text-base">Example 1</h1>
-                        <div className={testStyle}>
+                    question.testCases.map((testCase, index) => (
+                        <>
+                            <div>
+                                <h1 className="text-base">Example {index + 1}</h1>
+                                <div className={testStyle}>
 
-                            <div className={testStyle} >
-                                <h1 className="font-bold text-xl">Input </h1>
-                                <h1 className="input">{question.testCases.testCase1.input}</h1>
+                                    <div className={testStyle} >
+                                        <h1 className="font-bold text-xl">Input </h1>
+                                        <h1 className="input">{testCase.input}</h1>
+                                    </div>
+                                    <div className={testStyle}>
+                                        <h1 className="font-bold text-xl">Output </h1>
+                                        <h1 className="output">{testCase.output}</h1>
+                                    </div>
+                                    <div className={`${testStyle} mt-4`}>
+                                        <h1 className="font-bold text-xl">Explaination</h1>
+                                        <h1>{Parser(testCase.explaination)}</h1>
+                                    </div>
+                                </div>
                             </div>
-                            <div className={testStyle}>
-                                <h1 className="font-bold text-xl">Output </h1>
-                                <h1 className="output">{question.testCases.testCase1.output}</h1>
-                            </div>
-                            <div className={`${testStyle} mt-4`}>
-                                <h1 className="font-bold text-xl">Explaination</h1>
-                                <h1>{Parser(question.testCases.testCase1.explaination)}</h1>
-                            </div>
-                        </div>
-                    </div>
-                )}
-                <br />
-                {question.testCases && (
-                    <div>
-                        <h1 className="text-base">Example 2</h1>
-                        <div className={testStyle}>
-
-                            <div className={testStyle} >
-                                <h1 className="font-bold text-xl">Input </h1>
-                                <h1 className="input">{question.testCases.testCase2.input}</h1>
-                            </div>
-                            <div className={testStyle}>
-                                <h1 className="font-bold text-xl">Output </h1>
-                                <h1 className="output">{question.testCases.testCase2.output}</h1>
-                            </div>
-                            <div className={`${testStyle} mt-4`}>
-                                <h1 className="font-bold text-xl">Explaination</h1>
-                                <h1>{Parser(question.testCases.testCase2.explaination)}</h1>
-                            </div>
-                        </div>
-                    </div>
+                            <br />
+                        </>
+                    ))
                 )}
 
                 <br />
@@ -180,7 +164,7 @@ const Question = () => {
     };
     return (
         <div className="back ">
-            <Navbar  question/>
+            <Navbar question />
             <div className="w-full flex bg-[#222629]">
                 <div className="w-9/12 flex flex-col py-8 text-[white] px-20">
                     <div className="flex justify-start">
@@ -236,9 +220,9 @@ const Question = () => {
                 </div>
                 <div className="min-h-[100vh] border-r"></div>
                 <div className="w-3/12 flex flex-col gap-4 p-4 mt-20">
-                    <div style={{ position: 'fixed' ,width:'25%'}}>
+                    <div style={{ position: 'fixed', width: '25%' }}>
 
-                        <div className="bg-[#25272E] rounded-xl py-4 mb-5" style={{width:'90%'}} >
+                        <div className="bg-[#25272E] rounded-xl py-4 mb-5" style={{ width: '90%' }} >
                             <h1 className="text-base font-bold text-center text-[white] h-10">
                                 Topic Tags
                             </h1>
@@ -256,7 +240,7 @@ const Question = () => {
                                 })}
                             </div>
                         </div>
-                        <div className="bg-[#25272E] rounded-xl py-4" style={{width:'90%'}}>
+                        <div className="bg-[#25272E] rounded-xl py-4" style={{ width: '90%' }}>
                             <h1 className="text-base font-bold text-center text-[white]">
                                 Company Tags
                             </h1>

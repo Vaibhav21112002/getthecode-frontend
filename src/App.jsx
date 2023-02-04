@@ -2,7 +2,7 @@ import React from "react";
 import { Home, Programming, Blogs, Articles, Question } from "./pages";
 import {
     Admin,
-    AdminProgramming,
+    AdminProgramming_2,
     AdminBlogs,
     AdminArticles,
 } from "./pages/Admin";
@@ -19,7 +19,7 @@ const App = () => {
                     <Route path="/articles" element={<Articles />} />
                     <Route path="/programming/:id" element={<Question />} />
                     <Route path="/admin" element={<Admin />} />
-                    <Route path="/admin/programming" element={<AdminProgramming />} />
+                    <Route path="/admin/programming" element={<AdminProgramming_2 />} />
                     <Route path="/admin/blogs" element={<AdminBlogs />} />
                     <Route path="/admin/articles" element={<AdminArticles />} />
                 </Routes>
