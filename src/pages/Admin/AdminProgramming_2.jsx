@@ -119,7 +119,7 @@ const AdminProgramming = () => {
     const divStyle = `flex w-full flex-col sm:px-12 px-4 gap-2 text-[#202128] py-2`;
     const labelStyle = ``;
     const inputStyle = `w-full border rounded-md p-2`;
-    const activeClass = `bg-[#3A355C] text-white px-4 py-2 rounded-xl cursor-pointer`;
+    const activeClass = `bg-[#E97500] border-[#E97500] text-white px-4 py-2 w-full rounded-xl cursor-pointer`;
     const unactiveClass = `bg-[#F2F2F2] text-[#3A355C] px-4 py-2 rounded-xl cursor-pointer `;
     // const buttonStyle = `w-full flex justify-center items-center gap-2`;
     useEffect(() => {
@@ -218,7 +218,7 @@ const AdminProgramming = () => {
                                     <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
                                         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                             <thead
-                                                className={`text-xs text-white uppercase bg-[#3A355C]`}
+                                                className={`text-xs text-white uppercase text-white bg-[#E97500] border-[#E97500]`}
                                             >
                                                 <tr>
                                                     <th
@@ -1304,7 +1304,7 @@ const AdminProgramming = () => {
                                             </div>
                                             <div className="w-full flex px-24 justify-center">
                                                 <button
-                                                    className="bg-[#3A355C] text-white px-4 py-2 rounded-xl cursor-pointer w-[25rem]"
+                                                    className={activeClass}
                                                     onClick={handleEdit}
                                                 >
                                                     Edit
