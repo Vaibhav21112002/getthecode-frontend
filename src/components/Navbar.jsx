@@ -13,6 +13,7 @@ function Navbar({ question }) {
         { title: "Programming", path: "/programming" },
         { title: "Blogs", path: "/blogs" },
         { title: "Articles", path: "/articles" },
+        {title:"MCQs",path:'/mcqs'}
     ];
 
     return (

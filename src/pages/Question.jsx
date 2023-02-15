@@ -119,26 +119,6 @@ const Question = () => {
                     <div className="flex flex-col gap-2">
                         <h1 className="font-bold">Java</h1>
                         <div className="bg-[#25272E] w-full rounded-xl text-[0.76rem] p-4 mt-2">
-                            {/* <code>
-                                {question.solution
-                                    ? question.solution
-                                    : "class Solution {" +
-                                      "public:" +
-                                      "vector<int> twoSum(vector<int>& nums, int target) {" +
-                                      "vector<int> ans;" +
-                                      "for(int i=0;i<nums.size();i++) {" +
-                                      "for(int j=i+1;j<nums.size();j++) {" +
-                                      "if(nums[i]+nums[j]==target) {" +
-                                      "ans.push_back(i);" +
-                                      "ans.push_back(j);" +
-                                      "return ans;" +
-                                      "}" +
-                                      "}" +
-                                      "}" +
-                                      "return ans;" +
-                                      "}" +
-                                      "};"}
-                            </code> */}
                             {question.solution && (
                                 <div className="w-full flex justify-center items-center flex-col py-4">
                                     <div className="w-[100%] h-[30px] bg-[#1E1E1E] rounded-t-2xl"></div>
@@ -148,9 +128,6 @@ const Question = () => {
                                         theme="vs-dark"
                                         defaultLanguage="java"
                                         defaultValue={question.solution}
-                                        // onChange={(value, event) => {
-                                        //     console.log(value);
-                                        // }}
                                         tabIndex={4}
                                     />
                                     <div className="w-[100%] h-[30px] bg-[#1E1E1E] rounded-b-2xl mt-[-4px]"></div>

@@ -1,6 +1,6 @@
 import React from "react";
 import { darkTheme } from "../assets/Constants";
-import { BsFillPersonFill, BsCodeSlash, BsInfoLg } from "react-icons/bs";
+import { BsFillPersonFill, BsCodeSlash, BsInfoLg,BsQuestionCircle } from "react-icons/bs";
 import { MdDashboard } from "react-icons/md";
 import { HiOutlineNewspaper } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
@@ -19,7 +19,11 @@ const AdminNav = () => {
             title: "Articles",
             path: "/admin/articles",
             icon: <HiOutlineNewspaper />,
-        },
+        },{
+            title:"MCQs",
+            path:'/admin/mcqs',
+            icon:<BsQuestionCircle />
+        }
     ];
     return (
         <div

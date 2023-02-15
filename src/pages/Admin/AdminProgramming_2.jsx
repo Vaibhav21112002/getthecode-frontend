@@ -7,7 +7,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import "../../assets/CSS/index.css";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import CodeContext from "../../context/CodeContext";
+import codeContext from "../../context/CodeContext";
 import swal from "sweetalert";
 import Void from "../../assets/Images/Void.svg";
 import { useNavigate } from "react-router-dom";
@@ -15,14 +15,13 @@ import { useNavigate } from "react-router-dom";
 const AdminProgramming = () => {
     const navigate = useNavigate();
     const { addQuestion, questions, getQuestions, editQuestion } =
-        useContext(CodeContext);
+        useContext(codeContext);
     const [data, setData] = React.useState([]);
     const [editData, setEditData] = React.useState({});
     const [uploadOpen, setUploadOpen] = React.useState(false);
     const [detailOpen, setDetailOpen] = React.useState(false);
     const [editOpen, setEditOpen] = React.useState(false);
     const [solutionOpen, setSolutionOpen] = React.useState(false);
-    const [currentTestCaseData, setCurrentTestCaseData] = React.useState({ input: "", output: "", explaination: "" });
     const [uploadData, setUploadData] = React.useState({
         title: "",
         description: "",
@@ -77,7 +76,7 @@ const AdminProgramming = () => {
                     <button
                         className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                         onClick={() => {
-                            console.log(item)
+                            console.log(item);
                             setEditData(item);
                             setEditOpen(true);
                         }}
@@ -119,7 +118,7 @@ const AdminProgramming = () => {
     const divStyle = `flex w-full flex-col sm:px-12 px-4 gap-2 text-[#202128] py-2`;
     const labelStyle = ``;
     const inputStyle = `w-full border rounded-md p-2`;
-    const activeClass = `bg-[#E97500] border-[#E97500] text-white px-4 py-2 w-full rounded-xl cursor-pointer`;
+    const activeClass = `bg-[#E97500] border-[#E97500] text-white px-4 py-2 rounded-xl cursor-pointer`;
     const unactiveClass = `bg-[#F2F2F2] text-[#3A355C] px-4 py-2 rounded-xl cursor-pointer `;
     // const buttonStyle = `w-full flex justify-center items-center gap-2`;
     useEffect(() => {
@@ -141,8 +140,10 @@ const AdminProgramming = () => {
             uploadData.testCases.length == 0 ||
             uploadData.testCases[uploadData.testCases.length - 1].input === "" ||
             uploadData.testCases[uploadData.testCases.length - 1].output === "" ||
-            uploadData.testCases[uploadData.testCases.length - 1].explaination === "" ||
-            uploadData.testCases[uploadData.testCases.length - 1].explaination === "<p><br></p>"
+            uploadData.testCases[uploadData.testCases.length - 1].explaination ===
+            "" ||
+            uploadData.testCases[uploadData.testCases.length - 1].explaination ===
+            "<p><br></p>"
         ) {
             swal({
                 title: "Error",
@@ -159,8 +160,6 @@ const AdminProgramming = () => {
             });
             setUploadOpen(false);
         }
-
-
     };
 
     const handleEdit = () => {
@@ -195,9 +194,7 @@ const AdminProgramming = () => {
                 <AdminTopBar />
                 <div className="flex w-full ">
                     <div className="flex flex-col gap-3 w-full ">
-                        <h1
-                            className={`text-center text-[#BDA9A9] text-xl font-bold mt-5`}
-                        >
+                        <h1 className={`text-center text-[#BDA9A9] text-xl font-bold mt-5`}>
                             Programming
                         </h1>
                         <div className="flex flex-col ">
@@ -218,57 +215,33 @@ const AdminProgramming = () => {
                                     <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
                                         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                             <thead
-                                                className={`text-xs text-white uppercase text-white bg-[#E97500] border-[#E97500]`}
+                                                className={`text-xs text-white uppercase bg-[#E97500] border-[#E97500]`}
                                             >
                                                 <tr>
-                                                    <th
-                                                        scope="col"
-                                                        className="py-3 px-6"
-                                                    >
+                                                    <th scope="col" className="py-3 px-6">
                                                         Title
                                                     </th>
-                                                    <th
-                                                        scope="col"
-                                                        className="py-3 px-6"
-                                                    >
+                                                    <th scope="col" className="py-3 px-6">
                                                         Solution
                                                     </th>
-                                                    <th
-                                                        scope="col"
-                                                        className="py-3 px-6"
-                                                    >
+                                                    <th scope="col" className="py-3 px-6">
                                                         Difficutly
                                                     </th>
-                                                    <th
-                                                        scope="col"
-                                                        className="py-3 px-6"
-                                                    >
+                                                    <th scope="col" className="py-3 px-6">
                                                         Score
                                                     </th>
 
-                                                    <th
-                                                        scope="col"
-                                                        className="py-3 px-6"
-                                                    ></th>
+                                                    <th scope="col" className="py-3 px-6"></th>
                                                 </tr>
                                             </thead>
                                             {questions.length > 0 && (
                                                 <tbody>
                                                     {questions.length &&
-                                                        questions.map(
-                                                            (value, index) => {
-                                                                return (
-                                                                    <TableComponent
-                                                                        key={
-                                                                            index
-                                                                        }
-                                                                        item={
-                                                                            value
-                                                                        }
-                                                                    />
-                                                                );
-                                                            }
-                                                        )}
+                                                        questions.map((value, index) => {
+                                                            return (
+                                                                <TableComponent key={index} item={value} />
+                                                            );
+                                                        })}
                                                 </tbody>
                                             )}
                                         </table>
@@ -299,15 +272,11 @@ const AdminProgramming = () => {
                                     <div className="flex w-full justify-end px-4 py-4">
                                         <AiOutlineClose
                                             className="text-black hover:font-bold text-[20px] cursor-pointer"
-                                            onClick={() =>
-                                                setSolutionOpen(false)
-                                            }
+                                            onClick={() => setSolutionOpen(false)}
                                         />
                                     </div>
                                     <div className="w-full flex flex-col gap-4 justify-center items-center">
-                                        <h1 className="text-center font-bold text-2xl">
-                                            Solution
-                                        </h1>{" "}
+                                        <h1 className="text-center font-bold text-2xl">Solution</h1>{" "}
                                         {editData.solution && (
                                             <div className="w-full flex justify-center items-center flex-col py-4">
                                                 <div className="w-[90%] h-[30px] bg-[#1E1E1E] rounded-t-2xl"></div>
@@ -316,13 +285,8 @@ const AdminProgramming = () => {
                                                     width={`90%`}
                                                     theme="vs-dark"
                                                     defaultLanguage="java"
-                                                    defaultValue={
-                                                        editData.solution
-                                                    }
-                                                    onChange={(
-                                                        value,
-                                                        event
-                                                    ) => {
+                                                    defaultValue={editData.solution}
+                                                    onChange={(value, event) => {
                                                         console.log(value);
                                                         setEditData({
                                                             ...editData,
@@ -345,14 +309,12 @@ const AdminProgramming = () => {
                                         title: "Do you want to discard your changes?",
                                         icon: "warning",
                                         buttons: true,
-                                    }).then(res => {
+                                    }).then((res) => {
                                         if (res) {
                                             setUploadOpen(false);
                                         }
-                                    })
-
+                                    });
                                 }}
-
                                 title="Solution"
                                 width="90%"
                                 height="90%"
@@ -361,15 +323,17 @@ const AdminProgramming = () => {
                                     <div className="flex w-full justify-end px-4 py-4">
                                         <AiOutlineClose
                                             className="text-black hover:font-bold text-[20px] cursor-pointer"
-                                            onClick={() => swal({
-                                                title: "Do you want to discard your changes?",
-                                                icon: "warning",
-                                                buttons: true,
-                                            }).then(res => {
-                                                if (res) {
-                                                    setUploadOpen(false);
-                                                }
-                                            })}
+                                            onClick={() =>
+                                                swal({
+                                                    title: "Do you want to discard your changes?",
+                                                    icon: "warning",
+                                                    buttons: true,
+                                                }).then((res) => {
+                                                    if (res) {
+                                                        setUploadOpen(false);
+                                                    }
+                                                })
+                                            }
                                         />
                                     </div>
                                     <h1 className="text-center text-2xl py-4 text-[#202128]">
@@ -377,9 +341,7 @@ const AdminProgramming = () => {
                                     </h1>
                                     <div className="w-full flex flex-col gap-4  py-8">
                                         <div className={divStyle}>
-                                            <label className={labelStyle}>
-                                                Problem Title
-                                            </label>
+                                            <label className={labelStyle}>Problem Title</label>
                                             <input
                                                 type="text"
                                                 className={inputStyle}
@@ -394,9 +356,7 @@ const AdminProgramming = () => {
                                             />
                                         </div>
                                         <div className={divStyle}>
-                                            <label className={labelStyle}>
-                                                Problem Description
-                                            </label>
+                                            <label className={labelStyle}>Problem Description</label>
                                             <ReactQuill
                                                 theme="snow"
                                                 value={uploadData.description}
@@ -411,9 +371,7 @@ const AdminProgramming = () => {
                                             />
                                         </div>
                                         <div className={divStyle}>
-                                            <label className={labelStyle}>
-                                                Score
-                                            </label>
+                                            <label className={labelStyle}>Score</label>
                                             <input
                                                 type="number"
                                                 className={inputStyle}
@@ -428,69 +386,44 @@ const AdminProgramming = () => {
                                             />
                                         </div>
                                         <div className={divStyle}>
-                                            <label className={labelStyle}>
-                                                Difficulty
-                                            </label>
+                                            <label className={labelStyle}>Difficulty</label>
                                             <select
                                                 className={inputStyle}
                                                 value={uploadData.difficulty}
                                                 onChange={(e) =>
                                                     setUploadData({
                                                         ...uploadData,
-                                                        difficulty:
-                                                            e.target.value,
+                                                        difficulty: e.target.value,
                                                     })
                                                 }
                                             >
-                                                <option value="easy">
-                                                    Easy
-                                                </option>
-                                                <option value="medium">
-                                                    Medium
-                                                </option>
-                                                <option value="hard">
-                                                    Hard
-                                                </option>
+                                                <option value="easy">Easy</option>
+                                                <option value="medium">Medium</option>
+                                                <option value="hard">Hard</option>
                                             </select>
                                         </div>
                                         <div className={divStyle}>
-                                            <label className={labelStyle}>
-                                                Topic Tags
-                                            </label>
+                                            <label className={labelStyle}>Topic Tags</label>
                                             <div className="flex flex-wrap w-full gap-4">
                                                 {TopicTags.map((tag) => (
                                                     <div
                                                         className={
-                                                            uploadData.topicTag.includes(
-                                                                tag
-                                                            )
+                                                            uploadData.topicTag.includes(tag)
                                                                 ? activeClass
                                                                 : unactiveClass
                                                         }
                                                         onClick={() => {
-                                                            if (
-                                                                uploadData.topicTag.includes(
-                                                                    tag
-                                                                )
-                                                            ) {
+                                                            if (uploadData.topicTag.includes(tag)) {
                                                                 setUploadData({
                                                                     ...uploadData,
-                                                                    topicTag:
-                                                                        uploadData.topicTag.filter(
-                                                                            (
-                                                                                t
-                                                                            ) =>
-                                                                                t !==
-                                                                                tag
-                                                                        ),
+                                                                    topicTag: uploadData.topicTag.filter(
+                                                                        (t) => t !== tag
+                                                                    ),
                                                                 });
                                                             } else {
                                                                 setUploadData({
                                                                     ...uploadData,
-                                                                    topicTag: [
-                                                                        ...uploadData.topicTag,
-                                                                        tag,
-                                                                    ],
+                                                                    topicTag: [...uploadData.topicTag, tag],
                                                                 });
                                                             }
                                                         }}
@@ -501,44 +434,27 @@ const AdminProgramming = () => {
                                             </div>
                                         </div>
                                         <div className={divStyle}>
-                                            <label className={labelStyle}>
-                                                Company Tags
-                                            </label>
+                                            <label className={labelStyle}>Company Tags</label>
                                             <div className="flex flex-wrap w-full gap-4">
                                                 {CompanyTags.map((tag) => (
                                                     <div
                                                         className={
-                                                            uploadData.companyTag.includes(
-                                                                tag
-                                                            )
+                                                            uploadData.companyTag.includes(tag)
                                                                 ? activeClass
                                                                 : unactiveClass
                                                         }
                                                         onClick={() => {
-                                                            if (
-                                                                uploadData.companyTag.includes(
-                                                                    tag
-                                                                )
-                                                            ) {
+                                                            if (uploadData.companyTag.includes(tag)) {
                                                                 setUploadData({
                                                                     ...uploadData,
-                                                                    companyTag:
-                                                                        uploadData.companyTag.filter(
-                                                                            (
-                                                                                t
-                                                                            ) =>
-                                                                                t !==
-                                                                                tag
-                                                                        ),
+                                                                    companyTag: uploadData.companyTag.filter(
+                                                                        (t) => t !== tag
+                                                                    ),
                                                                 });
                                                             } else {
                                                                 setUploadData({
                                                                     ...uploadData,
-                                                                    companyTag:
-                                                                        [
-                                                                            ...uploadData.companyTag,
-                                                                            tag,
-                                                                        ],
+                                                                    companyTag: [...uploadData.companyTag, tag],
                                                                 });
                                                             }
                                                         }}
@@ -549,9 +465,7 @@ const AdminProgramming = () => {
                                             </div>
                                         </div>
                                         <div className={divStyle}>
-                                            <label className={labelStyle}>
-                                                Hints
-                                            </label>
+                                            <label className={labelStyle}>Hints</label>
                                             <input
                                                 className={inputStyle}
                                                 value={uploadData.hints.hint1}
@@ -561,8 +475,7 @@ const AdminProgramming = () => {
                                                         ...uploadData,
                                                         hints: {
                                                             ...uploadData.hints,
-                                                            hint1: e.target
-                                                                .value,
+                                                            hint1: e.target.value,
                                                         },
                                                     })
                                                 }
@@ -576,8 +489,7 @@ const AdminProgramming = () => {
                                                         ...uploadData,
                                                         hints: {
                                                             ...uploadData.hints,
-                                                            hint2: e.target
-                                                                .value,
+                                                            hint2: e.target.value,
                                                         },
                                                     })
                                                 }
@@ -591,8 +503,7 @@ const AdminProgramming = () => {
                                                         ...uploadData,
                                                         hints: {
                                                             ...uploadData.hints,
-                                                            hint3: e.target
-                                                                .value,
+                                                            hint3: e.target.value,
                                                         },
                                                     })
                                                 }
@@ -606,8 +517,7 @@ const AdminProgramming = () => {
                                                         ...uploadData,
                                                         hints: {
                                                             ...uploadData.hints,
-                                                            hint4: e.target
-                                                                .value,
+                                                            hint4: e.target.value,
                                                         },
                                                     })
                                                 }
@@ -621,53 +531,54 @@ const AdminProgramming = () => {
                                                         ...uploadData,
                                                         hints: {
                                                             ...uploadData.hints,
-                                                            hint5: e.target
-                                                                .value,
+                                                            hint5: e.target.value,
                                                         },
                                                     })
                                                 }
                                             />
                                         </div>
                                         <div className={divStyle}>
-                                            <label className={labelStyle}>
-                                                Sample Test Cases
-                                            </label>
+                                            <label className={labelStyle}>Sample Test Cases</label>
                                             {uploadData.testCases.map((testCase, index) => (
                                                 <div className="w-full flex flex-col gap-2 border p-4 rounded-lg">
-
-                                                    <label className={labelStyle}>Test Case {index + 1}</label>
-                                                    <textarea className={inputStyle}
+                                                    <label className={labelStyle}>
+                                                        Test Case {index + 1}
+                                                    </label>
+                                                    <textarea
+                                                        className={inputStyle}
                                                         name="input"
-                                                        value={
-                                                            testCase.input
-                                                        }
+                                                        value={testCase.input}
                                                         placeholder="Input"
                                                         onChange={(e) => {
                                                             if (uploadData.testCases) {
-                                                                const updatedTestCases = [...uploadData.testCases];
-                                                                updatedTestCases[index][e.target.name] = e.target.value;
+                                                                const updatedTestCases = [
+                                                                    ...uploadData.testCases,
+                                                                ];
+                                                                updatedTestCases[index][e.target.name] =
+                                                                    e.target.value;
                                                                 setUploadData({
                                                                     ...uploadData,
-                                                                    testCases: updatedTestCases
-                                                                })
+                                                                    testCases: updatedTestCases,
+                                                                });
                                                             }
                                                         }}
                                                     />
                                                     <textarea
                                                         className={inputStyle}
                                                         name="output"
-                                                        value={
-                                                            testCase.output
-                                                        }
+                                                        value={testCase.output}
                                                         placeholder="Output"
                                                         onChange={(e) => {
                                                             if (uploadData.testCases) {
-                                                                const updatedTestCases = [...uploadData.testCases];
-                                                                updatedTestCases[index][e.target.name] = e.target.value;
+                                                                const updatedTestCases = [
+                                                                    ...uploadData.testCases,
+                                                                ];
+                                                                updatedTestCases[index][e.target.name] =
+                                                                    e.target.value;
                                                                 setUploadData({
                                                                     ...uploadData,
-                                                                    testCases: updatedTestCases
-                                                                })
+                                                                    testCases: updatedTestCases,
+                                                                });
                                                             }
                                                         }}
                                                     />
@@ -679,62 +590,74 @@ const AdminProgramming = () => {
                                                         modules={{
                                                             toolbar: {
                                                                 container: [
-                                                                    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                                                                    ['bold', 'italic', 'underline'],
-                                                                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                                                                    [{ 'align': [] }],
-                                                                    ['link', 'image'],
-                                                                    ['clean'],
-                                                                    [{ 'color': [] }]
-                                                                ]
-                                                            }
+                                                                    [{ header: [1, 2, 3, 4, 5, 6, false] }],
+                                                                    ["bold", "italic", "underline"],
+                                                                    [{ list: "ordered" }, { list: "bullet" }],
+                                                                    [{ align: [] }],
+                                                                    ["link", "image"],
+                                                                    ["clean"],
+                                                                    [{ color: [] }],
+                                                                ],
+                                                            },
                                                         }}
                                                         onChange={(e) => {
-                                                            console.log(e)
+                                                            console.log(e);
                                                             if (uploadData.testCases) {
-                                                                const updatedTestCases = [...uploadData.testCases];
-                                                                updatedTestCases[index]['explaination'] = e;
+                                                                const updatedTestCases = [
+                                                                    ...uploadData.testCases,
+                                                                ];
+                                                                updatedTestCases[index]["explaination"] = e;
                                                                 setUploadData({
                                                                     ...uploadData,
-                                                                    testCases: updatedTestCases
-                                                                })
+                                                                    testCases: updatedTestCases,
+                                                                });
                                                             }
                                                         }}
                                                     />
                                                 </div>
                                             ))}
 
-                                            <button onClick={(e) => {
-                                                e.preventDefault();
-                                                console.log(uploadData.testCases)
-                                                if (uploadData.testCases.length == 0 ||
-                                                    (
-                                                        uploadData.testCases[uploadData.testCases.length - 1].input !== "" &&
-                                                        uploadData.testCases[uploadData.testCases.length - 1].output !== "" &&
-                                                        uploadData.testCases[uploadData.testCases.length - 1].explaination !== "" &&
-                                                        uploadData.testCases[uploadData.testCases.length - 1].explaination !== "<p><br></p>"
-                                                    )) {
-                                                    console.log("hello");
-                                                    setUploadData({
-                                                        ...uploadData,
-                                                        testCases: [...uploadData.testCases, { input: "", output: "", explaination: "" }],
-                                                    });
-                                                }
-                                                else {
-                                                    swal(
-                                                        {
+                                            <button
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    console.log(uploadData.testCases);
+                                                    if (
+                                                        uploadData.testCases.length == 0 ||
+                                                        (uploadData.testCases[
+                                                            uploadData.testCases.length - 1
+                                                        ].input !== "" &&
+                                                            uploadData.testCases[
+                                                                uploadData.testCases.length - 1
+                                                            ].output !== "" &&
+                                                            uploadData.testCases[
+                                                                uploadData.testCases.length - 1
+                                                            ].explaination !== "" &&
+                                                            uploadData.testCases[
+                                                                uploadData.testCases.length - 1
+                                                            ].explaination !== "<p><br></p>")
+                                                    ) {
+                                                        console.log("hello");
+                                                        setUploadData({
+                                                            ...uploadData,
+                                                            testCases: [
+                                                                ...uploadData.testCases,
+                                                                { input: "", output: "", explaination: "" },
+                                                            ],
+                                                        });
+                                                    } else {
+                                                        swal({
                                                             title: "Error",
                                                             text: "Please fill in the last testcase completely",
                                                             icon: "error",
-                                                        }
-                                                    )
-                                                }
-                                            }}>Add Test Cases</button>
+                                                        });
+                                                    }
+                                                }}
+                                            >
+                                                Add Test Cases
+                                            </button>
                                         </div>
                                         <div className={divStyle}>
-                                            <label className={labelStyle}>
-                                                Solution
-                                            </label>
+                                            <label className={labelStyle}>Solution</label>
                                             <div className="w-[90%] h-[30px] bg-[#1E1E1E] rounded-t-2xl mb-[-8px]"></div>
                                             <Editor
                                                 height="60vh"
@@ -754,9 +677,7 @@ const AdminProgramming = () => {
                                             <div className="w-[90%] h-[30px] bg-[#1E1E1E] rounded-b-2xl mt-[-9px]"></div>
                                         </div>
                                         <div className={divStyle}>
-                                            <label className={labelStyle}>
-                                                Video Link
-                                            </label>
+                                            <label className={labelStyle}>Video Link</label>
                                             <input
                                                 type="text"
                                                 className={inputStyle}
@@ -765,17 +686,13 @@ const AdminProgramming = () => {
                                                 onChange={(e) =>
                                                     setUploadData({
                                                         ...uploadData,
-                                                        videoLink:
-                                                            e.target.value,
+                                                        videoLink: e.target.value,
                                                     })
                                                 }
                                             />
                                         </div>
                                         <div className={divStyle}>
-                                            <button
-                                                className={activeClass}
-                                                onClick={handleUpload}
-                                            >
+                                            <button className={activeClass} onClick={handleUpload}>
                                                 Upload
                                             </button>
                                         </div>
@@ -798,57 +715,35 @@ const AdminProgramming = () => {
                                             <div className="flex w-full justify-end px-4 py-4">
                                                 <AiOutlineClose
                                                     className="text-black hover:font-bold text-[20px] cursor-pointer"
-                                                    onClick={() =>
-                                                        setDetailOpen(false)
-                                                    }
+                                                    onClick={() => setDetailOpen(false)}
                                                 />
                                             </div>
                                             <div className="px-8 w-full flex flex-col gap-2">
                                                 <h1>
-                                                    <span className="font-bold">
-                                                        Title :{" "}
-                                                    </span>
-                                                    {editData.title
-                                                        ? editData.title
-                                                        : "Two Sum"}
+                                                    <span className="font-bold">Title : </span>
+                                                    {editData.title ? editData.title : "Two Sum"}
                                                 </h1>
                                                 <h1>
-                                                    <span className="font-bold">
-                                                        Difficulty :{" "}
-                                                    </span>
+                                                    <span className="font-bold">Difficulty : </span>
                                                     {editData.difficulty
-                                                        ? editData.difficulty
-                                                            .slice(0, 1)
-                                                            .toUpperCase() +
-                                                        editData.difficulty
-                                                            .slice(1)
-                                                            .toLowerCase()
+                                                        ? editData.difficulty.slice(0, 1).toUpperCase() +
+                                                        editData.difficulty.slice(1).toLowerCase()
                                                         : "Easy"}
                                                 </h1>
                                                 <h1>
-                                                    <span className="font-bold">
-                                                        Tags :{" "}
-                                                    </span>{" "}
-                                                    Two Pointer, Sorting
+                                                    <span className="font-bold">Tags : </span> Two
+                                                    Pointer, Sorting
                                                 </h1>
                                                 <div className="py-4">
-                                                    <h1 className="font-bold">
-                                                        Problem Statement
-                                                    </h1>
+                                                    <h1 className="font-bold">Problem Statement</h1>
                                                     <h1>
-                                                        Given an array of
-                                                        integers nums and an
-                                                        integer target, return
-                                                        indices of the two
-                                                        numbers such that they
-                                                        add up to target. <br />
-                                                        You may assume that each
-                                                        input would have exactly
-                                                        one solution, and you
-                                                        may not use the same
-                                                        element twice. <br />
-                                                        You can return the
-                                                        answer in any order.
+                                                        Given an array of integers nums and an integer
+                                                        target, return indices of the two numbers such that
+                                                        they add up to target. <br />
+                                                        You may assume that each input would have exactly
+                                                        one solution, and you may not use the same element
+                                                        twice. <br />
+                                                        You can return the answer in any order.
                                                     </h1>
                                                 </div>
                                             </div>
@@ -860,15 +755,17 @@ const AdminProgramming = () => {
                             {editData.title && (
                                 <Modal
                                     visible={editOpen}
-                                    onClickAway={() => swal({
-                                        title: "Do you want to discard your changes?",
-                                        icon: "warning",
-                                        buttons: true,
-                                    }).then(res => {
-                                        if (res) {
-                                            setEditOpen(false);
-                                        }
-                                    })}
+                                    onClickAway={() =>
+                                        swal({
+                                            title: "Do you want to discard your changes?",
+                                            icon: "warning",
+                                            buttons: true,
+                                        }).then((res) => {
+                                            if (res) {
+                                                setEditOpen(false);
+                                            }
+                                        })
+                                    }
                                     title="Solution"
                                     width="90%"
                                     height="90%"
@@ -882,7 +779,7 @@ const AdminProgramming = () => {
                                                         title: "Do you want to discard your changes?",
                                                         icon: "warning",
                                                         buttons: true,
-                                                    }).then(res => {
+                                                    }).then((res) => {
                                                         if (res) {
                                                             setEditOpen(false);
                                                         }
@@ -895,9 +792,7 @@ const AdminProgramming = () => {
                                         </h1>
                                         <div className="w-full flex flex-col gap-4  py-8">
                                             <div className={divStyle}>
-                                                <label className={labelStyle}>
-                                                    Problem Title
-                                                </label>
+                                                <label className={labelStyle}>Problem Title</label>
                                                 <input
                                                     type="text"
                                                     className={inputStyle}
@@ -906,8 +801,7 @@ const AdminProgramming = () => {
                                                     onChange={(e) =>
                                                         setEditData({
                                                             ...editData,
-                                                            title: e.target
-                                                                .value,
+                                                            title: e.target.value,
                                                         })
                                                     }
                                                 />
@@ -930,9 +824,7 @@ const AdminProgramming = () => {
                                                 />
                                             </div>
                                             <div className={divStyle}>
-                                                <label className={labelStyle}>
-                                                    Score
-                                                </label>
+                                                <label className={labelStyle}>Score</label>
                                                 <input
                                                     type="number"
                                                     className={inputStyle}
@@ -941,82 +833,51 @@ const AdminProgramming = () => {
                                                     onChange={(e) =>
                                                         setEditData({
                                                             ...editData,
-                                                            score: e.target
-                                                                .value,
+                                                            score: e.target.value,
                                                         })
                                                     }
                                                 />
                                             </div>
                                             <div className={divStyle}>
-                                                <label className={labelStyle}>
-                                                    Difficulty
-                                                </label>
+                                                <label className={labelStyle}>Difficulty</label>
                                                 <select
                                                     className={inputStyle}
                                                     value={editData.difficulty}
                                                     onChange={(e) =>
                                                         setEditData({
                                                             ...editData,
-                                                            difficulty:
-                                                                e.target.value,
+                                                            difficulty: e.target.value,
                                                         })
                                                     }
                                                 >
-                                                    <option value="easy">
-                                                        Easy
-                                                    </option>
-                                                    <option value="medium">
-                                                        Medium
-                                                    </option>
-                                                    <option value="hard">
-                                                        Hard
-                                                    </option>
+                                                    <option value="easy">Easy</option>
+                                                    <option value="medium">Medium</option>
+                                                    <option value="hard">Hard</option>
                                                 </select>
                                             </div>
                                             <div className={divStyle}>
-                                                <label className={labelStyle}>
-                                                    Topic Tags
-                                                </label>
+                                                <label className={labelStyle}>Topic Tags</label>
                                                 <div className="flex flex-wrap w-full gap-4">
                                                     {TopicTags.map((tag) => (
                                                         <div
                                                             className={
-                                                                editData.topicTag.includes(
-                                                                    tag
-                                                                )
+                                                                editData.topicTag.includes(tag)
                                                                     ? activeClass
                                                                     : unactiveClass
                                                             }
                                                             onClick={() => {
-                                                                if (
-                                                                    editData.topicTag.includes(
-                                                                        tag
-                                                                    )
-                                                                ) {
-                                                                    setEditData(
-                                                                        {
-                                                                            ...editData,
-                                                                            topicTag:
-                                                                                editData.topicTag.filter(
-                                                                                    (
-                                                                                        t
-                                                                                    ) =>
-                                                                                        t !==
-                                                                                        tag
-                                                                                ),
-                                                                        }
-                                                                    );
+                                                                if (editData.topicTag.includes(tag)) {
+                                                                    setEditData({
+                                                                        ...editData,
+                                                                        topicTag: editData.topicTag.filter(
+                                                                            (t) => t !== tag
+                                                                        ),
+                                                                    });
                                                                 } else {
-                                                                    setEditData(
-                                                                        {
-                                                                            ...editData,
-                                                                            topicTag:
-                                                                                [
-                                                                                    ...editData.topicTag,
-                                                                                    tag,
-                                                                                ],
-                                                                        }
-                                                                    );
+                                                                    setEditData({
+                                                                        ...editData,
+                                                                        topicTag: [...editData.topicTag, tag],
+                                                                    });
                                                                 }
                                                             }}
                                                         >
@@ -1026,49 +887,28 @@ const AdminProgramming = () => {
                                                 </div>
                                             </div>
                                             <div className={divStyle}>
-                                                <label className={labelStyle}>
-                                                    Company Tags
-                                                </label>
+                                                <label className={labelStyle}>Company Tags</label>
                                                 <div className="flex flex-wrap w-full gap-4">
                                                     {CompanyTags.map((tag) => (
                                                         <div
                                                             className={
-                                                                editData.companyTag.includes(
-                                                                    tag
-                                                                )
+                                                                editData.companyTag.includes(tag)
                                                                     ? activeClass
                                                                     : unactiveClass
                                                             }
                                                             onClick={() => {
-                                                                if (
-                                                                    editData.companyTag.includes(
-                                                                        tag
-                                                                    )
-                                                                ) {
-                                                                    setEditData(
-                                                                        {
-                                                                            ...editData,
-                                                                            companyTag:
-                                                                                editData.companyTag.filter(
-                                                                                    (
-                                                                                        t
-                                                                                    ) =>
-                                                                                        t !==
-                                                                                        tag
-                                                                                ),
-                                                                        }
-                                                                    );
+                                                                if (editData.companyTag.includes(tag)) {
+                                                                    setEditData({
+                                                                        ...editData,
+                                                                        companyTag: editData.companyTag.filter(
+                                                                            (t) => t !== tag
+                                                                        ),
+                                                                    });
                                                                 } else {
-                                                                    setEditData(
-                                                                        {
-                                                                            ...editData,
-                                                                            companyTag:
-                                                                                [
-                                                                                    ...editData.companyTag,
-                                                                                    tag,
-                                                                                ],
-                                                                        }
-                                                                    );
+                                                                    setEditData({
+                                                                        ...editData,
+                                                                        companyTag: [...editData.companyTag, tag],
+                                                                    });
                                                                 }
                                                             }}
                                                         >
@@ -1078,9 +918,7 @@ const AdminProgramming = () => {
                                                 </div>
                                             </div>
                                             <div className={divStyle}>
-                                                <label className={labelStyle}>
-                                                    Hints
-                                                </label>
+                                                <label className={labelStyle}>Hints</label>
                                                 <input
                                                     className={inputStyle}
                                                     value={editData.hints.hint1}
@@ -1090,8 +928,7 @@ const AdminProgramming = () => {
                                                             ...editData,
                                                             hints: {
                                                                 ...editData.hints,
-                                                                hint1: e.target
-                                                                    .value,
+                                                                hint1: e.target.value,
                                                             },
                                                         })
                                                     }
@@ -1105,8 +942,7 @@ const AdminProgramming = () => {
                                                             ...editData,
                                                             hints: {
                                                                 ...editData.hints,
-                                                                hint2: e.target
-                                                                    .value,
+                                                                hint2: e.target.value,
                                                             },
                                                         })
                                                     }
@@ -1120,8 +956,7 @@ const AdminProgramming = () => {
                                                             ...editData,
                                                             hints: {
                                                                 ...editData.hints,
-                                                                hint3: e.target
-                                                                    .value,
+                                                                hint3: e.target.value,
                                                             },
                                                         })
                                                     }
@@ -1135,8 +970,7 @@ const AdminProgramming = () => {
                                                             ...editData,
                                                             hints: {
                                                                 ...editData.hints,
-                                                                hint4: e.target
-                                                                    .value,
+                                                                hint4: e.target.value,
                                                             },
                                                         })
                                                     }
@@ -1150,52 +984,54 @@ const AdminProgramming = () => {
                                                             ...editData,
                                                             hints: {
                                                                 ...editData.hints,
-                                                                hint5: e.target
-                                                                    .value,
+                                                                hint5: e.target.value,
                                                             },
                                                         })
                                                     }
                                                 />
                                             </div>
                                             <div className={divStyle}>
-                                                <label className={labelStyle}>
-                                                    Sample Test Cases
-                                                </label>
+                                                <label className={labelStyle}>Sample Test Cases</label>
                                                 {editData.testCases.map((testCase, index) => (
                                                     <div className="w-full flex flex-col gap-2 border p-4 rounded-lg">
-                                                        <label className={labelStyle}>Test Case {index + 1}</label>
-                                                        <textarea className={inputStyle}
+                                                        <label className={labelStyle}>
+                                                            Test Case {index + 1}
+                                                        </label>
+                                                        <textarea
+                                                            className={inputStyle}
                                                             name="input"
-                                                            value={
-                                                                testCase.input
-                                                            }
+                                                            value={testCase.input}
                                                             placeholder="Input"
                                                             onChange={(e) => {
                                                                 if (editData.testCases) {
-                                                                    const updatedTestCases = [...editData.testCases];
-                                                                    updatedTestCases[index][e.target.name] = e.target.value;
+                                                                    const updatedTestCases = [
+                                                                        ...editData.testCases,
+                                                                    ];
+                                                                    updatedTestCases[index][e.target.name] =
+                                                                        e.target.value;
                                                                     setEditData({
                                                                         ...editData,
-                                                                        testCases: updatedTestCases
-                                                                    })
+                                                                        testCases: updatedTestCases,
+                                                                    });
                                                                 }
                                                             }}
                                                         />
                                                         <textarea
                                                             className={inputStyle}
                                                             name="output"
-                                                            value={
-                                                                testCase.output
-                                                            }
+                                                            value={testCase.output}
                                                             placeholder="Output"
                                                             onChange={(e) => {
                                                                 if (editData.testCases) {
-                                                                    const updatedTestCases = [...editData.testCases];
-                                                                    updatedTestCases[index][e.target.name] = e.target.value;
+                                                                    const updatedTestCases = [
+                                                                        ...editData.testCases,
+                                                                    ];
+                                                                    updatedTestCases[index][e.target.name] =
+                                                                        e.target.value;
                                                                     setEditData({
                                                                         ...editData,
-                                                                        testCases: updatedTestCases
-                                                                    })
+                                                                        testCases: updatedTestCases,
+                                                                    });
                                                                 }
                                                             }}
                                                         />
@@ -1207,73 +1043,79 @@ const AdminProgramming = () => {
                                                             modules={{
                                                                 toolbar: {
                                                                     container: [
-                                                                        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                                                                        ['bold', 'italic', 'underline'],
-                                                                        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                                                                        [{ 'align': [] }],
-                                                                        ['link', 'image'],
-                                                                        ['clean'],
-                                                                        [{ 'color': [] }]
-                                                                    ]
-                                                                }
+                                                                        [{ header: [1, 2, 3, 4, 5, 6, false] }],
+                                                                        ["bold", "italic", "underline"],
+                                                                        [{ list: "ordered" }, { list: "bullet" }],
+                                                                        [{ align: [] }],
+                                                                        ["link", "image"],
+                                                                        ["clean"],
+                                                                        [{ color: [] }],
+                                                                    ],
+                                                                },
                                                             }}
                                                             onChange={(e) => {
                                                                 if (editData.testCases) {
-                                                                    const updatedTestCases = [...editData.testCases];
-                                                                    updatedTestCases[index]['explaination'] = e;
+                                                                    const updatedTestCases = [
+                                                                        ...editData.testCases,
+                                                                    ];
+                                                                    updatedTestCases[index]["explaination"] = e;
                                                                     setEditData({
                                                                         ...editData,
-                                                                        testCases: updatedTestCases
-                                                                    })
+                                                                        testCases: updatedTestCases,
+                                                                    });
                                                                 }
                                                             }}
                                                         />
                                                     </div>
                                                 ))}
-                                                <button onClick={(e) => {
-                                                    e.preventDefault();
-                                                    console.log(editData.testCases)
-                                                    if (editData.testCases.length === 0 ||
-                                                        (
-                                                            editData.testCases[editData.testCases.length - 1].input !== "" &&
-                                                            editData.testCases[editData.testCases.length - 1].output !== "" &&
-                                                            editData.testCases[uploadData.testCases.length - 1].explaination !== "" &&
-                                                            editData.testCases[editData.testCases.length - 1].explaination !== "<p><br></p>"
-                                                        )) {
-                                                        setEditData({
-                                                            ...editData,
-                                                            testCases: [...editData.testCases, { input: "", output: "", explaination: "" }],
-                                                        });
-                                                    }
-                                                    else {
-                                                        swal(
-                                                            {
+                                                <button
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        console.log(editData.testCases);
+                                                        if (
+                                                            editData.testCases.length === 0 ||
+                                                            (editData.testCases[editData.testCases.length - 1]
+                                                                .input !== "" &&
+                                                                editData.testCases[
+                                                                    editData.testCases.length - 1
+                                                                ].output !== "" &&
+                                                                editData.testCases[
+                                                                    uploadData.testCases.length - 1
+                                                                ].explaination !== "" &&
+                                                                editData.testCases[
+                                                                    editData.testCases.length - 1
+                                                                ].explaination !== "<p><br></p>")
+                                                        ) {
+                                                            setEditData({
+                                                                ...editData,
+                                                                testCases: [
+                                                                    ...editData.testCases,
+                                                                    { input: "", output: "", explaination: "" },
+                                                                ],
+                                                            });
+                                                        } else {
+                                                            swal({
                                                                 title: "Error",
                                                                 text: "Please fill in the last testcase completely",
                                                                 icon: "error",
-                                                            }
-                                                        )
-                                                    }
-                                                }}>Add Test Cases</button>
+                                                            });
+                                                        }
+                                                    }}
+                                                >
+                                                    Add Test Cases
+                                                </button>
                                             </div>
 
                                             <div className={divStyle}>
-                                                <label className={labelStyle}>
-                                                    Solution
-                                                </label>
+                                                <label className={labelStyle}>Solution</label>
                                                 <div className="w-[90%] h-[30px] bg-[#1E1E1E] rounded-t-2xl mb-[-8px]"></div>
                                                 <Editor
                                                     height="60vh"
                                                     width={`90%`}
                                                     theme="vs-dark"
                                                     defaultLanguage="java"
-                                                    defaultValue={
-                                                        editData.solution
-                                                    }
-                                                    onChange={(
-                                                        value,
-                                                        event
-                                                    ) => {
+                                                    defaultValue={editData.solution}
+                                                    onChange={(value, event) => {
                                                         console.log(value);
                                                         setEditData({
                                                             ...editData,
@@ -1285,9 +1127,7 @@ const AdminProgramming = () => {
                                                 <div className="w-[90%] h-[30px] bg-[#1E1E1E] rounded-b-2xl mt-[-9px]"></div>
                                             </div>
                                             <div className={divStyle}>
-                                                <label className={labelStyle}>
-                                                    Video Link
-                                                </label>
+                                                <label className={labelStyle}>Video Link</label>
                                                 <input
                                                     type="text"
                                                     className={inputStyle}
@@ -1296,17 +1136,13 @@ const AdminProgramming = () => {
                                                     onChange={(e) =>
                                                         setEditData({
                                                             ...editData,
-                                                            videoLink:
-                                                                e.target.value,
+                                                            videoLink: e.target.value,
                                                         })
                                                     }
                                                 />
                                             </div>
                                             <div className="w-full flex px-24 justify-center">
-                                                <button
-                                                    className={activeClass}
-                                                    onClick={handleEdit}
-                                                >
+                                                <button className={activeClass} onClick={handleEdit}>
                                                     Edit
                                                 </button>
                                             </div>
@@ -1319,8 +1155,8 @@ const AdminProgramming = () => {
                         </div>
                     </div>
                 </div>
-            </div >
-        </div >
+            </div>
+        </div>
     );
 };
 
