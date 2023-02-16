@@ -391,7 +391,7 @@ const AdminProgramming = () => {
                                                 width={`90%`}
                                                 theme="vs-light"
                                                 defaultLanguage="java"
-                                                defaultValue={`function add(a, b) {\n  return a + b;\n}`}
+                                                defaultValue={uploadData.description}
                                                 onChange={(value, event) => {
                                                     console.log(value);
                                                     setUploadData({
