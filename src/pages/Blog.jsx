@@ -45,33 +45,34 @@ const Blog = () => {
           </h1>
 
           <div className="mb-3 text-center">
-            {data.tags.map((topic) => (
+            
               <span className=" text-sm text-white">
-                #{topic}
+                #{data.tag}
                 {data.company &&
-                  topic === "Interview Experiences" &&
+                  data.tag === "Interview Experiences" &&
                   ":" + data.company + " "}
               </span>
-            ))}
           </div>
           <div className="ml-1 mt-10">{Parser(data.content)}</div>
         </div>
         <div className="min-h-[100vh] border-r"></div>
         <div className="w-3/12 flex flex-col gap-4 p-4 mt-20">
-          <div style={{ position: "fixed", width: "25%" }}>
+          <div style={{ position: "", width: "100%" }}>
             <div
-              className="bg-[#25272E] rounded-xl py-4 mb-5"
+              className="bg-[#25272E] overflow-scroll rounded-xl py-4 mb-5"
               style={{ width: "90%" }}
             >
               <h1 className="text-base font-bold text-center text-[white] h-10">
                 Users also read these Blogs
               </h1>
+              <div className="overflow-scroll">
+
               {allBlogs.map((item) => {
-                if (data.tags.some((tag) => item.tags.includes(tag))&&data._id!==item._id) {
+                if (data.tag=== item.tag&&data._id!==item._id) {
                   return (
-                    <div>
+                    <div className="">
                       <div
-                        className="bg-white ml-10 mb-10 rounded-[16px] cursor-pointer flex"
+                        className="bg-white ml-10 mb-10 overflow-scroll rounded-[16px] cursor-pointer flex"
                         onClick={() => navigate("/blogs/" + item.id)}
                       >
                         <div className="flex flex-col w-full ml-6">
@@ -84,14 +85,13 @@ const Blog = () => {
                             </div>
                           </div>
                           <div className="mb-1">
-                            {item.tags.map((topic) => (
+                           
                               <span className=" text-sm text-gray-700">
-                                #{topic}
+                                #{item.tag}
                                 {item.company &&
-                                  topic === "Interview Experiences" &&
+                                  item.tag === "Interview Experiences" &&
                                   ":" + item.company + " "}
                               </span>
-                            ))}
                           </div>
                         </div>
                       </div>
@@ -99,6 +99,7 @@ const Blog = () => {
                   );
                 }
               })}
+              </div>
               {/* <div>
                 <div
                   className="bg-white ml-10 mb-10 rounded-[16px] cursor-pointer flex"

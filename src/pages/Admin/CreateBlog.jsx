@@ -8,12 +8,11 @@ import { useNavigate } from "react-router-dom";
 import codeContext from "../../context/CodeContext";
 import { Company } from "..";
 
-
 const CreateBlog = () => {
   const navigate = useNavigate();
   const [uploadData, setUploadData] = useState({
     title: "",
-    tags: [],
+    tag: "",
     company: "",
     keywords: "",
     content: "",
@@ -25,7 +24,7 @@ const CreateBlog = () => {
 
     if (
       uploadData.title === "" ||
-      uploadData.tags.length === 0 ||
+      uploadData.tag === "" ||
       uploadData.keywords === "" ||
       uploadData.content === "" ||
       uploadData.content === "<p><br></p>"
@@ -37,7 +36,7 @@ const CreateBlog = () => {
       });
       return;
     } else if (
-      uploadData.tags.includes("Interview Experiences") &&
+      uploadData.tag === "Interview Experiences" &&
       uploadData.company === ""
     ) {
       swal({
@@ -48,7 +47,7 @@ const CreateBlog = () => {
       return;
     } else if (
       uploadData.company !== "" &&
-      !uploadData.tags.includes("Interview Experiences")
+      uploadData.tag !== "Interview Experiences"
     ) {
       setUploadData({ ...uploadData, company: "" });
       addBlog(uploadData);
@@ -60,6 +59,7 @@ const CreateBlog = () => {
       navigate("/admin/blogs");
     } else {
       addBlog(uploadData);
+      console.log("blog added");
       swal({
         title: "Success",
         text: "Blog added successfully",
@@ -70,20 +70,10 @@ const CreateBlog = () => {
   };
   const [isInterview, setIsInterview] = useState(false);
   const topics = [
+    "",
     "Interview Experiences",
     "Latest Tech Innovations",
     "Miscellaneous",
-  ];
-  const companies = [
-    { name: "All Companies" },
-    { name: "Adobe" },
-    { name: "Google" },
-    { name: "Uber" },
-    { name: "Atlassian" },
-    { name: "Microsoft" },
-    { name: "Tower Research" },
-    { name: "D.E. Shaw" },
-    { name: "Arcesium" },
   ];
 
   const divStyle = `flex w-full flex-col gap-2 text-[#202128] py-2`;
@@ -151,40 +141,22 @@ const CreateBlog = () => {
 
               <div className={divStyle}>
                 <label className="text-white">Tags</label>
-                <div className="flex flex-wrap w-full gap-8 mb-5">
+                <select
+                  value={uploadData.tag}
+                  onChange={(e) =>
+                    setUploadData({ ...uploadData, tag: e.target.value })
+                  }
+                  className="flex flex-wrap w-full h-[40px] rounded-lg gap-8 mb-5"
+                >
                   {topics.map((tag) => (
-                    <div
-                      className={
-                        uploadData.tags.includes(tag)
-                          ? activeClass
-                          : unactiveClass
-                      }
-                      onClick={() => {
-                        console.log(
-                          uploadData.tags.includes(tag),
-                          tag,
-                          uploadData.tags
-                        );
-                        if (uploadData.tags.includes(tag)) {
-                          setUploadData({
-                            ...uploadData,
-                            tags: uploadData.tags.filter((t) => t !== tag),
-                          });
-                        } else {
-                          setUploadData({
-                            ...uploadData,
-                            tags: [...uploadData.tags, tag],
-                          });
-                        }
-                      }}
-                    >
+                    <option key={tag} value={tag}>
                       {tag}
-                    </div>
+                    </option>
                   ))}
-                </div>
+                </select>
               </div>
               <div>
-                {uploadData.tags.includes("Interview Experiences") && (
+                {uploadData.tag === "Interview Experiences" && (
                   <div className="w-full">
                     <label htmlFor="title" className="text-white">
                       Company name

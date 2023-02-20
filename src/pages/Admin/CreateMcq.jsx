@@ -30,7 +30,7 @@ const CreateMcq = () => {
         option: "",
       },
     ],
-    answer: 0,
+    answer: "",
   });
 
   function handleOptionChange(optionNo, optionValue) {
@@ -52,7 +52,7 @@ const CreateMcq = () => {
       uploadData.options[1].option === "" ||
       uploadData.options[2].option === "" ||
       uploadData.options[3].option === "" ||
-      uploadData.answer === 0
+      uploadData.answer===""
     ) {
       swal({
         title: "Error",
