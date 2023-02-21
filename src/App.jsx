@@ -16,8 +16,6 @@ import {
   AdminArticles,
   CreateBlog,
   EditBlog,
-  CreateMcq,
-  EditMcq
 } from "./pages/Admin";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -37,9 +35,7 @@ const App = () => {
           <Route path="/admin/programming" element={<AdminProgramming_2 />} />
           <Route path="/admin/blogs" element={<AdminBlogs />} />
           <Route path="/admin/createBlog" element={<CreateBlog />} />
-          <Route path="/admin/createMcq" element={<CreateMcq />} />
           <Route path="/admin/blogs/:id" element={<EditBlog />} />
-          <Route path="/admin/mcqs/:id" element={<EditMcq />} />
           <Route path="/admin/articles" element={<AdminArticles />} />
           <Route path="/admin/mcqs" element={<AdminMcq />} />
         </Routes>

@@ -1,153 +1,681 @@
 import React, { useEffect, useContext } from "react";
 import { AdminNavbar, AdminTopBar } from "../../components";
-import { BsFileEarmarkSpreadsheet } from "react-icons/bs";
 import Modal from "react-awesome-modal";
 import Editor from "@monaco-editor/react";
-import { AiOutlineClose } from "react-icons/ai";
+import { AiOutlineClose, AiFillDelete, AiFillEdit } from "react-icons/ai";
+import { CgMoreR } from "react-icons/cg";
 import "../../assets/CSS/index.css";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import CodeContext from "../../context/CodeContext";
 import swal from "sweetalert";
-import Void from "../../assets/Images/Void.svg";
-import { useNavigate } from "react-router-dom";
-import data from "../../assets/data.json";
-import codeContext from "../../context/CodeContext";
-import { useState } from "react";
+import FileBase64 from "react-file-base64";
+import Loader from "../../assets/Images/loader.gif";
 
-const AdminMcq = () => {
-  const navigate = useNavigate();
-  const { getMcqs, mcqs } = useContext(codeContext);
-  const [data, setData] = useState([]);
+const AdminMCQ = () => {
+	const {
+		mcqs,
+		getMcqs,
+		addMcq,
+		editMcq,
+		deleteMcq,
+		addUploadImage,
+		loading,
+	} = useContext(CodeContext);
+	const [data, setData] = React.useState([]);
+	const [editData, setEditData] = React.useState({});
+	const [uploadOpen, setUploadOpen] = React.useState(false);
+	const [detailOpen, setDetailOpen] = React.useState(false);
+	const [editOpen, setEditOpen] = React.useState(false);
+	const [solutionOpen, setSolutionOpen] = React.useState(false);
+	const [uploadData, setUploadData] = React.useState({
+		question: "",
+		options: [
+			{
+				text: "",
+				image: "",
+			},
+		],
+		answer: 0,
+	});
+	const TableComponent = ({ item, index }) => {
+		return (
+			<tr className="bg-white dark:bg-gray-800 text-[0.76rem]">
+				<th className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
+					{index + 1}
+				</th>
+				<th className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
+					{item.question.length > 50 ? (
+						<p>{item.question.slice(0, 50)}...</p>
+					) : (
+						<p>{item.question}</p>
+					)}
+				</th>
+				<th className="py-4 px-6 font-bold text-xl text-gray-900 whitespace-nowrap">
+					<CgMoreR
+						className="cursor-pointer"
+						onClick={() => {
+							setDetailOpen(true);
+							setEditData(item);
+							console.log("open", detailOpen);
+						}}
+					/>
+				</th>
+				{/* Edit Icon */}
+				<th
+					className="py-4 px-6 font-bold text-xl text-gray-900 whitespace-nowrap"
+					onClick={() => {
+						setEditOpen(true);
+						setEditData(item);
+					}}
+				>
+					<AiFillEdit className="cursor-pointer" />
+				</th>
 
-  useEffect(() => {
-    getMcqs();
-    // eslint-disable-next-line
-  }, []);
-  useEffect(() => {
-    setData(mcqs);
-    console.log(mcqs);
-  }, [mcqs]);
+				<th
+					className="py-4 px-6 font-bold text-xl text-gray-900 whitespace-nowrap"
+					onClick={() => {
+						swal({
+							title: "Are you sure?",
+							text: "Once deleted, you will not be able to recover this question!",
+							icon: "warning",
+							buttons: true,
+							dangerMode: true,
+						}).then((willDelete) => {
+							if (willDelete) {
+								swal("Poof! Your question has been deleted!", {
+									icon: "success",
+								});
+								deleteMcq(item._id);
+							} else {
+								swal("Your question is safe!");
+							}
+						});
+					}}
+				>
+					<AiFillDelete className="cursor-pointer" />
+				</th>
+			</tr>
+		);
+	};
+	const TopicTags = [
+		"Arrays",
+		"Strings",
+		"Linked List",
+		"Stacks",
+		"Queues",
+		"Trees",
+		"Graphs",
+		"Sorting",
+		"Searching",
+		"Dynamic Programming",
+		"Greedy",
+		"Backtracking",
+		"Bit Manipulation",
+		"Math",
+		"Miscellaneous",
+	];
 
-  const TableComponent = ({ item }) => {
-    console.log(item);
-    return (
-      <tr className="bg-white dark:bg-gray-800 text-[0.76rem]">
-        <th
-          scope="row"
-          className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white hover:text-blue-600 dark:hover:text-blue-500 cursor-pointer"
-          //redirect to new page
-          onClick={() => {
-            navigate(`/mcqs/${item._id}`);
-          }}
-        >
-          {item.question ? item.question : "Two Sum"}
-        </th>
-        {item.options.map((option) => (
-          <th
-            scope="row"
-            className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white hover:text-blue-600 dark:hover:text-blue-500 cursor-pointer"
-            //redirect to new page
-            onClick={() => {
-            }}
-          >
-            {option.option}
-          </th>
-        ))}
-        <th
-          scope="row"
-          className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white hover:text-blue-600 dark:hover:text-blue-500 cursor-pointer"
-          //redirect to new page
-          onClick={() => {
-            navigate(`/mcqs/${item._id}`);
-          }}
-        >
-          {item.answer ? item.answer : "Two Sum"}
-        </th>
+	const CompanyTags = [
+		"Amazon",
+		"Apple",
+		"Facebook",
+		"Google",
+		"Microsoft",
+		"Oracle",
+		"Uber",
+		"Miscellaneous",
+	];
+	const divStyle = `flex w-full flex-col sm:px-12 px-4 gap-2 text-[#202128] py-2`;
+	const labelStyle = ``;
+	const inputStyle = `w-full border rounded-md p-2`;
+	const activeClass = `bg-[#3A355C] text-white px-4 py-2 rounded-xl cursor-pointer`;
+	const unactiveClass = `bg-[#F2F2F2] text-[#3A355C] px-4 py-2 rounded-xl cursor-pointer `;
+	useEffect(() => {
+		getMcqs();
+		// eslint-disable-next-line
+	}, []);
+	const handleUpload = async () => {
+		console.log(uploadData);
+		if (
+			uploadData.question === "" ||
+			uploadData.options[0].text === "" ||
+			uploadData.answer === 0
+		) {
+			swal("Please fill all the fields!");
+			return;
+		}
 
-        <td className="py-4 px-6 text-right">
-          <button
-            className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-            onClick={() => navigate(`/admin/mcqs/${item._id}`)}
-          >
-            Edit
-          </button>
-        </td>
-      </tr>
-    );
-  };
+		for (let i = 0; i < uploadData.options.length; i++) {
+			if (
+				uploadData.options[i].text === "" &&
+				uploadData.options[i].image === ""
+			) {
+				swal(
+					"Please Either fill all the options or remove the empty options!",
+				);
+				return;
+			}
+		}
 
-  return (
-    <div className={`w-full flex bg-[#222629]`}>
-      <div className="w-2/12">
-        <AdminNavbar />
-      </div>
-      <div className="w-10/12 bg-[#222629]">
-        <AdminTopBar />
-        <div className="flex w-full ">
-          <div className="flex flex-col gap-3 w-full ">
-            <h1 className={`text-center text-[#BDA9A9] text-xl font-bold mt-5`}>
-              MCQ questions
-            </h1>
-            <div className="flex flex-col ">
-              <div className="flex w-full items-center justify-between mt-8 px-[3rem]">
-                <h1 className="text-left text-[white] text-base font-normal px-4">
-                </h1>
-                <button
-                  className="text-sm bg-[#E97500] px-4 py-2 rounded-xl text-white border-[#E97500] hover:shadow-2xl"
-                  onClick={() => navigate("/admin/createMcq")}
-                >
-                  Upload{" "}
-                </button>
-              </div>
+		if (uploadData.answer > uploadData.options.length) {
+			swal("Please select a valid answer!");
+			return;
+		}
 
-              <div className="py-8 w-full flex justify-center items-center text-[10px]">
-                <div className="w-[90%]">
-                  <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
-                    <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                      <thead
-                        className={`text-xs text-white uppercase bg-[#E97500] border-[#E97500]`}
-                      >
-                        <tr>
-                          <th scope="col" className="py-3 px-6 ">
-                            Question
-                          </th>
-                          <th scope="col" className="py-3 px-6 ">
-                            Option 1
-                          </th>
-                          <th scope="col" className="py-3 px-6 ">
-                            Option 2
-                          </th>
-                          <th scope="col" className="py-3 px-6 ">
-                            Option 3
-                          </th>
-                          <th scope="col" className="py-3 px-6 ">
-                            Option 4
-                          </th>
-                          <th scope="col" className="py-3 px-6 ">
-                            Answer
-                          </th>
-                          <th scope="col" className="py-3 px-6"></th>
-                        </tr>
-                      </thead>
-                      {data.length > 0 && (
-                        <tbody>
-                          {data.length &&
-                            data.map((mcq, index) => {
-                              return <TableComponent key={index} item={mcq} />;
-                            })}
-                        </tbody>
-                      )}
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+		for (let i = 0; i < uploadData.options.length; i++) {
+			if (
+				uploadData.options[i].image &&
+				uploadData.options[i].image !== ""
+			) {
+				const cloudUrl = await addUploadImage(
+					uploadData.options[i].image,
+				);
+				uploadData.options[i].image = cloudUrl;
+			}
+			uploadData.options[i].no = i + 1;
+		}
+
+		console.log(loading, "before");
+		await addMcq(uploadData);
+		console.log(loading, "after");
+		swal({
+			title: "MCQ Uploaded Successfully!",
+			icon: "success",
+		});
+
+		setUploadData({
+			question: "",
+			options: [
+				{
+					text: "",
+					image: "",
+				},
+			],
+			answer: 0,
+		});
+
+		setUploadOpen(false);
+	};
+
+	const handleEdit = () => {};
+
+	const handleClose = () => {
+		swal({
+			title: "Do you want to discard your changes?",
+			icon: "warning",
+			buttons: true,
+		}).then((res) => {
+			if (res) {
+				setUploadData({
+					question: "",
+					options: [
+						{
+							text: "",
+							image: "",
+						},
+					],
+					answer: 0,
+				});
+				setUploadOpen(false);
+			}
+		});
+	};
+	return (
+		<div className={`w-full flex bg-[#222629]`}>
+			<div className="w-2/12">
+				<AdminNavbar />
+			</div>
+			<div className="w-10/12">
+				<AdminTopBar />
+				<div className="flex w-full ">
+					<div className="flex flex-col gap-3 w-full ">
+						<h1
+							className={`text-center text-[#BDA9A9] text-xl font-bold mt-5`}
+						>
+							MCQs
+						</h1>
+						<div className="flex flex-col ">
+							<div className="flex w-full items-center justify-between mt-8 px-[3rem]">
+								<h1 className="text-left text-[white] text-base font-normal px-4">
+									Your MCQs Here
+								</h1>
+								<button
+									className="text-sm bg-[#E97500] px-4 py-2 rounded-xl text-white border-[#E97500] hover:shadow-2xl"
+									onClick={() => setUploadOpen(true)}
+								>
+									Upload{" "}
+								</button>
+							</div>
+
+							{mcqs && (
+								<div className="py-8 w-full flex justify-center items-center text-[10px]">
+									<div className="w-[90%]">
+										<div className="overflow-x-auto relative shadow-md sm:rounded-lg">
+											<table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+												<thead
+													className={`text-xs text-white uppercase bg-[#E97500]`}
+												>
+													<tr>
+														<th
+															scope="col"
+															className="py-3 px-6"
+														>
+															SNo.
+														</th>
+														<th
+															scope="col"
+															className="py-3 px-6"
+														>
+															Question
+														</th>
+														<th
+															scope="col"
+															className="py-3 px-6"
+														>
+															See More
+														</th>
+														<th
+															scope="col"
+															className="py-3 px-6"
+														>
+															Edit
+														</th>
+														<th
+															scope="col"
+															className="py-3 px-6"
+														>
+															Delete
+														</th>
+													</tr>
+												</thead>
+												{mcqs.length > 0 && (
+													<tbody>
+														{mcqs.map(
+															(item, index) => (
+																<TableComponent
+																	item={item}
+																	index={
+																		index
+																	}
+																/>
+															),
+														)}
+													</tbody>
+												)}
+											</table>
+										</div>
+									</div>
+								</div>
+							)}
+							{/* Upload Modal */}
+							<Modal
+								visible={uploadOpen}
+								onClickAway={handleClose}
+								title="Solution"
+								width="90%"
+								height="90%"
+							>
+								<div className="h-[100%] overflow-auto modals text-[0.76rem]">
+									<div className="flex w-full justify-end px-4 py-4">
+										<AiOutlineClose
+											className="text-black hover:font-bold text-[20px] cursor-pointer"
+											onClick={handleClose}
+										/>
+									</div>
+									<h1 className="text-center text-2xl py-4 text-[#202128]">
+										{loading
+											? "Uplading...."
+											: "Upload a MCQ"}
+									</h1>
+									<div className="w-full flex flex-col gap-4 justify-center items-center">
+										{!loading ? (
+											<div className="w-full flex justify-center items-center flex-col py-4">
+												<div className={divStyle}>
+													<label
+														className={labelStyle}
+													>
+														Question
+													</label>
+													<input
+														type="text"
+														className={inputStyle}
+														value={
+															uploadData.question
+														}
+														placeholder="Question"
+														onChange={(e) =>
+															setUploadData({
+																...uploadData,
+																question:
+																	e.target
+																		.value,
+															})
+														}
+													/>
+												</div>
+												<div className={divStyle}>
+													<label
+														className={labelStyle}
+													>
+														Options
+													</label>
+													{/* Input Options dynmaically in a loop here with a button to add more options 
+												and a button to remove options and a button to add more options and a button to remove options  */}
+
+													{uploadData.options.map(
+														(item, index) => (
+															<div
+																className="w-full flex justify-center items-center "
+																key={index}
+															>
+																{/* Input both image and text from the use and image from filebase 64 */}
+																<div className="w-full p-4 border rounded-md flex flex-col gap-2">
+																	<input
+																		type="text"
+																		className="w-9/12 border rounded-md p-2"
+																		value={
+																			item.text
+																		}
+																		placeholder={`Option ${
+																			index +
+																			1
+																		}`}
+																		onChange={(
+																			e,
+																		) => {
+																			let temp =
+																				uploadData.options;
+																			temp[
+																				index
+																			].text =
+																				e.target.value;
+																			setUploadData(
+																				{
+																					...uploadData,
+																					options:
+																						temp,
+																				},
+																			);
+																		}}
+																	/>
+
+																	<FileBase64
+																		multiple={
+																			false
+																		}
+																		onDone={(
+																			file,
+																		) => {
+																			let temp =
+																				uploadData.options;
+																			temp[
+																				index
+																			].image =
+																				file.base64;
+																			setUploadData(
+																				{
+																					...uploadData,
+																					options:
+																						temp,
+																				},
+																			);
+																		}}
+																	/>
+
+																	{/* Show Image if There */}
+																	{item.image && (
+																		<img
+																			src={
+																				item.image
+																			}
+																			alt="option"
+																			className="w-[100px] h-[100px] object-contain"
+																		/>
+																	)}
+																</div>
+																<div className="w-3/12 flex justify-center items-center gap-2">
+																	{uploadData
+																		.options
+																		.length >
+																		1 && (
+																		<button
+																			className="w-[100px] h-[40px] bg-[#1E1E1E] text-white rounded-md"
+																			onClick={() => {
+																				let temp =
+																					uploadData.options;
+																				temp.splice(
+																					index,
+																					1,
+																				);
+																				setUploadData(
+																					{
+																						...uploadData,
+																						options:
+																							temp,
+																					},
+																				);
+																			}}
+																		>
+																			Remove
+																		</button>
+																	)}
+																	{index ==
+																		uploadData
+																			.options
+																			.length -
+																			1 && (
+																		<button
+																			className="w-[100px] h-[40px] bg-[#1E1E1E] text-white rounded-md"
+																			onClick={() => {
+																				let temp =
+																					uploadData.options;
+																				temp.push(
+																					{
+																						option: "",
+																						image: "",
+																					},
+																				);
+																				setUploadData(
+																					{
+																						...uploadData,
+																						options:
+																							temp,
+																					},
+																				);
+																			}}
+																		>
+																			Add
+																		</button>
+																	)}
+																</div>
+															</div>
+														),
+													)}
+												</div>
+												<div className={divStyle}>
+													<label
+														className={labelStyle}
+													>
+														Correct Answer
+													</label>
+													<input
+														type="number"
+														className={inputStyle}
+														value={
+															uploadData.answer
+														}
+														placeholder="Correct Answer"
+														onChange={(e) =>
+															setUploadData({
+																...uploadData,
+																answer: e.target
+																	.value,
+															})
+														}
+													/>
+												</div>
+
+												{/* Submit Question */}
+												<button
+													className="min-w-[100px] h-[40px] bg-[#1E1E1E] text-white rounded-md px-8"
+													onClick={handleUpload}
+												>
+													Upload Question
+												</button>
+											</div>
+										) : (
+											<div className="w-full flex justify-center items-center flex-col py-4">
+												<div>
+													<img
+														src={Loader}
+														alt="loader"
+														className="w-[20rem] h-[20rem] object-contain"
+													/>
+												</div>
+											</div>
+										)}
+									</div>
+								</div>
+							</Modal>
+							{/* Detail Modal */}
+							{editData.question && (
+								<Modal
+									visible={detailOpen}
+									onClickAway={() => setDetailOpen(false)}
+									title="Solution"
+									width="90%"
+									height="90%"
+								>
+									<div>
+										<div className="h-[100%] overflow-auto modals text-[0.76rem]">
+											<div className="flex w-full justify-end px-4 py-4">
+												<AiOutlineClose
+													className="text-black hover:font-bold text-[20px] cursor-pointer"
+													onClick={() =>
+														setDetailOpen(false)
+													}
+												/>
+											</div>
+											<div className="px-8 w-full flex flex-col gap-2  text-[0.9rem]">
+												<span
+													className={`text-[#E97500] font-bold`}
+												>
+													Question
+												</span>{" "}
+												<span
+													className={`text-[#202128] font-bold`}
+												>
+													{editData.question}
+												</span>
+											</div>
+
+											<div className="px-8 w-full flex flex-col gap-2 mt-8">
+												<span
+													className={`text-[#E97500] font-bold text-[0.9rem]`}
+												>
+													Options
+												</span>{" "}
+												{editData.options &&
+													editData.options.map(
+														(item, index) => (
+															<div>
+																<div
+																	className={`flex gap-2 items-center text-[0.9rem]`}
+																>
+																	<span
+																		className={`text-[#202128] font-bold text-[0.9rem]`}
+																	>
+																		{
+																			item.no
+																		}{" "}
+																		{"."}
+																	</span>
+																	<span
+																		className={`text-[#202128] font-bold text-[0.9rem]`}
+																	>
+																		{
+																			item.text
+																		}
+																	</span>
+																	{editData.answer ===
+																		index +
+																			1 && (
+																		<span
+																			className={`text-[#E97500] font-bold`}
+																		>
+																			Answer
+																		</span>
+																	)}
+																</div>
+																{item.image !==
+																	"" && (
+																	<div className="mt-2">
+																		<img
+																			src={
+																				item.image
+																			}
+																			alt="option"
+																			className="w-[100px] h-[100px] object-contain"
+																		/>
+																	</div>
+																)}
+															</div>
+														),
+													)}
+											</div>
+										</div>
+									</div>
+								</Modal>
+							)}
+							{/* Edit Modal */}
+							{editData.title && (
+								<Modal
+									visible={editOpen}
+									onClickAway={() =>
+										swal({
+											title: "Do you want to discard your changes?",
+											icon: "warning",
+											buttons: true,
+										}).then((res) => {
+											if (res) {
+												setEditOpen(false);
+											}
+										})
+									}
+									title="Solution"
+									width="90%"
+									height="90%"
+								>
+									<div className="h-[100%] overflow-auto modals text-[0.76rem]">
+										<div className="flex w-full justify-end px-4 py-4">
+											<AiOutlineClose
+												className="text-black hover:font-bold text-[20px] cursor-pointer"
+												onClick={() =>
+													swal({
+														title: "Do you want to discard your changes?",
+														icon: "warning",
+														buttons: true,
+													}).then((res) => {
+														if (res) {
+															setEditOpen(false);
+														}
+													})
+												}
+											/>
+										</div>
+										<h1 className="text-center text-2xl py-4 text-[#202128]">
+											Edit the Problem
+										</h1>
+									</div>
+								</Modal>
+							)}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
 };
 
-export default AdminMcq;
+export default AdminMCQ;
