@@ -56,6 +56,8 @@ const Blogs = () => {
 
   useEffect(() => {
     setData(blogs);
+  }, [blogs]);
+  useEffect(() => {
     if (data.length > 0) {
       let comp = [];
       data.map((blog) => {
@@ -69,7 +71,7 @@ const Blogs = () => {
       setCompanies(uniqueCompanies);
       setFilteredCompanies(companies);
     }
-  }, [blogs]);
+  }, [data]);
   console.log(filteredCompanies);
 
   const navigate = useNavigate();
