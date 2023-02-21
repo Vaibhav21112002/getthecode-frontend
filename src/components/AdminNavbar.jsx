@@ -1,6 +1,6 @@
 import React from "react";
 import { darkTheme } from "../assets/Constants";
-import { BsFillPersonFill, BsCodeSlash, BsInfoLg } from "react-icons/bs";
+import { BsFillPersonFill, BsCodeSlash, BsInfoLg,BsQuestionCircle } from "react-icons/bs";
 import { MdDashboard } from "react-icons/md";
 import { HiOutlineNewspaper } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
@@ -19,14 +19,18 @@ const AdminNav = () => {
             title: "Articles",
             path: "/admin/articles",
             icon: <HiOutlineNewspaper />,
-        },
+        },{
+            title:"MCQs",
+            path:'/admin/mcqs',
+            icon:<BsQuestionCircle />
+        }
     ];
     return (
         <div
             className={`sm:flex hidden flex-col py-4 items-center w-full h-[100vh] bg-[${darkTheme.bgPrimary}] `}
         >
             <div
-                className={`w-[90%] h-[2rem] bg-[#25272E] rounded-lg flex justify-center items-center text-[#BDA9A9] gap-2 cursor-pointer`}
+                className={`w-[90%] h-[2rem] bg-[#222629] rounded-lg flex justify-center items-center text-[#BDA9A9] gap-2 cursor-pointer`}
                 onClick={() => navigate("/")}
             >
                 <BsFillPersonFill className=" text-[1.2rem]" />

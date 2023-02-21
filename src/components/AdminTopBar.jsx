@@ -8,15 +8,15 @@ const AdminTopBar = () => {
     return (
         <div className="w-full ">
             <div className="w-full flex">
-                <div className="w-full h-[4rem] bg-[#202128] flex justify-start px-8 py-4 items-center text-[#BDA9A9] gap-4 cursor-pointer text-[1.5rem]"></div>
+                <div className="w-full h-[4rem] bg-[#222629] flex justify-start px-8 py-4 items-center text-[#BDA9A9] gap-4 cursor-pointer text-[1.5rem]"></div>
                 <div
-                    className={`w-full h-[4rem] bg-[#202128] flex justify-end px-8 py-4 items-center text-[#BDA9A9] gap-4 cursor-pointer text-[1.5rem]`}
+                    className={`w-full h-[4rem] bg-[#222629] flex justify-end px-8 py-4 items-center text-[#BDA9A9] gap-4 cursor-pointer text-[1.5rem]`}
                 >
                     <BsPersonFill />
                     <AiOutlineLogout onClick={() => navigate("/")} />
                 </div>
             </div>
-            <div className="w-full h-[0.5px] bg-[#33343B]"></div>
+            <div className="w-full h-[0.5px] bg-[#222629]"></div>
         </div>
     );
 };

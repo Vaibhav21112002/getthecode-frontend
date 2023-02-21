@@ -152,7 +152,6 @@ const AdminProgramming = () => {
             uploadData.testCases.testCase2.output === "" ||
             uploadData.testCases.testCase2.explaination === ""
         ) {
-            console.log(uploadData);
             swal({
                 title: "Error",
                 text: "Please fill all the fields",
@@ -196,7 +195,7 @@ const AdminProgramming = () => {
         });
     };
     return (
-        <div className={`w-full flex bg-[#202128]`}>
+        <div className={`w-full flex bg-[#222629]`}>
             <div className="w-2/12">
                 <AdminNavbar />
             </div>
@@ -211,11 +210,11 @@ const AdminProgramming = () => {
                         </h1>
                         <div className="flex flex-col ">
                             <div className="flex w-full items-center justify-between mt-8 px-[3rem]">
-                                <h1 className="text-left text-[#BDA9A9] text-base font-normal px-4">
+                                <h1 className="text-left text-[white] text-base font-normal px-4">
                                     Your Programming Questions
                                 </h1>
                                 <button
-                                    className="text-sm bg-[#3A355C] px-4 py-2 rounded-xl text-white border-[#3A355C] hover:shadow-2xl"
+                                    className="text-sm bg-[#E97500] px-4 py-2 rounded-xl text-white border-[#E97500] hover:shadow-2xl"
                                     onClick={() => setUploadOpen(true)}
                                 >
                                     Upload{" "}
@@ -349,7 +348,19 @@ const AdminProgramming = () => {
                             {/* Upload Modal */}
                             <Modal
                                 visible={uploadOpen}
-                                onClickAway={() => setUploadOpen(false)}
+                                onClickAway={() => {
+                                    swal({
+                                        title: "Do you want to discard your changes?",
+                                        icon: "warning",
+                                        buttons: true,
+                                    }).then(res => {
+                                        if (res) {
+                                            setUploadOpen(false);
+                                        }
+                                    })
+
+                                }}
+
                                 title="Solution"
                                 width="90%"
                                 height="90%"
@@ -358,7 +369,15 @@ const AdminProgramming = () => {
                                     <div className="flex w-full justify-end px-4 py-4">
                                         <AiOutlineClose
                                             className="text-black hover:font-bold text-[20px] cursor-pointer"
-                                            onClick={() => setUploadOpen(false)}
+                                            onClick={() => swal({
+                                                title: "Do you want to discard your changes?",
+                                                icon: "warning",
+                                                buttons: true,
+                                            }).then(res => {
+                                                if (res) {
+                                                    setUploadOpen(false);
+                                                }
+                                            })}
                                         />
                                     </div>
                                     <h1 className="text-center text-2xl py-4 text-[#202128]">
@@ -386,20 +405,18 @@ const AdminProgramming = () => {
                                             <label className={labelStyle}>
                                                 Problem Description
                                             </label>
-                                            <Editor
-                                                height="60vh"
-                                                width={`90%`}
-                                                theme="vs-light"
-                                                defaultLanguage="java"
-                                                defaultValue={uploadData.description}
-                                                onChange={(value, event) => {
-                                                    console.log(value);
+
+                                            <ReactQuill
+                                                theme="snow"
+                                                value={uploadData.description}
+                                                placeholder="Problem Description"
+                                                onChange={(e) => {
+                                                    console.log(e);
                                                     setUploadData({
                                                         ...uploadData,
-                                                        description: value,
+                                                        description: e,
                                                     });
                                                 }}
-                                                tabIndex={4}
                                             />
                                         </div>
                                         <div className={divStyle}>
@@ -628,14 +645,15 @@ const AdminProgramming = () => {
                                                 <label className={labelStyle}>
                                                     Test Case 1
                                                 </label>
-                                                <input
+                                                <textarea
                                                     className={inputStyle}
                                                     value={
                                                         uploadData.testCases
                                                             .testCase1.input
                                                     }
                                                     placeholder="Input"
-                                                    onChange={(e) =>
+                                                    onChange={(e) => {
+                                                        console.log(e.target.value);
                                                         setUploadData({
                                                             ...uploadData,
                                                             testCases: {
@@ -651,8 +669,9 @@ const AdminProgramming = () => {
                                                             },
                                                         })
                                                     }
+                                                    }
                                                 />
-                                                <input
+                                                <textarea
                                                     className={inputStyle}
                                                     value={
                                                         uploadData.testCases
@@ -676,7 +695,39 @@ const AdminProgramming = () => {
                                                         })
                                                     }
                                                 />
-                                                <input
+                                                <ReactQuill
+                                                    theme="snow"
+                                                    value={uploadData.testCases.testCase1.explaination}
+                                                    placeholder="Explanation"
+                                                    modules={{
+                                                        toolbar: {
+                                                            container: [
+                                                                [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                                                                ['bold', 'italic', 'underline'],
+                                                                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                                                                [{ 'align': [] }],
+                                                                ['link', 'image'],
+                                                                ['clean'],
+                                                                [{ 'color': [] }]
+                                                            ]
+                                                        }
+                                                    }}
+                                                    onChange={(e) => {
+                                                        console.log(uploadData.testCases.testCase1.explaination)
+                                                        console.log(e);
+                                                        setUploadData({
+                                                            ...uploadData,
+                                                            testCases: {
+                                                                ...uploadData.testCases,
+                                                                testCase1: {
+                                                                    ...uploadData.testCases.testCase1,
+                                                                    explaination: e
+                                                                }
+                                                            }
+                                                        });
+                                                    }}
+                                                />
+                                                {/* <input
                                                     className={inputStyle}
                                                     value={
                                                         uploadData.testCases
@@ -700,20 +751,21 @@ const AdminProgramming = () => {
                                                             },
                                                         })
                                                     }
-                                                />
+                                                /> */}
                                             </div>
                                             <div className="w-full flex flex-col gap-2 border p-4 rounded-lg mt-2">
                                                 <label className={labelStyle}>
                                                     Test Case 2
                                                 </label>
-                                                <input
+                                                <textarea
                                                     className={inputStyle}
                                                     value={
                                                         uploadData.testCases
                                                             .testCase2.input
                                                     }
                                                     placeholder="Input"
-                                                    onChange={(e) =>
+                                                    onChange={(e) => {
+                                                        console.log(e.target.value);
                                                         setUploadData({
                                                             ...uploadData,
                                                             testCases: {
@@ -729,15 +781,17 @@ const AdminProgramming = () => {
                                                             },
                                                         })
                                                     }
+                                                    }
                                                 />
-                                                <input
+                                                <textarea
                                                     className={inputStyle}
                                                     value={
                                                         uploadData.testCases
                                                             .testCase2.output
                                                     }
                                                     placeholder="Output"
-                                                    onChange={(e) =>
+                                                    onChange={(e) => {
+                                                        console.log(e.target.value);
                                                         setUploadData({
                                                             ...uploadData,
                                                             testCases: {
@@ -753,8 +807,41 @@ const AdminProgramming = () => {
                                                             },
                                                         })
                                                     }
+                                                    }
                                                 />
-                                                <input
+
+                                                <ReactQuill
+                                                    theme="snow"
+                                                    value={uploadData.testCases.testCase2.explaination}
+                                                    placeholder="Explanation"
+                                                    modules={{
+                                                        toolbar: {
+                                                            container: [
+                                                                [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                                                                ['bold', 'italic', 'underline'],
+                                                                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                                                                [{ 'align': [] }],
+                                                                ['link', 'image'],
+                                                                ['clean'],
+                                                                [{ 'color': [] }]
+                                                            ]
+                                                        }
+                                                    }}
+                                                    onChange={(e) => {
+                                                        console.log(e);
+                                                        setUploadData({
+                                                            ...uploadData,
+                                                            testCases: {
+                                                                ...uploadData.testCases,
+                                                                testCase2: {
+                                                                    ...uploadData.testCases.testCase2,
+                                                                    explaination: e
+                                                                }
+                                                            }
+                                                        });
+                                                    }}
+                                                />
+                                                {/* <input
                                                     className={inputStyle}
                                                     value={
                                                         uploadData.testCases
@@ -778,7 +865,7 @@ const AdminProgramming = () => {
                                                             },
                                                         })
                                                     }
-                                                />
+                                                /> */}
                                             </div>
                                         </div>
                                         <div className={divStyle}>
@@ -868,11 +955,11 @@ const AdminProgramming = () => {
                                                     </span>
                                                     {editData.difficulty
                                                         ? editData.difficulty
-                                                              .slice(0, 1)
-                                                              .toUpperCase() +
-                                                          editData.difficulty
-                                                              .slice(1)
-                                                              .toLowerCase()
+                                                            .slice(0, 1)
+                                                            .toUpperCase() +
+                                                        editData.difficulty
+                                                            .slice(1)
+                                                            .toLowerCase()
                                                         : "Easy"}
                                                 </h1>
                                                 <h1>
@@ -910,7 +997,15 @@ const AdminProgramming = () => {
                             {editData.title && (
                                 <Modal
                                     visible={editOpen}
-                                    onClickAway={() => setEditOpen(false)}
+                                    onClickAway={() => swal({
+                                        title: "Do you want to discard your changes?",
+                                        icon: "warning",
+                                        buttons: true,
+                                    }).then(res => {
+                                        if (res) {
+                                            setEditOpen(false);
+                                        }
+                                    })}
                                     title="Solution"
                                     width="90%"
                                     height="90%"
@@ -920,7 +1015,15 @@ const AdminProgramming = () => {
                                             <AiOutlineClose
                                                 className="text-black hover:font-bold text-[20px] cursor-pointer"
                                                 onClick={() =>
-                                                    setEditOpen(false)
+                                                    swal({
+                                                        title: "Do you want to discard your changes?",
+                                                        icon: "warning",
+                                                        buttons: true,
+                                                    }).then(res => {
+                                                        if (res) {
+                                                            setEditOpen(false);
+                                                        }
+                                                    })
                                                 }
                                             />
                                         </div>
@@ -1201,14 +1304,15 @@ const AdminProgramming = () => {
                                                     >
                                                         Test Case 1
                                                     </label>
-                                                    <input
+                                                    <textarea
                                                         className={inputStyle}
                                                         value={
                                                             editData.testCases
                                                                 .testCase1.input
                                                         }
                                                         placeholder="Input"
-                                                        onChange={(e) =>
+                                                        onChange={(e) => {
+                                                            console.log(e.target.value);
                                                             setEditData({
                                                                 ...editData,
                                                                 testCases: {
@@ -1224,8 +1328,9 @@ const AdminProgramming = () => {
                                                                 },
                                                             })
                                                         }
+                                                        }
                                                     />
-                                                    <input
+                                                    <textarea
                                                         className={inputStyle}
                                                         value={
                                                             editData.testCases
@@ -1250,7 +1355,43 @@ const AdminProgramming = () => {
                                                             })
                                                         }
                                                     />
-                                                    <input
+
+                                                    <ReactQuill
+                                                        theme="snow"
+                                                        value={editData.testCases
+                                                            .testCase1
+                                                            .explaination}
+                                                        placeholder="Explanation"
+                                                        modules={{
+                                                            toolbar: {
+                                                                container: [
+                                                                    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                                                                    ['bold', 'italic', 'underline'],
+                                                                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                                                                    [{ 'align': [] }],
+                                                                    ['link', 'image'],
+                                                                    ['clean'],
+                                                                    [{ 'color': [] }]
+                                                                ]
+                                                            }
+                                                        }}
+                                                        onChange={(e) =>
+                                                            setEditData({
+                                                                ...editData,
+                                                                testCases: {
+                                                                    ...editData.testCases,
+                                                                    testCase1: {
+                                                                        ...editData
+                                                                            .testCases
+                                                                            .testCase1,
+                                                                        explaination:
+                                                                            e
+                                                                    },
+                                                                },
+                                                            })
+                                                        }
+                                                    />
+                                                    {/* <input
                                                         className={inputStyle}
                                                         value={
                                                             editData.testCases
@@ -1275,7 +1416,7 @@ const AdminProgramming = () => {
                                                                 },
                                                             })
                                                         }
-                                                    />
+                                                    /> */}
                                                 </div>
                                                 <div className="w-full flex flex-col gap-2 border p-4 rounded-lg mt-2">
                                                     <label
@@ -1283,14 +1424,15 @@ const AdminProgramming = () => {
                                                     >
                                                         Test Case 2
                                                     </label>
-                                                    <input
+                                                    <textarea
                                                         className={inputStyle}
                                                         value={
                                                             editData.testCases
                                                                 .testCase2.input
                                                         }
                                                         placeholder="Input"
-                                                        onChange={(e) =>
+                                                        onChange={(e) => {
+                                                            console.log(e.target.value);
                                                             setEditData({
                                                                 ...editData,
                                                                 testCases: {
@@ -1306,8 +1448,9 @@ const AdminProgramming = () => {
                                                                 },
                                                             })
                                                         }
+                                                        }
                                                     />
-                                                    <input
+                                                    <textarea
                                                         className={inputStyle}
                                                         value={
                                                             editData.testCases
@@ -1332,7 +1475,42 @@ const AdminProgramming = () => {
                                                             })
                                                         }
                                                     />
-                                                    <input
+                                                    <ReactQuill
+                                                        theme="snow"
+                                                        value={editData.testCases
+                                                            .testCase2
+                                                            .explaination}
+                                                        placeholder="Explanation"
+                                                        modules={{
+                                                            toolbar: {
+                                                                container: [
+                                                                    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                                                                    ['bold', 'italic', 'underline'],
+                                                                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                                                                    [{ 'align': [] }],
+                                                                    ['link', 'image'],
+                                                                    ['clean'],
+                                                                    [{ 'color': [] }]
+                                                                ]
+                                                            }
+                                                        }}
+                                                        onChange={(e) =>
+                                                            setEditData({
+                                                                ...editData,
+                                                                testCases: {
+                                                                    ...editData.testCases,
+                                                                    testCase2: {
+                                                                        ...editData
+                                                                            .testCases
+                                                                            .testCase2,
+                                                                        explaination:
+                                                                            e
+                                                                    },
+                                                                },
+                                                            })
+                                                        }
+                                                    />
+                                                    {/* <input
                                                         className={inputStyle}
                                                         value={
                                                             editData.testCases
@@ -1357,7 +1535,7 @@ const AdminProgramming = () => {
                                                                 },
                                                             })
                                                         }
-                                                    />
+                                                    /> */}
                                                 </div>
                                             </div>
                                             <div className={divStyle}>
