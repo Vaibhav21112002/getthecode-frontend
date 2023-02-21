@@ -1,12 +1,9 @@
 import React, { useEffect, useContext } from "react";
 import { AdminNavbar, AdminTopBar } from "../../components";
 import Modal from "react-awesome-modal";
-import Editor from "@monaco-editor/react";
 import { AiOutlineClose, AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { CgMoreR } from "react-icons/cg";
 import "../../assets/CSS/index.css";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
 import CodeContext from "../../context/CodeContext";
 import swal from "sweetalert";
 import FileBase64 from "react-file-base64";
@@ -22,12 +19,10 @@ const AdminMCQ = () => {
 		addUploadImage,
 		loading,
 	} = useContext(CodeContext);
-	const [data, setData] = React.useState([]);
 	const [editData, setEditData] = React.useState({});
 	const [uploadOpen, setUploadOpen] = React.useState(false);
 	const [detailOpen, setDetailOpen] = React.useState(false);
 	const [editOpen, setEditOpen] = React.useState(false);
-	const [solutionOpen, setSolutionOpen] = React.useState(false);
 	const [uploadData, setUploadData] = React.useState({
 		question: "",
 		options: [
@@ -98,45 +93,14 @@ const AdminMCQ = () => {
 			</tr>
 		);
 	};
-	const TopicTags = [
-		"Arrays",
-		"Strings",
-		"Linked List",
-		"Stacks",
-		"Queues",
-		"Trees",
-		"Graphs",
-		"Sorting",
-		"Searching",
-		"Dynamic Programming",
-		"Greedy",
-		"Backtracking",
-		"Bit Manipulation",
-		"Math",
-		"Miscellaneous",
-	];
-
-	const CompanyTags = [
-		"Amazon",
-		"Apple",
-		"Facebook",
-		"Google",
-		"Microsoft",
-		"Oracle",
-		"Uber",
-		"Miscellaneous",
-	];
 	const divStyle = `flex w-full flex-col sm:px-12 px-4 gap-2 text-[#202128] py-2`;
 	const labelStyle = ``;
 	const inputStyle = `w-full border rounded-md p-2`;
-	const activeClass = `bg-[#3A355C] text-white px-4 py-2 rounded-xl cursor-pointer`;
-	const unactiveClass = `bg-[#F2F2F2] text-[#3A355C] px-4 py-2 rounded-xl cursor-pointer `;
 	useEffect(() => {
 		getMcqs();
 		// eslint-disable-next-line
 	}, []);
 	const handleUpload = async () => {
-		console.log(uploadData);
 		if (
 			uploadData.question === "" ||
 			uploadData.options[0].text === "" ||
@@ -176,9 +140,7 @@ const AdminMCQ = () => {
 			uploadData.options[i].no = i + 1;
 		}
 
-		console.log(loading, "before");
 		await addMcq(uploadData);
-		console.log(loading, "after");
 		swal({
 			title: "MCQ Uploaded Successfully!",
 			icon: "success",
@@ -198,7 +160,53 @@ const AdminMCQ = () => {
 		setUploadOpen(false);
 	};
 
-	const handleEdit = () => {};
+	const handleEdit = async () => {
+		if (
+			editData.question === "" ||
+			editData.options[0].text === "" ||
+			editData.answer === 0
+		) {
+			swal("Please fill all the fields!");
+			return;
+		}
+
+		for (let i = 0; i < editData.options.length; i++) {
+			if (
+				editData.options[i].text === "" &&
+				editData.options[i].image === ""
+			) {
+				swal(
+					"Please Either fill all the options or remove the empty options!",
+				);
+				return;
+			}
+		}
+
+		if (editData.answer > editData.options.length) {
+			swal("Please select a valid answer!");
+			return;
+		}
+
+		for (let i = 0; i < editData.options.length; i++) {
+			if (editData.options[i].image && editData.options[i].image !== "") {
+				const cloudUrl = await addUploadImage(
+					editData.options[i].image,
+				);
+				editData.options[i].image = cloudUrl;
+			}
+			editData.options[i].no = i + 1;
+		}
+
+		await editMcq(editData._id, editData);
+		swal({
+			title: "MCQ Edited Successfully!",
+			icon: "success",
+		});
+
+		setEditData({});
+
+		setEditOpen(false);
+	};
 
 	const handleClose = () => {
 		swal({
@@ -218,6 +226,19 @@ const AdminMCQ = () => {
 					answer: 0,
 				});
 				setUploadOpen(false);
+			}
+		});
+	};
+
+	const handleClose2 = () => {
+		swal({
+			title: "Do you want to discard your changes?",
+			icon: "warning",
+			buttons: true,
+		}).then((res) => {
+			if (res) {
+				setEditData({});
+				setEditOpen(false);
 			}
 		});
 	};
@@ -499,13 +520,11 @@ const AdminMCQ = () => {
 													>
 														Correct Answer
 													</label>
-													<input
-														type="number"
+													<select
 														className={inputStyle}
 														value={
 															uploadData.answer
 														}
-														placeholder="Correct Answer"
 														onChange={(e) =>
 															setUploadData({
 																...uploadData,
@@ -513,7 +532,25 @@ const AdminMCQ = () => {
 																	.value,
 															})
 														}
-													/>
+													>
+														<option value="">
+															Select
+														</option>
+														{uploadData.options.map(
+															(item, index) => (
+																<option
+																	value={
+																		index +
+																		1
+																	}
+																	key={index}
+																>
+																	Option{" "}
+																	{index + 1}
+																</option>
+															),
+														)}
+													</select>
 												</div>
 
 												{/* Submit Question */}
@@ -608,18 +645,19 @@ const AdminMCQ = () => {
 																		</span>
 																	)}
 																</div>
-																{item.image !==
-																	"" && (
-																	<div className="mt-2">
-																		<img
-																			src={
-																				item.image
-																			}
-																			alt="option"
-																			className="w-[100px] h-[100px] object-contain"
-																		/>
-																	</div>
-																)}
+																{item.image &&
+																	item.image !==
+																		"" && (
+																		<div className="mt-2">
+																			<img
+																				src={
+																					item.image
+																				}
+																				alt="option"
+																				className="w-[100px] h-[100px] object-contain"
+																			/>
+																		</div>
+																	)}
 															</div>
 														),
 													)}
@@ -629,20 +667,10 @@ const AdminMCQ = () => {
 								</Modal>
 							)}
 							{/* Edit Modal */}
-							{editData.title && (
+							{editData.question && (
 								<Modal
 									visible={editOpen}
-									onClickAway={() =>
-										swal({
-											title: "Do you want to discard your changes?",
-											icon: "warning",
-											buttons: true,
-										}).then((res) => {
-											if (res) {
-												setEditOpen(false);
-											}
-										})
-									}
+									onClickAway={handleClose2}
 									title="Solution"
 									width="90%"
 									height="90%"
@@ -651,22 +679,216 @@ const AdminMCQ = () => {
 										<div className="flex w-full justify-end px-4 py-4">
 											<AiOutlineClose
 												className="text-black hover:font-bold text-[20px] cursor-pointer"
-												onClick={() =>
-													swal({
-														title: "Do you want to discard your changes?",
-														icon: "warning",
-														buttons: true,
-													}).then((res) => {
-														if (res) {
-															setEditOpen(false);
-														}
-													})
-												}
+												onClick={handleClose2}
 											/>
 										</div>
 										<h1 className="text-center text-2xl py-4 text-[#202128]">
 											Edit the Problem
 										</h1>
+										<div className="w-full flex justify-center items-center flex-col py-4">
+											<div className={divStyle}>
+												<label className={labelStyle}>
+													Question
+												</label>
+												<input
+													type="text"
+													className={inputStyle}
+													value={editData.question}
+													placeholder="Question"
+													onChange={(e) =>
+														setEditData({
+															...editData,
+															question:
+																e.target.value,
+														})
+													}
+												/>
+											</div>
+											<div className={divStyle}>
+												<label className={labelStyle}>
+													Options
+												</label>
+												{/* Input Options dynmaically in a loop here with a button to add more options 
+												and a button to remove options and a button to add more options and a button to remove options  */}
+
+												{editData.options.map(
+													(item, index) => (
+														<div
+															className="w-full flex justify-center items-center "
+															key={index}
+														>
+															{/* Input both image and text from the use and image from filebase 64 */}
+															<div className="w-full p-4 border rounded-md flex flex-col gap-2">
+																<input
+																	type="text"
+																	className="w-9/12 border rounded-md p-2"
+																	value={
+																		item.text
+																	}
+																	placeholder={`Option ${
+																		index +
+																		1
+																	}`}
+																	onChange={(
+																		e,
+																	) => {
+																		let temp =
+																			editData.options;
+																		temp[
+																			index
+																		].text =
+																			e.target.value;
+																		setEditData(
+																			{
+																				...editData,
+																				options:
+																					temp,
+																			},
+																		);
+																	}}
+																/>
+																<div className="border rounded-md p-2">
+																	<h1 className="my-2">
+																		Change /
+																		Update
+																		Image -{" "}
+																	</h1>
+																	<FileBase64
+																		multiple={
+																			false
+																		}
+																		onDone={(
+																			file,
+																		) => {
+																			let temp =
+																				editData.options;
+																			temp[
+																				index
+																			].image =
+																				file.base64;
+																			setEditData(
+																				{
+																					...editData,
+																					options:
+																						temp,
+																				},
+																			);
+																		}}
+																	/>
+																</div>
+
+																{/* Show Image if There */}
+																{item.image && (
+																	<img
+																		src={
+																			item.image
+																		}
+																		alt="option"
+																		className="w-[100px] h-[100px] object-contain"
+																	/>
+																)}
+															</div>
+															<div className="w-3/12 flex justify-center items-center gap-2">
+																{editData
+																	.options
+																	.length >
+																	1 && (
+																	<button
+																		className="w-[100px] h-[40px] bg-[#1E1E1E] text-white rounded-md"
+																		onClick={() => {
+																			let temp =
+																				editData.options;
+																			temp.splice(
+																				index,
+																				1,
+																			);
+																			setEditData(
+																				{
+																					...editData,
+																					options:
+																						temp,
+																				},
+																			);
+																		}}
+																	>
+																		Remove
+																	</button>
+																)}
+																{index ==
+																	editData
+																		.options
+																		.length -
+																		1 && (
+																	<button
+																		className="w-[100px] h-[40px] bg-[#1E1E1E] text-white rounded-md"
+																		onClick={() => {
+																			let temp =
+																				editData.options;
+																			temp.push(
+																				{
+																					option: "",
+																					image: "",
+																				},
+																			);
+																			setEditData(
+																				{
+																					...editData,
+																					options:
+																						temp,
+																				},
+																			);
+																		}}
+																	>
+																		Add
+																	</button>
+																)}
+															</div>
+														</div>
+													),
+												)}
+											</div>
+											<div className={divStyle}>
+												<label className={labelStyle}>
+													Correct Answer
+												</label>
+												<select
+													className={inputStyle}
+													value={editData.answer}
+													onChange={(e) =>
+														setEditData({
+															...editData,
+															answer: e.target
+																.value,
+														})
+													}
+												>
+													<option value="">
+														Select
+													</option>
+													{editData.options.map(
+														(item, index) => (
+															<option
+																value={
+																	index + 1
+																}
+																key={index}
+															>
+																Option{" "}
+																{index + 1}
+															</option>
+														),
+													)}
+												</select>
+											</div>
+
+											{/* Submit Question */}
+											<button
+												className="min-w-[100px] h-[40px] bg-[#1E1E1E] text-white rounded-md px-8"
+												onClick={handleEdit}
+											>
+												Save Changes
+											</button>
+										</div>
 									</div>
 								</Modal>
 							)}
