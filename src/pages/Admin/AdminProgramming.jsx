@@ -168,7 +168,6 @@ const AdminProgramming = () => {
             setUploadOpen(false);
         }
 
-        console.log(uploadData);
     };
 
     const handleEdit = () => {
@@ -331,7 +330,6 @@ const AdminProgramming = () => {
                                                         value,
                                                         event
                                                     ) => {
-                                                        console.log(value);
                                                         setEditData({
                                                             ...editData,
                                                             solution: value,
@@ -405,12 +403,12 @@ const AdminProgramming = () => {
                                             <label className={labelStyle}>
                                                 Problem Description
                                             </label>
+
                                             <ReactQuill
                                                 theme="snow"
                                                 value={uploadData.description}
                                                 placeholder="Problem Description"
                                                 onChange={(e) => {
-                                                    console.log(e);
                                                     setUploadData({
                                                         ...uploadData,
                                                         description: e,
@@ -652,7 +650,6 @@ const AdminProgramming = () => {
                                                     }
                                                     placeholder="Input"
                                                     onChange={(e) => {
-                                                        console.log(e.target.value);
                                                         setUploadData({
                                                             ...uploadData,
                                                             testCases: {
@@ -712,8 +709,6 @@ const AdminProgramming = () => {
                                                         }
                                                     }}
                                                     onChange={(e) => {
-                                                        console.log(uploadData.testCases.testCase1.explaination)
-                                                        console.log(e);
                                                         setUploadData({
                                                             ...uploadData,
                                                             testCases: {
@@ -764,7 +759,6 @@ const AdminProgramming = () => {
                                                     }
                                                     placeholder="Input"
                                                     onChange={(e) => {
-                                                        console.log(e.target.value);
                                                         setUploadData({
                                                             ...uploadData,
                                                             testCases: {
@@ -790,7 +784,6 @@ const AdminProgramming = () => {
                                                     }
                                                     placeholder="Output"
                                                     onChange={(e) => {
-                                                        console.log(e.target.value);
                                                         setUploadData({
                                                             ...uploadData,
                                                             testCases: {
@@ -827,7 +820,6 @@ const AdminProgramming = () => {
                                                         }
                                                     }}
                                                     onChange={(e) => {
-                                                        console.log(e);
                                                         setUploadData({
                                                             ...uploadData,
                                                             testCases: {
@@ -879,7 +871,6 @@ const AdminProgramming = () => {
                                                 defaultLanguage="java"
                                                 defaultValue={`function add(a, b) {\n  return a + b;\n}`}
                                                 onChange={(value, event) => {
-                                                    console.log(value);
                                                     setUploadData({
                                                         ...uploadData,
                                                         solution: value,
@@ -1057,7 +1048,6 @@ const AdminProgramming = () => {
                                                     value={editData.description}
                                                     placeholder="Problem Description"
                                                     onChange={(e) => {
-                                                        console.log(e);
                                                         setEditData({
                                                             ...editData,
                                                             description: e,
@@ -1311,7 +1301,6 @@ const AdminProgramming = () => {
                                                         }
                                                         placeholder="Input"
                                                         onChange={(e) => {
-                                                            console.log(e.target.value);
                                                             setEditData({
                                                                 ...editData,
                                                                 testCases: {
@@ -1431,7 +1420,6 @@ const AdminProgramming = () => {
                                                         }
                                                         placeholder="Input"
                                                         onChange={(e) => {
-                                                            console.log(e.target.value);
                                                             setEditData({
                                                                 ...editData,
                                                                 testCases: {
@@ -1554,7 +1542,6 @@ const AdminProgramming = () => {
                                                         value,
                                                         event
                                                     ) => {
-                                                        console.log(value);
                                                         setEditData({
                                                             ...editData,
                                                             solution: value,

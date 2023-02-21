@@ -52,7 +52,6 @@ const AdminMCQ = () => {
 						onClick={() => {
 							setDetailOpen(true);
 							setEditData(item);
-							console.log("open", detailOpen);
 						}}
 					/>
 				</th>
@@ -172,8 +171,8 @@ const AdminMCQ = () => {
 
 		for (let i = 0; i < editData.options.length; i++) {
 			if (
-				editData.options[i].text === "" &&
-				editData.options[i].image === ""
+				editData.options[i].text == "" &&
+				(!editData.options[i].image || editData.options[i].image === "")
 			) {
 				swal(
 					"Please Either fill all the options or remove the empty options!",

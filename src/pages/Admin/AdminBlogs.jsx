@@ -26,7 +26,6 @@ const AdminBlogs = () => {
   }, []);
   useEffect(() => {
     setData(blogs);
-    console.log(blogs);
   }, [blogs]);
 
   const TableComponent = ({ item }) => {

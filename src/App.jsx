@@ -6,7 +6,8 @@ import {
   Articles,
   Question,
   Blog,
-  MCQ
+  MCQ,
+  // Example
 } from "./pages";
 import {
   Admin,
@@ -38,6 +39,7 @@ const App = () => {
           <Route path="/admin/blogs/:id" element={<EditBlog />} />
           <Route path="/admin/articles" element={<AdminArticles />} />
           <Route path="/admin/mcqs" element={<AdminMcq />} />
+          {/* <Route path="/example" element={<Example />} /> */}
         </Routes>
       </Router>
     </div>

@@ -76,7 +76,6 @@ const AdminProgramming = () => {
                     <button
                         className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                         onClick={() => {
-                            console.log(item);
                             setEditData(item);
                             setEditOpen(true);
                         }}
@@ -127,7 +126,6 @@ const AdminProgramming = () => {
         // eslint-disable-next-line
     }, []);
     const handleUpload = () => {
-        console.log(uploadData);
         if (
             uploadData.title === "" ||
             uploadData.description === "" ||
@@ -287,7 +285,6 @@ const AdminProgramming = () => {
                                                     defaultLanguage="java"
                                                     defaultValue={editData.solution}
                                                     onChange={(value, event) => {
-                                                        console.log(value);
                                                         setEditData({
                                                             ...editData,
                                                             solution: value,
@@ -362,7 +359,6 @@ const AdminProgramming = () => {
                                                 value={uploadData.description}
                                                 placeholder="Problem Description"
                                                 onChange={(e) => {
-                                                    console.log(e);
                                                     setUploadData({
                                                         ...uploadData,
                                                         description: e,
@@ -601,7 +597,6 @@ const AdminProgramming = () => {
                                                             },
                                                         }}
                                                         onChange={(e) => {
-                                                            console.log(e);
                                                             if (uploadData.testCases) {
                                                                 const updatedTestCases = [
                                                                     ...uploadData.testCases,
@@ -620,7 +615,6 @@ const AdminProgramming = () => {
                                             <button
                                                 onClick={(e) => {
                                                     e.preventDefault();
-                                                    console.log(uploadData.testCases);
                                                     if (
                                                         uploadData.testCases.length == 0 ||
                                                         (uploadData.testCases[
@@ -636,7 +630,6 @@ const AdminProgramming = () => {
                                                                 uploadData.testCases.length - 1
                                                             ].explaination !== "<p><br></p>")
                                                     ) {
-                                                        console.log("hello");
                                                         setUploadData({
                                                             ...uploadData,
                                                             testCases: [
@@ -666,7 +659,6 @@ const AdminProgramming = () => {
                                                 defaultLanguage="java"
                                                 defaultValue={`function add(a, b) {\n  return a + b;\n}`}
                                                 onChange={(value, event) => {
-                                                    console.log(value);
                                                     setUploadData({
                                                         ...uploadData,
                                                         solution: value,
@@ -815,7 +807,6 @@ const AdminProgramming = () => {
                                                     value={editData.description}
                                                     placeholder="Problem Description"
                                                     onChange={(e) => {
-                                                        console.log(e);
                                                         setEditData({
                                                             ...editData,
                                                             description: e,
@@ -1071,7 +1062,6 @@ const AdminProgramming = () => {
                                                 <button
                                                     onClick={(e) => {
                                                         e.preventDefault();
-                                                        console.log(editData.testCases);
                                                         if (
                                                             editData.testCases.length === 0 ||
                                                             (editData.testCases[editData.testCases.length - 1]
@@ -1116,7 +1106,6 @@ const AdminProgramming = () => {
                                                     defaultLanguage="java"
                                                     defaultValue={editData.solution}
                                                     onChange={(value, event) => {
-                                                        console.log(value);
                                                         setEditData({
                                                             ...editData,
                                                             solution: value,

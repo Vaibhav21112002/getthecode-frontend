@@ -20,9 +20,7 @@ const EditBlog = () => {
     setEditData(blog[0]);
   }, [blog]);
 
-  console.log(editData);
   const handleUpload = () => {
-    console.log(editData);
 
     if (
       editData.title === "" ||
@@ -127,7 +125,6 @@ const EditBlog = () => {
                   placeholder="Title:"
                   className="w-full pl-2 h-10 rounded-[8px] mb-5"
                   onChange={(e) => {
-                    console.log(editData);
                     setEditData({
                       ...editData,
                       title: e.target.value,
@@ -146,7 +143,6 @@ const EditBlog = () => {
                   placeholder="keywords"
                   className="w-full pl-2 h-10 rounded-[8px] mb-5"
                   onChange={(e) => {
-                    console.log(editData);
                     setEditData({
                       ...editData,
                       keywords: e.target.value,
@@ -166,11 +162,6 @@ const EditBlog = () => {
                           : unactiveClass
                       }
                       onClick={() => {
-                        console.log(
-                          editData.tags.includes(tag),
-                          tag,
-                          editData.tags
-                        );
                         if (editData.tags.includes(tag)) {
                           setEditData({
                             ...editData,
@@ -202,7 +193,6 @@ const EditBlog = () => {
                       placeholder="Company Name: "
                       className="w-full pl-2 h-10 rounded-[8px] mb-5"
                       onChange={(e) => {
-                        console.log(editData);
                         setEditData({
                           ...editData,
                           company: e.target.value,

@@ -21,14 +21,12 @@ const Programming = () => {
         setActiveFilter(topic);
         if (topic === "All Questions") {
             setData(questions);
-            // console.log(questions);
         }
         else {
             const newData = questions.filter((item) =>
                 item.topicTag.includes(topic)
             );
             setData(newData);
-            // console.log(newData);
         }
 
     }
@@ -41,21 +39,13 @@ const Programming = () => {
     useEffect(() => {
         if(activeFilter!=="All Questions") return;
         getQuestions();
-        console.log(questions);
         // eslint-disable-next-line
     }, []);
     
     useEffect(()=>{
         if(activeFilter!=="All Questions") return;
         setData(questions);
-        console.log(questions);
     },[questions]);
-    // while(data.length===0){
-    //     // getQuestions();
-    //     setData(questions);
-    // }
-
-    // console.log(data);
     const topics = [
         { title: "All Questions" },
         { title: "Arrays" },
@@ -216,7 +206,6 @@ const Programming = () => {
                                             defaultLanguage="java"
                                             defaultValue={editData.solution}
                                             onChange={(value, event) => {
-                                                console.log(value);
                                                 setEditData({
                                                     ...editData,
                                                     solution: value,

@@ -15,11 +15,9 @@ const CodeState = (props) => {
 	const [loading, setLoading] = useState(false);
 
 	const addUploadImage = async (image) => {
-		console.log(image);
 		const res = await api.post("/cloudinary/upload", {
 			image: image,
 		});
-		console.log(res.data.url);
 		return res.data.url;
 	};
 
@@ -28,7 +26,6 @@ const CodeState = (props) => {
 			setLoading(true);
 			const res = await api.get("/problems");
 			setQuestions(res.data);
-			// console.log(res.data);
 			setLoading(false);
 		} catch (err) {
 			console.log(err);
@@ -81,7 +78,6 @@ const CodeState = (props) => {
 			setLoading(true);
 			const res = await api.get("/blogs");
 			setBlogs(res.data);
-			// console.log(res.data);
 			setLoading(false);
 		} catch (err) {
 			console.log(err);
@@ -129,8 +125,6 @@ const CodeState = (props) => {
 			setLoading(true);
 			const res = await api.get("/mcqs");
 			setMcqs(res.data);
-			// console.log(res.data);
-			console.log(res.data);
 			setLoading(false);
 		} catch (err) {
 			console.log(err);

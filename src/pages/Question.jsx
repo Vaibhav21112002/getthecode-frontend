@@ -17,7 +17,6 @@ const Question = () => {
     useEffect(() => {
         getQuestion(id);
         setData(question);
-        console.log(question, data);
         // eslint-disable-next-line
     }, []);
     const testStyle = "bg-[#25272E] w-full rounded-xl text-[0.76rem] p-4 mt-2";
