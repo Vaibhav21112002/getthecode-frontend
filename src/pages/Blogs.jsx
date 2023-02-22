@@ -154,6 +154,21 @@ const Blogs = () => {
                 onFocus={handleInputFocus}
                 onBlur={handleInputBlur}
                 ref={inputRef}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    console.log(inputValue);
+                    setFilteredCompanies(companies);
+                    setData(
+                      blogs.filter(
+                        (blog) =>
+                          blog.company
+                            .toLowerCase()
+                            ===inputValue
+                      )
+                    );
+                    inputRef.current.blur();
+                  }
+                }}
                 placeholder="Select a company"
                 className="text-black w-[70%] h-[30px] text-center rounded-[8px]"
               />
@@ -175,54 +190,73 @@ const Blogs = () => {
             </div>
           )}
           <div className="py-1 flex flex-wrap">
-        {currentBlogs.map((blog,index) => (
-          <div
-            key={blog._id}
-            className="bg-white w-[29.6%] shadow-[rgb(233, 117, 0)] h-[64vh] ml-10 mb-10 rounded-[16px] cursor-pointer flex"
-            onClick={() => navigate("/blogs/" + blog._id)}
-          >
-            <div className="flex flex-col w-full ml-6">
-              <div className="text-black w-full mt-6">
-                <h1 className="text-5xl">{blog.title}</h1>
+            {currentBlogs.map((blog, index) => (
+              <div
+                key={blog._id}
+                className="bg-white w-[29.6%] shadow-[rgb(233, 117, 0)] h-[64vh] ml-10 mb-10 rounded-[16px] cursor-pointer flex"
+                onClick={() => navigate("/blogs/" + blog._id)}
+              >
+                <div className="flex flex-col w-full ml-6">
+                  <div className="text-black w-full mt-6">
+                    <h1 className="text-5xl">{blog.title}</h1>
+                  </div>
+                  <div className="text-black mt-6">
+                    <div>{Parser(blog.keywords.slice(0, 150))}.....</div>
+                  </div>
+                  <div className="mt-6 mb-3">
+                    (
+                    <span className="text-sm text-gray-700">
+                      #{blog.tag}
+                      {blog.company &&
+                        blog.tag === "Interview Experiences" &&
+                        ":" + blog.company + " "}
+                    </span>
+                    ))
+                  </div>
+                </div>
+                {(index + 1) % 3 === 0 ? <div className="w-full"></div> : null}
               </div>
-              <div className="text-black mt-6">
-                <div>{Parser(blog.keywords.slice(0, 150))}.....</div>
-              </div>
-              <div className="mt-6 mb-3">
-                (
-                <span className="text-sm text-gray-700">
-                  #{blog.tag}
-                  {blog.company &&
-                    blog.tag === "Interview Experiences" &&
-                    ":" + blog.company + " "}
-                </span>
-                ))
-              </div>
-            </div>
-            {(index + 1) % 3 === 0 ? <div className="w-full"></div> : null}
+            ))}
           </div>
-        ))}
-      </div>
-      <div className="flex justify-center items-center mt-8">
-        {currentPage >1 && (
-          <button
-            onClick={() => paginate(currentPage - 1)}
-            className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50 mr-2"
-          >
-            Previous
-          </button>
-        )}
-        <div className="rounded bg-white text-black">{`${currentPage}/${Math.ceil(data.length/blogsPerPage)}`}</div>
-        {currentBlogs.length < blogsPerPage ||
-        data.length <= blogsPerPage * currentPage ? null : (
-          <button
-            onClick={() => paginate(currentPage + 1)}
-            className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50"
-          >
-            Next
-          </button>
-        )}
-      </div>
+
+          {Math.ceil(data.length / blogsPerPage) === 0 ? (
+            <div>
+              No Blogs with the selected filters
+            </div>
+          ) : (
+            <div className="flex justify-center items-center mt-8">
+              {
+                <button
+                  onClick={() => {
+                    if (currentPage <= 1) return;
+                    paginate(currentPage - 1);
+                  }}
+                  className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50"
+                >
+                  Previous
+                </button>
+              }
+              <div className="rounded-full h-10 w-10 mx-5 flex items-center justify-center bg-white text-black">{`${currentPage}/${Math.ceil(
+                data.length / blogsPerPage
+              )}`}</div>
+
+              {
+                <button
+                  onClick={() => {
+                    if (
+                      currentBlogs.length < blogsPerPage ||
+                      data.length <= blogsPerPage * currentPage
+                    )
+                      return;
+                    paginate(currentPage + 1);
+                  }}
+                  className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50"
+                >
+                  Next
+                </button>
+              }
+            </div>
+          )}
         </div>
       </div>
     </div>
