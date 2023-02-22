@@ -20,7 +20,6 @@ const CreateBlog = () => {
 
   const { addBlog } = useContext(codeContext);
   const handleUpload = () => {
-
     if (
       uploadData.title === "" ||
       uploadData.tag === "" ||
@@ -91,8 +90,8 @@ const CreateBlog = () => {
               Create A blog
             </h1>
             <div className="flex flex-col ">
-              <div className="flex w-full items-center justify-between mt-8 px-[3rem]">
-                <h1 className="text-left text-[white] text-base font-normal px-4">
+              <div className="flex w-10/12 mx-auto items-center justify-between mt-8">
+                <h1 className="text-left text-[white] text-base font-normal">
                   Your New Blog
                 </h1>
               </div>
@@ -137,19 +136,20 @@ const CreateBlog = () => {
 
               <div className={divStyle}>
                 <label className="text-white">Tags</label>
-                <select
-                  value={uploadData.tag}
-                  onChange={(e) =>
-                    setUploadData({ ...uploadData, tag: e.target.value })
-                  }
-                  className="flex flex-wrap w-full h-[40px] rounded-lg gap-8 mb-5"
-                >
-                  {topics.map((tag) => (
-                    <option key={tag} value={tag}>
-                      {tag}
-                    </option>
-                  ))}
-                </select>
+                <div class="relative inline-block w-full">
+                  <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline">
+                    {topics.map((tag) => (
+                      <option key={tag} value={tag}>
+                        {tag}
+                      </option>
+                    ))}
+                  </select>
+                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg class="fill-current h-4 w-4" viewBox="0 0 20 20">
+                      <path d="M10 12l-5-5 1.41-1.41L10 9.17l3.59-3.58L15 7l-5 5z" />
+                    </svg>
+                  </div>
+                </div>
               </div>
               <div>
                 {uploadData.tag === "Interview Experiences" && (

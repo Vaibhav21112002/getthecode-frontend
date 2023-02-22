@@ -14,6 +14,13 @@ const Blogs = () => {
   const [filteredCompanies, setFilteredCompanies] = useState(companies);
   const [isFocused, setIsFocused] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [blogsPerPage] = useState(2);
+
+  const indexOfLastBlog = currentPage * blogsPerPage;
+  const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
@@ -99,19 +106,8 @@ const Blogs = () => {
     { title: "Miscellaneous" },
   ];
 
-  const TopicCard = ({ title }) => {
-    return (
-      <div
-        className="sm:w-[16rem] w-[10rem] text-[white] my-5 flex justify-center items-center sm:px-6 px-4 py-2 rounded-lg shadow-xl cursor-pointer bg-[#E97500] border-[#E97500] border hover:border-[#E97500] hover:bg-[#202128] hover:text-[white]"
-        onClick={() => handleTopicFilter(title)}
-      >
-        <h1 className="sm:text-sm text-xs text-center  hover:text-[white]">
-          {title}
-        </h1>
-      </div>
-    );
-  };
-
+  const currentBlogs = data.slice(indexOfFirstBlog, indexOfLastBlog);
+  console.log(currentBlogs);
   return (
     <div className="back">
       <Navbar />
@@ -127,19 +123,26 @@ const Blogs = () => {
               fingertips
             </h1>
             <div className="flex justify-center items-center float-right">
-              <select
-                value={activeFilter}
-                className=" h-[30%] rounded-lg border-[#E97500] border bg-[#E97500] text-white"
-                onChange={(e) => {
-                  handleTopicFilter(e.target.value);
-                }}
-              >
-                {topics.map((topic) => (
-                  <option value={topic.title} key={topic.title}>
-                    {topic.title}
-                  </option>
-                ))}
-              </select>
+              <div className="relative inline-block w-full">
+                <select
+                  value={activeFilter}
+                  onChange={(e) => {
+                    handleTopicFilter(e.target.value);
+                  }}
+                  className="block appearance-none w-full border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline text-black"
+                >
+                  {topics.map((topic) => (
+                    <option value={topic.title} key={topic.title}>
+                      {topic.title}
+                    </option>
+                  ))}
+                </select>
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                  <svg className="fill-current h-4 w-4" viewBox="0 0 20 20">
+                    <path d="M10 12l-5-5 1.41-1.41L10 9.17l3.59-3.58L15 7l-5 5z" />
+                  </svg>
+                </div>
+              </div>
             </div>
           </div>
           {activeFilter === "Interview Experiences" && (
@@ -172,34 +175,54 @@ const Blogs = () => {
             </div>
           )}
           <div className="py-1 flex flex-wrap">
-            {data.map((blog, index) => (
-              <div
-                key={blog._id}
-                className="bg-white w-[29.6%] h-[64vh] ml-10 mb-10 rounded-[16px] cursor-pointer flex"
-                onClick={() => navigate("/blogs/" + blog._id)}
-              >
-                <div className="flex flex-col w-full ml-6">
-                  <div className="text-black w-full mt-6">
-                    <h1 className="text-5xl">{blog.title}</h1>
-                  </div>
-                  <div className="text-black mt-6">
-                    <div>{Parser(blog.keywords.slice(0, 150))}.....</div>
-                  </div>
-                  <div className="mt-6 mb-3">
-                    (
-                    <span className="text-sm text-gray-700">
-                      #{blog.tag}
-                      {blog.company &&
-                        blog.tag === "Interview Experiences" &&
-                        ":" + blog.company + " "}
-                    </span>
-                    ))
-                  </div>
-                </div>
-                {(index + 1) % 3 === 0 ? <div className="w-full"></div> : null}
+        {currentBlogs.map((blog,index) => (
+          <div
+            key={blog._id}
+            className="bg-white w-[29.6%] shadow-[rgb(233, 117, 0)] h-[64vh] ml-10 mb-10 rounded-[16px] cursor-pointer flex"
+            onClick={() => navigate("/blogs/" + blog._id)}
+          >
+            <div className="flex flex-col w-full ml-6">
+              <div className="text-black w-full mt-6">
+                <h1 className="text-5xl">{blog.title}</h1>
               </div>
-            ))}
+              <div className="text-black mt-6">
+                <div>{Parser(blog.keywords.slice(0, 150))}.....</div>
+              </div>
+              <div className="mt-6 mb-3">
+                (
+                <span className="text-sm text-gray-700">
+                  #{blog.tag}
+                  {blog.company &&
+                    blog.tag === "Interview Experiences" &&
+                    ":" + blog.company + " "}
+                </span>
+                ))
+              </div>
+            </div>
+            {(index + 1) % 3 === 0 ? <div className="w-full"></div> : null}
           </div>
+        ))}
+      </div>
+      <div className="flex justify-center items-center mt-8">
+        {currentPage >1 && (
+          <button
+            onClick={() => paginate(currentPage - 1)}
+            className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50 mr-2"
+          >
+            Previous
+          </button>
+        )}
+        <div className="rounded bg-white text-black">{`${currentPage}/${Math.ceil(data.length/blogsPerPage)}`}</div>
+        {currentBlogs.length < blogsPerPage ||
+        data.length <= blogsPerPage * currentPage ? null : (
+          <button
+            onClick={() => paginate(currentPage + 1)}
+            className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50"
+          >
+            Next
+          </button>
+        )}
+      </div>
         </div>
       </div>
     </div>

@@ -12,7 +12,7 @@ const EditBlog = () => {
   const [editData, setEditData] = useState(undefined);
   const { id } = useParams();
 
-  const { editBlog, getBlog, blog, loading } = useContext(codeContext);
+  const { editBlog, getBlog, blog } = useContext(codeContext);
   useEffect(() => {
     getBlog(id);
   }, []);
@@ -21,10 +21,9 @@ const EditBlog = () => {
   }, [blog]);
 
   const handleUpload = () => {
-
     if (
       editData.title === "" ||
-      editData.tags.length === 0 ||
+      editData.tag === "" ||
       editData.keywords === "" ||
       editData.content === "" ||
       editData.content === "<p><br></p>"
@@ -36,7 +35,7 @@ const EditBlog = () => {
       });
       return;
     } else if (
-      editData.tags.includes("Interview Experiences") &&
+      editData.tag === "Interview Experiences" &&
       editData.company === ""
     ) {
       swal({
@@ -45,6 +44,18 @@ const EditBlog = () => {
         icon: "error",
       });
       return;
+    } else if (
+      editData.company !== "" &&
+      editData.tag !== "Interview Experiences"
+    ) {
+      setEditData({ ...editData, company: "" });
+      editBlog(editData);
+      swal({
+        title: "Success",
+        text: "Blog added successfully",
+        icon: "success",
+      });
+      navigate("/admin/blogs");
     } else {
       swal({
         title: "Do you stil want to edit the blog ?",
@@ -75,21 +86,8 @@ const EditBlog = () => {
     "Latest Tech Innovations",
     "Miscellaneous",
   ];
-  const companies = [
-    { name: "All Companies" },
-    { name: "Adobe" },
-    { name: "Google" },
-    { name: "Uber" },
-    { name: "Atlassian" },
-    { name: "Microsoft" },
-    { name: "Tower Research" },
-    { name: "D.E. Shaw" },
-    { name: "Arcesium" },
-  ];
 
   const divStyle = `flex w-full flex-col gap-2 text-[#202128] py-2`;
-  const activeClass = `bg-[#E97500] border-[#E97500] text-white px-4 py-2 rounded-xl cursor-pointer`;
-  const unactiveClass = `bg-[#F2F2F2] text-[#3A355C] px-4 py-2 rounded-xl cursor-pointer `;
   if (editData === undefined) {
     return <div>Loading.......</div>;
   }
@@ -107,9 +105,9 @@ const EditBlog = () => {
               Create A blog
             </h1>
             <div className="flex flex-col ">
-              <div className="flex w-full items-center justify-between mt-8 px-[3rem]">
-                <h1 className="text-left text-[white] text-base font-normal px-4">
-                  Your New Blog
+              <div className="flex w-10/12 mx-auto items-center justify-between mt-8">
+                <h1 className="text-left text-[white] text-base font-normal">
+                 Edit Blog
                 </h1>
               </div>
             </div>
@@ -122,7 +120,7 @@ const EditBlog = () => {
                   type="text"
                   name="title"
                   value={editData.title}
-                  placeholder="Title:"
+                  placeholder="Title"
                   className="w-full pl-2 h-10 rounded-[8px] mb-5"
                   onChange={(e) => {
                     setEditData({
@@ -153,35 +151,24 @@ const EditBlog = () => {
 
               <div className={divStyle}>
                 <label className="text-white">Tags</label>
-                <div className="flex flex-wrap w-full gap-8 mb-5">
-                  {topics.map((tag) => (
-                    <div
-                      className={
-                        editData.tags.includes(tag)
-                          ? activeClass
-                          : unactiveClass
-                      }
-                      onClick={() => {
-                        if (editData.tags.includes(tag)) {
-                          setEditData({
-                            ...editData,
-                            tags: editData.tags.filter((t) => t !== tag),
-                          });
-                        } else {
-                          setEditData({
-                            ...editData,
-                            tags: [...editData.tags, tag],
-                          });
-                        }
-                      }}
-                    >
-                      {tag}
-                    </div>
-                  ))}
+                <div class="relative inline-block w-full">
+                  <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline">
+                    {topics.map((tag) => (
+                      <option key={tag} value={tag}>
+                        {tag}
+                      </option>
+                    ))}
+                  </select>
+                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg class="fill-current h-4 w-4" viewBox="0 0 20 20">
+                      <path d="M10 12l-5-5 1.41-1.41L10 9.17l3.59-3.58L15 7l-5 5z" />
+                    </svg>
+                  </div>
                 </div>
               </div>
+
               <div>
-                {editData.tags.includes("Interview Experiences") && (
+                {editData.tag === "Interview Experiences" && (
                   <div className="w-full">
                     <label htmlFor="title" className="text-white">
                       Company name
@@ -190,7 +177,7 @@ const EditBlog = () => {
                       type="text"
                       name="title"
                       value={editData.company}
-                      placeholder="Company Name: "
+                      placeholder="Company Name "
                       className="w-full pl-2 h-10 rounded-[8px] mb-5"
                       onChange={(e) => {
                         setEditData({
