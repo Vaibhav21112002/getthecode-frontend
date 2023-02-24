@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 
 const AdminProgramming = () => {
     const navigate = useNavigate();
+    
     const { addQuestion, questions, getQuestions, editQuestion } =
         useContext(CodeContext);
     const [data, setData] = React.useState([]);
