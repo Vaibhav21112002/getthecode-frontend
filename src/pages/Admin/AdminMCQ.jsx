@@ -8,6 +8,7 @@ import CodeContext from "../../context/CodeContext";
 import swal from "sweetalert";
 import FileBase64 from "react-file-base64";
 import Loader from "../../assets/Images/loader.gif";
+import { topics } from "../../assets/Constants";
 
 const AdminMCQ = () => {
 	const {
@@ -32,6 +33,7 @@ const AdminMCQ = () => {
 			},
 		],
 		answer: 0,
+		topicTag: "",
 	});
 	const TableComponent = ({ item, index }) => {
 		return (
@@ -61,6 +63,7 @@ const AdminMCQ = () => {
 					onClick={() => {
 						setEditOpen(true);
 						setEditData(item);
+						console.log(item);
 					}}
 				>
 					<AiFillEdit className="cursor-pointer" />
@@ -100,10 +103,16 @@ const AdminMCQ = () => {
 		// eslint-disable-next-line
 	}, []);
 	const handleUpload = async () => {
+		setUploadData({
+			...uploadData,
+			answer: parseInt(uploadData.answer),
+		});
+		console.log(uploadData);
 		if (
 			uploadData.question === "" ||
 			uploadData.options[0].text === "" ||
-			uploadData.answer === 0
+			uploadData.answer === 0 ||
+			uploadData.topicTag === ""
 		) {
 			swal("Please fill all the fields!");
 			return;
@@ -154,6 +163,7 @@ const AdminMCQ = () => {
 				},
 			],
 			answer: 0,
+			topicTag: "",
 		});
 
 		setUploadOpen(false);
@@ -223,6 +233,7 @@ const AdminMCQ = () => {
 						},
 					],
 					answer: 0,
+					topicTag: "",
 				});
 				setUploadOpen(false);
 			}
@@ -551,6 +562,43 @@ const AdminMCQ = () => {
 														)}
 													</select>
 												</div>
+												<div className={divStyle}>
+													<label
+														className={labelStyle}
+													>
+														Topic Tag
+													</label>
+													<select
+														className={inputStyle}
+														value={
+															uploadData.topicTag
+														}
+														onChange={(e) =>
+															setUploadData({
+																...uploadData,
+																topicTag:
+																	e.target
+																		.value,
+															})
+														}
+													>
+														<option value="">
+															Select
+														</option>
+														{topics.map(
+															(item, index) => (
+																<option
+																	value={
+																		item.title
+																	}
+																	key={index}
+																>
+																	{item.title}
+																</option>
+															),
+														)}
+													</select>
+												</div>
 
 												{/* Submit Question */}
 												<button
@@ -660,6 +708,14 @@ const AdminMCQ = () => {
 															</div>
 														),
 													)}
+											</div>
+
+											<div className="px-8 w-full flex flex-col gap-2 mt-8">
+												<span
+													className={`text-[#E97500] font-bold text-[0.9rem]`}
+												>
+													# {editData.topicTag}
+												</span>
 											</div>
 										</div>
 									</div>
@@ -877,6 +933,34 @@ const AdminMCQ = () => {
 															</option>
 														),
 													)}
+												</select>
+											</div>
+											<div className={divStyle}>
+												<label className={labelStyle}>
+													Topic Tag
+												</label>
+												<select
+													className={inputStyle}
+													value={editData.topicTag}
+													onChange={(e) =>
+														setEditData({
+															...editData,
+															topicTag:
+																e.target.value,
+														})
+													}
+												>
+													<option value="">
+														Select
+													</option>
+													{topics.map((item) => (
+														<option
+															value={item.title}
+															key={item.title}
+														>
+															{item.title}
+														</option>
+													))}
 												</select>
 											</div>
 
