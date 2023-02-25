@@ -219,6 +219,32 @@ const AdminProgramming = () => {
   };
 
   const handleEdit = () => {
+    if (
+        editData.title === "" ||
+        editData.description === "" ||
+        editData.description === "<p><br></p>" ||
+        editData.difficulty === "" ||
+        editData.score === 0 ||
+        editData.topicTag.length === 0 ||
+        editData.companyTag.length === 0 ||
+        editData.solution.java === "" ||
+        editData.solution.cpp === "" ||
+        editData.solution.python === "" ||
+        editData.testCases.length == 0 ||
+        editData.testCases[editData.testCases.length - 1].input === "" ||
+        editData.testCases[editData.testCases.length - 1].output === "" ||
+        editData.testCases[editData.testCases.length - 1].explaination ===
+          "" ||
+        editData.testCases[editData.testCases.length - 1].explaination ===
+          "<p><br></p>"
+      ) {
+        swal({
+          title: "Error",
+          text: "Please fill all the fields",
+          icon: "error",
+        });
+        return;
+      } 
     swal({
       title: "Do you stil want to edit the question ?",
       icon: "warning",
@@ -358,15 +384,16 @@ const AdminProgramming = () => {
                     {editData?.solution?.java && (
                       <div className="w-full flex justify-center items-center flex-col py-4">
                         <div className="w-[90%] h-[30px] bg-[#1E1E1E] rounded-t-2xl"></div>
-                        {/* <Editor
+                        <Editor
                           height="60vh"
                           width={`90%`}
                           theme="vs-dark"
                           defaultLanguage="java"
+                          language={solutionLanguage}
                           value={`${editData.solution[solutionLanguage]}`}
-                          options={{ readOnly: true }}
+                          options={{readOnly:true}}
                           tabIndex={4}
-                        /> */}
+                        />
                         <div className="w-[90%] h-[30px] bg-[#1E1E1E] rounded-b-2xl mt-[-4px]"></div>
                       </div>
                     )}
