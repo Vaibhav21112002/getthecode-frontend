@@ -23,6 +23,8 @@ const AdminProgramming = () => {
   const [editOpen, setEditOpen] = React.useState(false);
   const [solutionOpen, setSolutionOpen] = React.useState(false);
   const [language, setLanguage] = useState("java");
+  const [solutionLanguage, setSolutionLanguage] = useState("java");
+  const [editLanguage, setEditLanguage] = useState("java");
   const [uploadData, setUploadData] = React.useState({
     title: "",
     description: "",
@@ -78,6 +80,20 @@ const AdminProgramming = () => {
       solution: updatedSolution,
     });
   }, [language]);
+
+  useEffect(() => {
+    if (editData.solution) {
+      const updatedSolution = {
+        ...editData.solution,
+        [editLanguage]: editData.solution[editLanguage] || "",
+      };
+
+      setEditData({
+        ...editData,
+        solution: updatedSolution,
+      });
+    }
+  }, [editLanguage]);
 
   const TableComponent = ({ item }) => {
     return (
@@ -216,6 +232,7 @@ const AdminProgramming = () => {
           icon: "success",
         });
         setEditOpen(false);
+        setEditLanguage('java');
       } else {
         swal({
           title: "Cancelled",
@@ -317,23 +334,39 @@ const AdminProgramming = () => {
                   </div>
                   <div className="w-full flex flex-col gap-4 justify-center items-center">
                     <h1 className="text-center font-bold text-2xl">Solution</h1>{" "}
-                    {editData.solution && (
+                    <div className="relative w-full flex items-center justify-center">
+                      <select
+                        value={solutionLanguage}
+                        onChange={(e) => {
+                          setSolutionLanguage(e.target.value);
+                        }}
+                        className="block appearance-none w-[40%] text-center justify-between border border-white hover:border-gray-800 bg-black text-white px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline"
+                      >
+                        <option value="java">Java</option>
+                        <option value="cpp">C++</option>
+                        <option value="python">Python</option>
+                      </select>
+                      <div className="pointer-events-none inset-y-0 absolute ml-[37%] flex items-center px-2 text-white">
+                        <svg
+                          className="fill-current h-4 w-4"
+                          viewBox="0 0 20 20"
+                        >
+                          <path d="M10 12l-5-5 1.41-1.41L10 9.17l3.59-3.58L15 7l-5 5z" />
+                        </svg>
+                      </div>
+                    </div>
+                    {editData?.solution?.java && (
                       <div className="w-full flex justify-center items-center flex-col py-4">
                         <div className="w-[90%] h-[30px] bg-[#1E1E1E] rounded-t-2xl"></div>
-                        <Editor
+                        {/* <Editor
                           height="60vh"
                           width={`90%`}
                           theme="vs-dark"
                           defaultLanguage="java"
-                          defaultValue={editData.solution}
-                          onChange={(value, event) => {
-                            setEditData({
-                              ...editData,
-                              solution: value,
-                            });
-                          }}
+                          value={`${editData.solution[solutionLanguage]}`}
+                          options={{ readOnly: true }}
                           tabIndex={4}
-                        />
+                        /> */}
                         <div className="w-[90%] h-[30px] bg-[#1E1E1E] rounded-b-2xl mt-[-4px]"></div>
                       </div>
                     )}
@@ -1169,18 +1202,47 @@ const AdminProgramming = () => {
                       </div>
 
                       <div className={divStyle}>
-                        <label className={labelStyle}>Solution</label>
+                        <div className="flex">
+                          <label className={labelStyle}>Solution</label>
+                          <div className="relative w-full">
+                            <select
+                              value={editLanguage}
+                              onChange={(e) => {
+                                setEditLanguage(e.target.value);
+                              }}
+                              className="block appearance-none h-[30px] w-[40%] float-right text-center justify-between bg-black border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline text-white"
+                            >
+                              <option value="java">Java</option>
+                              <option value="cpp">C++</option>
+                              <option value="python">Python</option>
+                            </select>
+                            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
+                              <svg
+                                className="fill-current h-4 w-4"
+                                viewBox="0 0 20 20"
+                              >
+                                <path d="M10 12l-5-5 1.41-1.41L10 9.17l3.59-3.58L15 7l-5 5z" />
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
                         <div className="w-[90%] h-[30px] bg-[#1E1E1E] rounded-t-2xl mb-[-8px]"></div>
                         <Editor
                           height="60vh"
                           width={`90%`}
                           theme="vs-dark"
                           defaultLanguage="java"
-                          defaultValue={editData.solution}
+                          language={editLanguage}
+                          value={`${editData.solution[editLanguage]}`}
                           onChange={(value, event) => {
+                            const updatedSolution = {
+                              ...editData.solution,
+                              [editLanguage]: value, // Use computed property syntax to update the specific language's value
+                            };
+                            console.log(editData.solution);
                             setEditData({
                               ...editData,
-                              solution: value,
+                              solution: updatedSolution,
                             });
                           }}
                           tabIndex={4}
