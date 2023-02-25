@@ -27,7 +27,7 @@ const AdminProgramming = () => {
   const [uploadData, setUploadData] = React.useState({
     title: "",
     description: "",
-    difficulty: "Easy",
+    difficulty: "easy",
     score: 0,
     topicTag: [],
     companyTag: [],
@@ -158,6 +158,7 @@ const AdminProgramming = () => {
     // eslint-disable-next-line
   }, []);
   const handleUpload = () => {
+    console.log(uploadData);
     if (
       uploadData.title === "" ||
       uploadData.description === "" ||
@@ -195,7 +196,7 @@ const AdminProgramming = () => {
   };
 
   const handleEdit = () => {
-
+    console.log(editData);
     if (
         editData.title === "" ||
         editData.description === "" ||
@@ -365,7 +366,6 @@ const AdminProgramming = () => {
                           width={`90%`}
                           theme="vs-dark"
                           defaultLanguage="java"
-                          defaultValue={`${editData.solution[language]}`}
                           value={`${editData.solution[language]}`}
                           options={{ readOnly: true }}
                           tabIndex={4}
@@ -759,7 +759,6 @@ const AdminProgramming = () => {
                         width={`90%`}
                         theme="vs-dark"
                         defaultLanguage="java"
-                        defaultValue={`function add(a, b) {\n  return a + b;\n}`}
                         value={`${uploadData.solution[language]}`}
                         onChange={(value, event) => {
                           const updatedSolution = {
@@ -828,7 +827,7 @@ const AdminProgramming = () => {
                           {editData.difficulty
                             ? editData.difficulty.slice(0, 1).toUpperCase() +
                               editData.difficulty.slice(1).toLowerCase()
-                            : "Easy"}
+                            : "easy"}
                         </h1>
                         <h1>
                           <span className="font-bold">Tags : </span> Two
@@ -1236,7 +1235,7 @@ const AdminProgramming = () => {
                             width={`90%`}
                             theme="vs-dark"
                             defaultLanguage="java"
-                            defaultValue={`function add(a, b) {\n  return a + b;\n}`}
+
                             value={`${editData.solution[editLanguage]}`}
                             onChange={(value, event) => {
                               const updatedSolution = {
