@@ -166,7 +166,9 @@ const AdminProgramming = () => {
       uploadData.score === 0 ||
       uploadData.topicTag.length === 0 ||
       uploadData.companyTag.length === 0 ||
-      uploadData.solution === "" ||
+      uploadData.solution.cpp === "" ||
+      uploadData.solution.java === "" ||
+      uploadData.solution.python === "" ||
       uploadData.testCases.length == 0 ||
       uploadData.testCases[uploadData.testCases.length - 1].input === "" ||
       uploadData.testCases[uploadData.testCases.length - 1].output === "" ||
@@ -193,6 +195,33 @@ const AdminProgramming = () => {
   };
 
   const handleEdit = () => {
+
+    if (
+        editData.title === "" ||
+        editData.description === "" ||
+        editData.description === "<p><br></p>" ||
+        editData.difficulty === "" ||
+        editData.score === 0 ||
+        editData.topicTag.length === 0 ||
+        editData.companyTag.length === 0 ||
+        editData.solution.cpp === "" ||
+        editData.solution.java === "" ||
+        editData.solution.python === "" ||
+        editData.testCases.length == 0 ||
+        editData.testCases[editData.testCases.length - 1].input === "" ||
+        editData.testCases[editData.testCases.length - 1].output === "" ||
+        editData.testCases[editData.testCases.length - 1].explaination ===
+          "" ||
+        editData.testCases[editData.testCases.length - 1].explaination ===
+          "<p><br></p>"
+      ) {
+        swal({
+          title: "Error",
+          text: "Please fill all the fields",
+          icon: "error",
+        });
+        return;
+      } 
     swal({
       title: "Do you stil want to edit the question ?",
       icon: "warning",
