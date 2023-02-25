@@ -9,8 +9,10 @@ import swal from "sweetalert";
 import FileBase64 from "react-file-base64";
 import Loader from "../../assets/Images/loader.gif";
 import { topics } from "../../assets/Constants";
+import { useNavigate } from "react-router-dom";
 
 const AdminMCQ = () => {
+	const { navigate } = useNavigate();
 	const {
 		mcqs,
 		getMcqs,
@@ -19,6 +21,7 @@ const AdminMCQ = () => {
 		deleteMcq,
 		addUploadImage,
 		loading,
+		setLogin,
 	} = useContext(CodeContext);
 	const [editData, setEditData] = React.useState({});
 	const [uploadOpen, setUploadOpen] = React.useState(false);
@@ -101,6 +104,27 @@ const AdminMCQ = () => {
 	useEffect(() => {
 		getMcqs();
 		// eslint-disable-next-line
+	}, []);
+
+	useEffect(() => {
+		const d = localStorage.getItem("token");
+		if (!d) {
+			setLogin(false);
+			navigate("/admin");
+			return;
+		}
+
+		const date = new Date(parseInt(d));
+		const now = new Date();
+		const diff = now.getTime() - date.getTime();
+		const diffDays = Math.ceil(diff / (1000 * 3600 * 24));
+		if (diffDays > 1) {
+			localStorage.removeItem("token");
+			setLogin(false);
+			navigate("/admin");
+			return;
+		}
+		setLogin(true);
 	}, []);
 	const handleUpload = async () => {
 		setUploadData({
@@ -710,13 +734,17 @@ const AdminMCQ = () => {
 													)}
 											</div>
 
-											<div className="px-8 w-full flex flex-col gap-2 mt-8">
-												<span
-													className={`text-[#E97500] font-bold text-[0.9rem]`}
-												>
-													# {editData.topicTag}
-												</span>
-											</div>
+											{editData.topicTag &&
+												editData.topicTag != "" && (
+													<div className="px-8 w-full flex flex-col gap-2 mt-8">
+														<span
+															className={`text-[#E97500] font-bold text-[0.9rem]`}
+														>
+															#{" "}
+															{editData.topicTag}
+														</span>
+													</div>
+												)}
 										</div>
 									</div>
 								</Modal>

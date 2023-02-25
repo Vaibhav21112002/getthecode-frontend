@@ -13,6 +13,7 @@ const CodeState = (props) => {
 	const [mcq, setMcq] = useState({});
 
 	const [loading, setLoading] = useState(false);
+	const [login, setLogin] = useState(false);
 
 	const addUploadImage = async (image) => {
 		const res = await api.post("/cloudinary/upload", {
@@ -190,6 +191,8 @@ const CodeState = (props) => {
 					mcq,
 					mcqs,
 					loading,
+					login,
+					setLogin,
 					addUploadImage,
 					getQuestions,
 					getQuestion,

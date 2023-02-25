@@ -1,11 +1,11 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { AdminNavbar, AdminTopBar } from "../../components";
 import codeContext from "../../context/CodeContext";
 import { useNavigate } from "react-router-dom";
 
-const AdminArticles = () => {
-	const { navigate } = useNavigate();
-	const { login, setLogin } = useContext(codeContext);
+const Profile = () => {
+	const { setLogin } = useContext(codeContext);
+	const navigate = useNavigate();
 	useEffect(() => {
 		const d = localStorage.getItem("token");
 		if (!d) {
@@ -38,4 +38,4 @@ const AdminArticles = () => {
 	);
 };
 
-export default AdminArticles;
+export default Profile;

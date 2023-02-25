@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 
 const AdminProgramming = () => {
     const navigate = useNavigate();
-    const { addQuestion, questions, getQuestions, editQuestion } =
+    const { addQuestion, questions, getQuestions, editQuestion, setLogin } =
         useContext(codeContext);
     const [data, setData] = React.useState([]);
     const [editData, setEditData] = React.useState({});
@@ -40,6 +40,27 @@ const AdminProgramming = () => {
         solution: "",
         videoLink: "",
     });
+
+    useEffect(() => {
+		const d = localStorage.getItem("token");
+		if (!d) {
+			setLogin(false);
+			navigate("/admin");
+			return;
+		}
+
+		const date = new Date(parseInt(d));
+		const now = new Date();
+		const diff = now.getTime() - date.getTime();
+		const diffDays = Math.ceil(diff / (1000 * 3600 * 24));
+		if (diffDays > 1) {
+			localStorage.removeItem("token");
+			setLogin(false);
+			navigate("/admin");
+			return;
+		}
+		setLogin(true);
+	}, []);
     const TableComponent = ({ item }) => {
         return (
             <tr className="bg-white dark:bg-gray-800 text-[0.76rem]">
