@@ -26,7 +26,7 @@ const AdminProgramming = () => {
   const [uploadData, setUploadData] = React.useState({
     title: "",
     description: "",
-    difficulty: "Easy",
+    difficulty: "easy",
     score: 0,
     topicTag: [],
     companyTag: [],
@@ -38,7 +38,11 @@ const AdminProgramming = () => {
       hint5: "",
     },
     testCases: [{ input: "", output: "", explaination: "" }],
-    solution: "",
+    solution: {
+      java: "",
+      cpp: "",
+      python: "",
+    },
     videoLink: "",
   });
 
@@ -62,6 +66,19 @@ const AdminProgramming = () => {
     }
     setLogin(true);
   }, []);
+
+  useEffect(() => {
+    const updatedSolution = {
+      ...uploadData.solution,
+      [language]: uploadData.solution[language] || "",
+    };
+
+    setUploadData({
+      ...uploadData,
+      solution: updatedSolution,
+    });
+  }, [language]);
+
   const TableComponent = ({ item }) => {
     return (
       <tr className="bg-white dark:bg-gray-800 text-[0.76rem]">
@@ -148,6 +165,7 @@ const AdminProgramming = () => {
     // eslint-disable-next-line
   }, []);
   const handleUpload = () => {
+    console.log(uploadData);
     if (
       uploadData.title === "" ||
       uploadData.description === "" ||
@@ -156,7 +174,9 @@ const AdminProgramming = () => {
       uploadData.score === 0 ||
       uploadData.topicTag.length === 0 ||
       uploadData.companyTag.length === 0 ||
-      uploadData.solution === "" ||
+      uploadData.solution.java === "" ||
+      uploadData.solution.cpp === "" ||
+      uploadData.solution.python === "" ||
       uploadData.testCases.length == 0 ||
       uploadData.testCases[uploadData.testCases.length - 1].input === "" ||
       uploadData.testCases[uploadData.testCases.length - 1].output === "" ||
@@ -395,12 +415,13 @@ const AdminProgramming = () => {
                         className={inputStyle}
                         value={uploadData.score}
                         placeholder="Score"
-                        onChange={(e) =>
+                        onChange={(e) => {
                           setUploadData({
                             ...uploadData,
                             score: e.target.value,
-                          })
-                        }
+                          });
+                          console.log(e.target.value);
+                        }}
                       />
                     </div>
                     <div className={divStyle}>
@@ -672,39 +693,47 @@ const AdminProgramming = () => {
                       </button>
                     </div>
                     <div className={divStyle}>
-                      <label className={labelStyle}>Solution</label>
-                      <div className="relative inline">
-                        <select
-                          value={language}
-                          onChange={(e) => {
-                            setLanguage(e.target.value);
-                          }}
-                          className="block appearance-none w-[40%] text-center justify-between border border-white hover:border-gray-800 bg-black text-white px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline"
-                        >
-                          <option value="java">Java</option>
-                          <option value="cpp">C++</option>
-                          <option value="python">Python</option>
-                        </select>
-                        <div className="pointer-events-none inset-y-0 absolute ml-[37%] flex items-center px-2 text-white">
-                          <svg
-                            className="fill-current h-4 w-4"
-                            viewBox="0 0 20 20"
+                      <div className="flex">
+                        <label className={labelStyle}>Solution</label>
+                        <div className="relative w-full">
+                          <select
+                            value={language}
+                            onChange={(e) => {
+                              setLanguage(e.target.value);
+                            }}
+                            className="block appearance-none h-[30px] w-[40%] float-right text-center justify-between bg-black border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline text-white"
                           >
-                            <path d="M10 12l-5-5 1.41-1.41L10 9.17l3.59-3.58L15 7l-5 5z" />
-                          </svg>
+                            <option value="java">Java</option>
+                            <option value="cpp">C++</option>
+                            <option value="python">Python</option>
+                          </select>
+                          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
+                            <svg
+                              className="fill-current h-4 w-4"
+                              viewBox="0 0 20 20"
+                            >
+                              <path d="M10 12l-5-5 1.41-1.41L10 9.17l3.59-3.58L15 7l-5 5z" />
+                            </svg>
+                          </div>
                         </div>
                       </div>
                       <div className="w-[90%] h-[30px] bg-[#1E1E1E] rounded-t-2xl mb-[-8px]"></div>
+
                       <Editor
                         height="60vh"
                         width={`90%`}
                         theme="vs-dark"
                         defaultLanguage="java"
-                        defaultValue={`function add(a, b) {\n  return a + b;\n}`}
+                        value={`${uploadData.solution[language]}`}
                         onChange={(value, event) => {
+                          const updatedSolution = {
+                            ...uploadData.solution,
+                            [language]: value, // Use computed property syntax to update the specific language's value
+                          };
+                          console.log(uploadData.solution);
                           setUploadData({
                             ...uploadData,
-                            solution: value,
+                            solution: updatedSolution,
                           });
                         }}
                         tabIndex={4}
