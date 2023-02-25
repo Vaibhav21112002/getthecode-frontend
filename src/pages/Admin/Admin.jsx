@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { darkTheme } from "../../assets/Constants";
-import { AdminNavbar, AdminTopBar } from "../../components";
+import { Navbar, AdminNavbar, AdminTopBar } from "../../components";
 import { MdAdminPanelSettings } from "react-icons/md";
 import codeContext from "../../context/CodeContext";
 import swal from "sweetalert";
@@ -50,6 +50,7 @@ const Admin = () => {
 				</div>
 			) : (
 				<div className={`w-full h-[100vh] flex bg-[${darkTheme.bgPrimary}]`} >
+					<Navbar/>
 					<div className="w-full h-full flex justify-center items-center">
 						<div className="w-[70%] h-[70%] bg-white rounded-md shadow-[0_50px_25px_-24px_rgb(0,0,0,0.3)] flex flex-col items-center">
 							<div className="flex items-center gap-4">

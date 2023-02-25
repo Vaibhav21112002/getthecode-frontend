@@ -33,6 +33,11 @@ const Profile = () => {
 			</div>
 			<div className="w-10/12">
 				<AdminTopBar />
+				<div>
+					<div>
+						
+					</div>
+				</div>
 			</div>
 		</div>
 	);

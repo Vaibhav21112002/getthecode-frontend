@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Navbar } from "../components";
+import { Navbar, Footer } from "../components";
 import "../assets/CSS/index.css";
 import codeContext from "../context/CodeContext";
 import { topics } from "../assets/Constants";
@@ -236,6 +236,7 @@ const MCQ = () => {
 					)}
 				</div>
 			</div>
+			<Footer />
 		</div>
 	);
 };

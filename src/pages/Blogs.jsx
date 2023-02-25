@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
-import { Navbar } from "../components";
+import { Navbar, Footer } from "../components";
 import "../assets/CSS/index.css";
 import { useNavigate } from "react-router-dom";
 import Parser from "html-react-parser";
@@ -259,6 +259,7 @@ const Blogs = () => {
           )}
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

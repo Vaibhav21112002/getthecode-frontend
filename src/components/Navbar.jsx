@@ -19,67 +19,35 @@ function Navbar({ question }) {
     return (
 
         <div className="mb-10">
-            <div style={{ position: 'fixed' }} className="flex w-full bg-[#222629] z-[10]">
+            <div style={{ position: 'fixed' }} className="flex w-full bg-[#222629] z-[10] border-b border-[#33343B]">
                 <div className="w-full flex items-center py-4">
                     <div className="flex w-full px-4">
-                        {question && <BiArrowBack className="text-[white] text-[1.6rem] mr-3 cursor-pointer"
-                            onClick={() => navigate("/programming")} />}
-                        <AiOutlineHome
-                            className="text-[white] text-[1.6rem] cursor-pointer"
-                            onClick={() => navigate("/")}
-                        />
-
+                        {question && <BiArrowBack className="text-[white] text-[1.6rem] mr-3 cursor-pointer" onClick={() => navigate("/programming")} />}
+                        <AiOutlineHome className="text-[white] text-[1.6rem] cursor-pointer" onClick={() => navigate("/")} />
                     </div>
                     <ul className="sm:flex hidden gap-4 w-full justify-end items-center px-8">
                         {navLinks.map((link, index) => {
                             return (
                                 <li key={index}>
-                                    <button
-                                        className="px-4 py-2 text-[white] hover:bg-[#BDA9A9] hover:text-[#202128] rounded-md text-sm"
-                                        onClick={() => navigate(`${link.path}`)}
-                                    >
-                                        {link.title}
-                                    </button>
-                                    {location.pathname === link.path && (
-                                        <div className="">
-                                            <div className=""></div>
-                                        </div>
-                                    )}
+                                    <button className="px-4 py-2 text-[white] hover:bg-[#BDA9A9] hover:text-[#202128] rounded-md text-sm" onClick={() => navigate(`${link.path}`)} > {link.title} </button>
+                                    {location.pathname === link.path && ( <div className=""> <div className=""></div> </div> )}
                                 </li>
                             );
                         })}
-                        <BiShieldQuarter
-                            className="text-[#BDA9A9] text-2xl hover:text-white cursor-pointer"
-                            onClick={() => navigate("/admin")}
-                        />
+                        <BiShieldQuarter className="text-[#BDA9A9] text-2xl hover:text-white cursor-pointer" onClick={() => navigate("/admin")} />
                     </ul>
                 </div>
                 <div className="w-full flex justify-end items-center px-4 sm:hidden">
-                    {!open && (
-                        <AiOutlineMenu
-                            className="text-[30px] text-white mr-2"
-                            onClick={() => setOpen(!open)}
-                        />
-                    )}
+                    {!open && ( <AiOutlineMenu className="text-[30px] text-white mr-2" onClick={() => setOpen(!open)} /> )}
                 </div>
                 {open && (
                     <div className="h-[100vh] absolute w-full sm:hidden flex justify-end bg-[rgb(0,0,0,0)] z-[10]">
                         <div className="h-full w-8/12 side-nav py-4 px-4">
-                            <AiOutlineClose
-                                className="text-[30px] text-white"
-                                onClick={() => setOpen(!open)}
-                            />
+                            <AiOutlineClose className="text-[30px] text-white" onClick={() => setOpen(!open)} />
                             <ul className="flex flex-col mt-12 gap-4 justify-center items-center">
                                 {navLinks.map((link) => {
                                     return (
-                                        <button
-                                            className="text-black text-lg"
-                                            onClick={() =>
-                                                navigate(`${link.path}`)
-                                            }
-                                        >
-                                            {link.title}
-                                        </button>
+                                        <button className="text-black text-lg" onClick={() => navigate(`${link.path}`) } > {link.title} </button>
                                     );
                                 })}
                             </ul>

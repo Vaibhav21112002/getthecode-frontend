@@ -22,6 +22,17 @@ const CodeState = (props) => {
 		return res.data.url;
 	};
 
+	const contactForm = async (data) => {
+		try {
+			setLoading(true);
+			const res = await api.post("/contact", data);
+			setLoading(false);
+		} catch (err) {
+			console.log(err);
+		}
+		setLoading(false);
+	};
+
 	const getQuestions = async () => {
 		try {
 			setLoading(true);
@@ -193,6 +204,7 @@ const CodeState = (props) => {
 					loading,
 					login,
 					setLogin,
+					contactForm,
 					addUploadImage,
 					getQuestions,
 					getQuestion,

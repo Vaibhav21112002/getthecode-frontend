@@ -17,7 +17,7 @@ import {
 	AdminArticles,
 	CreateBlog,
 	EditBlog,
-	Profile,
+	Profile
 } from "./pages/Admin";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
