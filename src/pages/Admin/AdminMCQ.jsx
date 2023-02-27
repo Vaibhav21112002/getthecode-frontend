@@ -135,8 +135,8 @@ const AdminMCQ = () => {
 		if (
 			uploadData.question === "" ||
 			uploadData.options[0].text === "" ||
-			uploadData.answer === 0 ||
-			uploadData.topicTag === ""
+			uploadData.answer == 0 ||
+			uploadData.topicTag == ""
 		) {
 			swal("Please fill all the fields!");
 			return;
@@ -527,7 +527,7 @@ const AdminMCQ = () => {
 																					uploadData.options;
 																				temp.push(
 																					{
-																						option: "",
+																						text: "",
 																						image: "",
 																					},
 																				);
@@ -909,7 +909,7 @@ const AdminMCQ = () => {
 																				editData.options;
 																			temp.push(
 																				{
-																					option: "",
+																					text: "",
 																					image: "",
 																				},
 																			);
@@ -965,7 +965,8 @@ const AdminMCQ = () => {
 											</div>
 											<div className={divStyle}>
 												<label className={labelStyle}>
-													Topic Tag
+													{" "}
+													Topic Tag{" "}
 												</label>
 												<select
 													className={inputStyle}
@@ -979,14 +980,16 @@ const AdminMCQ = () => {
 													}
 												>
 													<option value="">
-														Select
+														{" "}
+														Select{" "}
 													</option>
 													{topics.map((item) => (
 														<option
 															value={item.title}
 															key={item.title}
 														>
-															{item.title}
+															{" "}
+															{item.title}{" "}
 														</option>
 													))}
 												</select>
@@ -997,7 +1000,8 @@ const AdminMCQ = () => {
 												className="min-w-[100px] h-[40px] bg-[#1E1E1E] text-white rounded-md px-8"
 												onClick={handleEdit}
 											>
-												Save Changes
+												{" "}
+												Save Changes{" "}
 											</button>
 										</div>
 									</div>
