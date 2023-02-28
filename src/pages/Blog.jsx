@@ -64,7 +64,7 @@ const Blog = () => {
 													className="bg-white ml-10 mb-10 overflow-scroll rounded-[16px] cursor-pointer flex"
 													onClick={() =>
 														navigate(
-															"/blogs/" + item.id,
+															"/blogs/" + item._id,
 														)
 													}
 												>
@@ -103,31 +103,6 @@ const Blog = () => {
 									}
 								})}
 							</div>
-							{/* <div>
-                <div
-                  className="bg-white ml-10 mb-10 rounded-[16px] cursor-pointer flex"
-                  onClick={() => navigate("/blogs/" + blog.id)}
-                >
-                  <div className="flex flex-col w-full ml-6">
-                    <div className=" text-black w-full mt-2 ">
-                      <h1 className="text-3xl">{blog.title}</h1>
-                    </div>
-                    <div className=" text-black mt-2">
-                      <div>{Parser(data.content.slice(0, 100))}........</div>
-                    </div>
-                    <div className="mb-1">
-                      {blog.tags.map((topic) => (
-                        <span className=" text-sm text-gray-700">
-                          #{topic}
-                          {blog.company &&
-                            topic === "Interview Experiences" &&
-                            ":" + blog.company + " "}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div> 
-              </div>*/}
 						</div>
 					</div>
 				</div>

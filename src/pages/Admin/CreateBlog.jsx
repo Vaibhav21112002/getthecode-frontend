@@ -20,6 +20,7 @@ const CreateBlog = () => {
 
   const { addBlog } = useContext(codeContext);
   const handleUpload = () => {
+
     if (
       uploadData.title === "" ||
       uploadData.tag === "" ||
