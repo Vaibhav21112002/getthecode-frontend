@@ -190,9 +190,9 @@ const AdminProgramming = () => {
       uploadData.score === 0 ||
       uploadData.topicTag.length === 0 ||
       uploadData.companyTag.length === 0 ||
-      uploadData.solution.java === "" ||
-      uploadData.solution.cpp === "" ||
-      uploadData.solution.python === "" ||
+     ( uploadData.solution.java === "" &&
+      uploadData.solution.cpp === "" &&
+      uploadData.solution.python === "") ||
       uploadData.testCases.length == 0 ||
       uploadData.testCases[uploadData.testCases.length - 1].input === "" ||
       uploadData.testCases[uploadData.testCases.length - 1].output === "" ||
@@ -486,8 +486,7 @@ const AdminProgramming = () => {
                     </div>
                     <div className={divStyle}>
                       <label className={labelStyle}>Difficulty</label>
-                      <select
-                        className={inputStyle}
+                      <select 
                         value={uploadData.difficulty}
                         onChange={(e) =>
                           setUploadData({

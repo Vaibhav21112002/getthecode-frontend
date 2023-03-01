@@ -5,5 +5,7 @@ export { default as Blog } from "./Blog";
 export { default as Articles } from "./Articles";
 export {default as Question} from "./Question";
 export {default as MCQ} from "./MCQ.jsx";
+export {default as SqlQuestion} from "./SqlQuestion.jsx";
+export {default as SqlQuestions} from "./SqlQuestions.jsx";
 
-// export {default as Example} from "./Example";
+export {default as Table} from "./Table";

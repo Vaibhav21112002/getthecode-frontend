@@ -12,6 +12,9 @@ const CodeState = (props) => {
 	const [mcqs, setMcqs] = useState([]);
 	const [mcq, setMcq] = useState({});
 
+	const [sqls, setSqls] = useState([]);
+	const [sql, setSql] = useState({});
+
 	const [loading, setLoading] = useState(false);
 	const [login, setLogin] = useState(false);
 
@@ -85,6 +88,19 @@ const CodeState = (props) => {
 		setLoading(false);
 	};
 
+	const deleteQuestion = async (id) => {
+		try {
+			setLoading(true);
+			await api.delete(`/problems/${id}`);
+			setQuestions(questions.filter((question) => question._id !== id));
+			setLoading(false);
+		} catch (err) {
+			console.log(err);
+		}
+		setLoading(false);
+	};
+
+
 	const getBlogs = async () => {
 		try {
 			setLoading(true);
@@ -125,6 +141,19 @@ const CodeState = (props) => {
 			setLoading(true);
 			const res = await api.put(`/blogs/${id}`, question);
 			setBlogs(blogs.map((blog) => (blog._id === id ? res.data : blog)));
+			setLoading(false);
+		} catch (err) {
+			console.log(err);
+		}
+		setLoading(false);
+	};
+
+
+	const deleteBlog = async (id) => {
+		try {
+			setLoading(true);
+			await api.delete(`/blogs/${id}`);
+			setBlogs(blogs.filter((blog) => blog._id !== id));
 			setLoading(false);
 		} catch (err) {
 			console.log(err);
@@ -191,6 +220,70 @@ const CodeState = (props) => {
 		}
 		setLoading(false);
 	};
+
+	const getSqls = async()=>{
+		try{
+			setLoading(true);
+			const res = await api.get('/sql');
+			setSqls(res.data);
+			setLoading(false);
+		}
+		catch(err){
+			console.log(err);
+		}
+		setLoading(false);
+	}
+	const getSql = async(id)=>{
+		try{
+			setLoading(true);
+			const res = await api.get(`/sql/${id}`);
+			setSql(res.data);
+			setLoading(false);
+		}
+		catch(err){
+			console.log(err);
+		}
+		setLoading(false);
+	};
+	const addSql = async(question) =>{
+		try{
+			setLoading(true);
+			const res = await api.post('/sql',question);
+			setSqls([...sqls,res.data]);
+			setLoading(false);
+		}
+		catch(err){
+			console.log(err);
+		}
+		setLoading(false);
+	};
+
+	const editSql = async (id, question) => {
+		try {
+			setLoading(true);
+			const res = await api.put(`/sql/${id}`, question);
+			setSqls(
+				sqls.map((question) =>
+					question._id === id ? res.data : question,
+				),
+			);
+			setLoading(false);
+		} catch (err) {
+			console.log(err);
+		}
+		setLoading(false);
+	};
+	const deleteSql = async (id) => {
+		try {
+			setLoading(true);
+			await api.delete(`/sql/${id}`);
+			setSqls(questions.filter((sql) => sql._id !== id));
+			setLoading(false);
+		} catch (err) {
+			console.log(err);
+		}
+		setLoading(false);
+	};
 	return (
 		<div>
 			<CodeContext.Provider
@@ -201,6 +294,8 @@ const CodeState = (props) => {
 					blogs,
 					mcq,
 					mcqs,
+					sqls,
+					sql,
 					loading,
 					login,
 					setLogin,
@@ -210,15 +305,22 @@ const CodeState = (props) => {
 					getQuestion,
 					addQuestion,
 					editQuestion,
+					deleteQuestion,
 					getBlogs,
 					getBlog,
 					addBlog,
 					editBlog,
+					deleteBlog,
 					getMcqs,
 					getMcq,
 					addMcq,
 					editMcq,
 					deleteMcq,
+					getSqls,
+					getSql,
+					addSql,
+					editSql,
+					deleteSql
 				}}
 			>
 				{props.children}
