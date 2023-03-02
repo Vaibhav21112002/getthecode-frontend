@@ -17,11 +17,20 @@ const Admin = () => {
     getQuestions,
     blogs,
     getBlogs,
+    mcqs,
+    getMcqs,
   } = useContext(codeContext);
   const lableStyle = "text-[#33343B] font-bold text-sm mb-2  ";
   const inputStyle =
-    "w-full h-[40px] rounded-md border-[#33343B] border-2 p-2 mb-4 focus:outline-none focus:border-[#33343B] focus:ring-2 focus:ring-[#33343B] focus:ring-opacity-50     ";
+    "w-full h-[40px] rounded-md border-[#33343B] border-2 p-2 mb-4 focus:outline-none focus:border-[#33343B] focus:ring-2 focus:ring-[#33343B] focus:ring-opacity-50";
 
+  useEffect(() => {
+	getSqls();
+	getQuestions();
+	getBlogs();
+	getMcqs();
+	
+  }, []);
   useEffect(() => {
     const d = localStorage.getItem("token");
     if (!d) {
@@ -73,7 +82,9 @@ const Admin = () => {
                       Programming Questions
                     </h2>
                     <div className="flex items-center bg-[#E97500] rounded-full h-[100px] text-center justify-center w-[100px]">
-                      <span className="text-3xl font-bold mr-2 text-white">500</span>
+                      <span className="text-3xl font-bold mr-2 text-white">
+                        500
+                      </span>
                     </div>
                   </div>
 
@@ -81,7 +92,9 @@ const Admin = () => {
                   <div className="bg-white p-4 rounded-lg items-center shadow-md flex justify-between">
                     <h2 className="text-lg font-medium mb-2">MCQs</h2>
                     <div className="flex items-center bg-[#E97500] rounded-full h-[100px] text-center justify-center w-[100px]">
-                      <span className="text-3xl font-bold mr-2 text-white">200</span>
+                      <span className="text-3xl font-bold mr-2 text-white">
+                        200
+                      </span>
                     </div>
                   </div>
 
@@ -89,7 +102,9 @@ const Admin = () => {
                   <div className="bg-white p-4 rounded-lg items-center shadow-md flex justify-between">
                     <h2 className="text-lg font-medium mb-2">Blogs</h2>
                     <div className="flex items-center bg-[#E97500] rounded-full h-[100px] text-center justify-center w-[100px]">
-                      <span className="text-3xl font-bold mr-2 text-white">100</span>
+                      <span className="text-3xl font-bold mr-2 text-white">
+                        100
+                      </span>
                     </div>
                   </div>
 
@@ -97,7 +112,9 @@ const Admin = () => {
                   <div className="bg-white p-4 rounded-lg items-center shadow-md flex justify-between">
                     <h2 className="text-lg font-medium mb-2">SQL Problems</h2>
                     <div className="flex items-center bg-[#E97500] rounded-full h-[100px] text-center justify-center w-[100px]">
-                      <span className="text-3xl font-bold mr-2 text-white">50</span>
+                      <span className="text-3xl font-bold mr-2 text-white">
+                        50
+                      </span>
                     </div>
                   </div>
                 </div>
