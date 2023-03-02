@@ -70,7 +70,7 @@ const AdminBlogs = () => {
 			<div className="w-2/12">
 				<AdminNavbar />
 			</div>
-			<div className="w-10/12 flex flex-col justify-center items-center">
+			<div className="w-10/12 flex flex-col items-center">
 				<AdminTopBar />
 				<div className="flex w-full">
 					<div className="flex flex-col gap-3 w-full ">

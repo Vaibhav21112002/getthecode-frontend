@@ -7,7 +7,9 @@ import {
 	Question,
 	Blog,
 	MCQ,
-	// Example
+	Table,
+	SqlQuestion,
+	SqlQuestions
 } from "./pages";
 import {
 	Admin,
@@ -17,7 +19,10 @@ import {
 	AdminArticles,
 	CreateBlog,
 	EditBlog,
-	Profile
+	Profile,
+	AdminSql,
+	CreateSql,
+	EditSql
 } from "./pages/Admin";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -32,6 +37,9 @@ const App = () => {
 					<Route path="/mcqs" element={<MCQ />} />
 					<Route path="/blogs/:id" element={<Blog />} />
 					<Route path="/articles" element={<Articles />} />
+					<Route path="/sql" element={<SqlQuestions />} />
+					<Route path="/sql/:id" element={<SqlQuestion />} />
+					<Route path="/Table" element={<Table />} />
 					<Route path="/programming/:id" element={<Question />} />
 					<Route path="/admin" element={<Admin />} />
 					<Route
@@ -41,8 +49,11 @@ const App = () => {
 					<Route path="/admin/blogs" element={<AdminBlogs />} />
 					<Route path="/admin/createBlog" element={<CreateBlog />} />
 					<Route path="/admin/blogs/:id" element={<EditBlog />} />
+					<Route path="/admin/sql/:id" element={<EditSql />} />
 					<Route path="/admin/articles" element={<AdminArticles />} />
 					<Route path="/admin/mcqs" element={<AdminMcq />} />
+					<Route path="/admin/sql" element={<AdminSql />} />
+					<Route path="/admin/createSql" element={<CreateSql />} />
 					<Route path="/admin/profile" element={<Profile />} />
 				</Routes>
 			</Router>

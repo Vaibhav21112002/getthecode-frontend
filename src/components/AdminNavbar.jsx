@@ -9,6 +9,7 @@ import {
 import { MdDashboard, MdHomeFilled } from "react-icons/md";
 import { HiOutlineNewspaper } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
+import {AiOutlineConsoleSql} from "react-icons/ai"
 
 const AdminNav = () => {
 	const navigate = useNavigate();
@@ -19,6 +20,7 @@ const AdminNav = () => {
 		{ title: "Blogs", path: "/admin/blogs", icon: <BsInfoLg /> },
 		{ title: "Articles", path: "/admin/articles", icon: <HiOutlineNewspaper />, },
 		{ title: "MCQs", path: "/admin/mcqs", icon: <BsQuestionCircle />, },
+		{ title: "SQL", path: "/admin/sql", icon: <AiOutlineConsoleSql />, },
 	];
 	return (
 		<div
