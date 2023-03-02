@@ -85,6 +85,19 @@ const CodeState = (props) => {
 		setLoading(false);
 	};
 
+	const deleteQuestion = async (id) => {
+		try {
+			setLoading(true);
+			await api.delete(`/problems/${id}`);
+			setQuestions(questions.filter((question) => question._id !== id));
+			setLoading(false);
+		} catch (err) {
+			console.log(err);
+		}
+		setLoading(false);
+	};
+
+
 	const getBlogs = async () => {
 		try {
 			setLoading(true);
@@ -210,6 +223,7 @@ const CodeState = (props) => {
 					getQuestion,
 					addQuestion,
 					editQuestion,
+					deleteQuestion,
 					getBlogs,
 					getBlog,
 					addBlog,
