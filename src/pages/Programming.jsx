@@ -8,9 +8,7 @@ import Void from "../assets/Images/Void.svg";
 import Modal from "react-awesome-modal";
 import Editor from "@monaco-editor/react";
 import { AiOutlineClose } from "react-icons/ai";
-import load from "../assets/Images/question_mark.png";
-import { IoMdReturnRight } from "react-icons/io";
-import { topics } from "../assets/Constants";
+import MarkdownEditor from "@uiw/react-markdown-editor";
 
 const Programming = () => {
   const { questions, getQuestions } = useContext(CodeContext);

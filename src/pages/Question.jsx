@@ -6,6 +6,8 @@ import CodeContext from "../context/CodeContext";
 import { Media, Player } from "react-media-player";
 import Parser from "html-react-parser";
 import Editor from "@monaco-editor/react";
+import MarkdownEditor from "@uiw/react-markdown-editor";
+import "../assets/CSS/index.css";
 
 const Question = () => {
 	const { question, getQuestion } = useContext(CodeContext);
@@ -28,11 +30,14 @@ const Question = () => {
 				<h1 className="text-4xl font-bold text-[white]  ">
 					{question.title ? question.title : "Two Sum"}
 				</h1>
-				<h1 className="py-4 text-justify text-base">
-					{question.description
-						? Parser(question.description)
-						: "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target."}
-				</h1>
+				<br />
+				<div className="markdown">
+					<MarkdownEditor.Markdown
+						source={question.description}
+						// onChange={(value) => console.log(value)}
+						className="text-white text-sm bg-[#222629]"
+					/>
+				</div>
 				<h1 className="font-bold mt-8 text-xl">Test Case</h1>
 				<br />
 				{question.testCases &&
@@ -225,9 +230,9 @@ const Question = () => {
 										</div>
 									</Media>
 								) : (
-									<div
-                    className="w-full flex justify-center items-center flex-col py-4 text-2xl"
-                  >No Video Solution Available</div>
+									<div className="w-full flex justify-center items-center flex-col py-4 text-2xl">
+										No Video Solution Available
+									</div>
 								)}
 							</div>
 						)}

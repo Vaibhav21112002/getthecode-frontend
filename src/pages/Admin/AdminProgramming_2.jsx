@@ -11,11 +11,18 @@ import codeContext from "../../context/CodeContext";
 import swal from "sweetalert";
 import Void from "../../assets/Images/Void.svg";
 import { useNavigate } from "react-router-dom";
+import MarkdownEditor from "@uiw/react-markdown-editor";
 
 const AdminProgramming = () => {
 	const navigate = useNavigate();
-	const { addQuestion, questions, getQuestions, editQuestion, setLogin, deleteQuestion } =
-		useContext(codeContext);
+	const {
+		addQuestion,
+		questions,
+		getQuestions,
+		editQuestion,
+		setLogin,
+		deleteQuestion,
+	} = useContext(codeContext);
 	const [data, setData] = React.useState([]);
 	const [editData, setEditData] = React.useState({});
 	const [uploadOpen, setUploadOpen] = React.useState(false);
@@ -183,64 +190,66 @@ const AdminProgramming = () => {
 		"Miscellaneous",
 	];
 
-  const CompanyTags = [
-    "Amazon",
-    "Apple",
-    "Facebook",
-    "Google",
-    "Microsoft",
-    "Oracle",
-    "Uber",
-    "Miscellaneous",
-  ];
-  const divStyle = `flex w-full flex-col sm:px-12 px-4 gap-2 text-[#202128] py-2`;
-  const labelStyle = ``;
-  const inputStyle = `w-full border rounded-md p-2`;
-  const activeClass = `bg-[#E97500] border-[#E97500] text-white px-4 py-2 rounded-xl cursor-pointer`;
-  const unactiveClass = `bg-[#F2F2F2] text-[#3A355C] px-4 py-2 rounded-xl cursor-pointer `;
-  // const buttonStyle = `w-full flex justify-center items-center gap-2`;
-  useEffect(() => {
-    getQuestions();
-    setData(questions);
-    // eslint-disable-next-line
-  }, []);
-  const handleUpload = () => {
-    console.log(uploadData);
-    if (
-      uploadData.title === "" ||
-      uploadData.description === "" ||
-      uploadData.description === "<p><br></p>" ||
-      uploadData.difficulty === "" ||
-      uploadData.score === 0 ||
-      uploadData.topicTag.length === 0 ||
-      uploadData.companyTag.length === 0 ||
-     ( uploadData.solution.java === "" &&
-      uploadData.solution.cpp === "" &&
-      uploadData.solution.python === "") ||
-      uploadData.testCases.length == 0 ||
-      uploadData.testCases[uploadData.testCases.length - 1].input === "" ||
-      uploadData.testCases[uploadData.testCases.length - 1].output === "" ||
-      uploadData.testCases[uploadData.testCases.length - 1].explaination ===
-        "" ||
-      uploadData.testCases[uploadData.testCases.length - 1].explaination ===
-        "<p><br></p>"
-    ) {
-      swal({
-        title: "Error",
-        text: "Please fill all the fields",
-        icon: "error",
-      });
-      return;
-    } else {
-      addQuestion(uploadData);
-      swal({
-        title: "Success",
-        text: "Question added successfully",
-        icon: "success",
-      });
-      setUploadOpen(false);
-    }
-  };
+	const CompanyTags = [
+		"Amazon",
+		"Apple",
+		"Facebook",
+		"Google",
+		"Microsoft",
+		"Oracle",
+		"Uber",
+		"Miscellaneous",
+	];
+	const divStyle = `flex w-full flex-col sm:px-12 px-4 gap-2 text-[#202128] py-2`;
+	const labelStyle = ``;
+	const inputStyle = `w-full border rounded-md p-2`;
+	const activeClass = `bg-[#E97500] border-[#E97500] text-white px-4 py-2 rounded-xl cursor-pointer`;
+	const unactiveClass = `bg-[#F2F2F2] text-[#3A355C] px-4 py-2 rounded-xl cursor-pointer `;
+	// const buttonStyle = `w-full flex justify-center items-center gap-2`;
+	useEffect(() => {
+		getQuestions();
+		setData(questions);
+		// eslint-disable-next-line
+	}, []);
+	const handleUpload = () => {
+		console.log(uploadData);
+		if (
+			uploadData.title === "" ||
+			uploadData.description === "" ||
+			uploadData.description === "<p><br></p>" ||
+			uploadData.difficulty === "" ||
+			uploadData.score === 0 ||
+			uploadData.topicTag.length === 0 ||
+			uploadData.companyTag.length === 0 ||
+			(uploadData.solution.java === "" &&
+				uploadData.solution.cpp === "" &&
+				uploadData.solution.python === "") ||
+			uploadData.testCases.length == 0 ||
+			uploadData.testCases[uploadData.testCases.length - 1].input ===
+				"" ||
+			uploadData.testCases[uploadData.testCases.length - 1].output ===
+				"" ||
+			uploadData.testCases[uploadData.testCases.length - 1]
+				.explaination === "" ||
+			uploadData.testCases[uploadData.testCases.length - 1]
+				.explaination === "<p><br></p>"
+		) {
+			swal({
+				title: "Error",
+				text: "Please fill all the fields",
+				icon: "error",
+			});
+			return;
+		} else {
+			addQuestion(uploadData);
+			swal({
+				title: "Success",
+				text: "Question added successfully",
+				icon: "success",
+			});
+			setUploadOpen(false);
+		}
+	};
 
 	const handleEdit = () => {
 		if (
@@ -352,405 +361,569 @@ const AdminProgramming = () => {
 														Score
 													</th>
 
-                          <th scope="col" className="py-3 px-6"></th>
-                        </tr>
-                      </thead>
-                      {questions.length > 0 && (
-                        <tbody>
-                          {questions.length &&
-                            questions.map((value, index) => {
-                              return (
-                                <TableComponent key={index} item={value} />
-                              );
-                            })}
-                        </tbody>
-                      )}
-                    </table>
-                  </div>
-                  {questions.length === 0 && (
-                    <div className="w-full flex flex-col gap-12 justify-center items-center py-12">
-                      <img
-                        src={Void}
-                        alt="Void"
-                        className="w-[20rem] h-[20rem]"
-                      />
-                      <h1 className="text-2xl font-bold text-[#BDA9A9]">
-                        No Questions Found
-                      </h1>
-                    </div>
-                  )}
-                </div>
-              </div>
-              {/* Solution Modal */}
-              <Modal
-                visible={solutionOpen}
-                onClickAway={() => setSolutionOpen(false)}
-                title="Solution"
-                width="90%"
-                height="90%"
-              >
-                <div className="h-[100%] overflow-auto modals text-[0.76rem]">
-                  <div className="flex w-full justify-end px-4 py-4">
-                    <AiOutlineClose
-                      className="text-black hover:font-bold text-[20px] cursor-pointer"
-                      onClick={() => setSolutionOpen(false)}
-                    />
-                  </div>
-                  <div className="w-full flex flex-col gap-4 justify-center items-center">
-                    <h1 className="text-center font-bold text-2xl">Solution</h1>{" "}
-                    <div className="relative w-full flex items-center justify-center">
-                      <select
-                        value={solutionLanguage}
-                        onChange={(e) => {
-                          setSolutionLanguage(e.target.value);
-                        }}
-                        className="block appearance-none w-[40%] text-center justify-between border border-white hover:border-gray-800 bg-black text-white px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline"
-                      >
-                        <option value="java">Java</option>
-                        <option value="cpp">C++</option>
-                        <option value="python">Python</option>
-                      </select>
-                      <div className="pointer-events-none inset-y-0 absolute ml-[37%] flex items-center px-2 text-white">
-                        <svg
-                          className="fill-current h-4 w-4"
-                          viewBox="0 0 20 20"
-                        >
-                          <path d="M10 12l-5-5 1.41-1.41L10 9.17l3.59-3.58L15 7l-5 5z" />
-                        </svg>
-                      </div>
-                    </div>
-                    {editData?.solution?.java && (
-                      <div className="w-full flex justify-center items-center flex-col py-4">
-                        <div className="w-[90%] h-[30px] bg-[#1E1E1E] rounded-t-2xl"></div>
-                        <Editor
-                          height="60vh"
-                          width={`90%`}
-                          theme="vs-dark"
-                          defaultLanguage="java"
-                          language={solutionLanguage}
-                          value={`${editData.solution[solutionLanguage]}`}
-                          options={{readOnly:true}}
-                          tabIndex={4}
-                        />
-                        <div className="w-[90%] h-[30px] bg-[#1E1E1E] rounded-b-2xl mt-[-4px]"></div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </Modal>
-              {/* Upload Modal */}
-              <Modal
-                visible={uploadOpen}
-                onClickAway={() => {
-                  swal({
-                    title: "Do you want to discard your changes?",
-                    icon: "warning",
-                    buttons: true,
-                  }).then((res) => {
-                    if (res) {
-                      setUploadOpen(false);
-                    }
-                  });
-                }}
-                title="Solution"
-                width="90%"
-                height="90%"
-              >
-                <div className="h-[100%] overflow-auto modals text-[0.76rem]">
-                  <div className="flex w-full justify-end px-4 py-4">
-                    <AiOutlineClose
-                      className="text-black hover:font-bold text-[20px] cursor-pointer"
-                      onClick={() =>
-                        swal({
-                          title: "Do you want to discard your changes?",
-                          icon: "warning",
-                          buttons: true,
-                        }).then((res) => {
-                          if (res) {
-                            setUploadOpen(false);
-                          }
-                        })
-                      }
-                    />
-                  </div>
-                  <h1 className="text-center text-2xl py-4 text-[#202128]">
-                    Upload a Problem
-                  </h1>
-                  <div className="w-full flex flex-col gap-4  py-8">
-                    <div className={divStyle}>
-                      <label className={labelStyle}>Problem Title</label>
-                      <input
-                        type="text"
-                        className={inputStyle}
-                        value={uploadData.title}
-                        placeholder="Problem Title"
-                        onChange={(e) =>
-                          setUploadData({
-                            ...uploadData,
-                            title: e.target.value,
-                          })
-                        }
-                      />
-                    </div>
-                    <div className={divStyle}>
-                      <label className={labelStyle}>Problem Description</label>
-                      <ReactQuill
-                        theme="snow"
-                        value={uploadData.description}
-                        placeholder="Problem Description"
-                        onChange={(e) => {
-                          setUploadData({
-                            ...uploadData,
-                            description: e,
-                          });
-                        }}
-                      />
-                    </div>
-                    <div className={divStyle}>
-                      <label className={labelStyle}>Score</label>
-                      <input
-                        type="number"
-                        className={inputStyle}
-                        value={uploadData.score}
-                        placeholder="Score"
-                        onChange={(e) => {
-                          setUploadData({
-                            ...uploadData,
-                            score: e.target.value,
-                          });
-                          console.log(e.target.value);
-                        }}
-                      />
-                    </div>
-                    <div className={divStyle}>
-                      <label className={labelStyle}>Difficulty</label>
-                      <select 
-                        value={uploadData.difficulty}
-                        onChange={(e) =>
-                          setUploadData({
-                            ...uploadData,
-                            difficulty: e.target.value,
-                          })
-                        }
-                      >
-                        <option value="easy">Easy</option>
-                        <option value="medium">Medium</option>
-                        <option value="hard">Hard</option>
-                      </select>
-                    </div>
-                    <div className={divStyle}>
-                      <label className={labelStyle}>Topic Tags</label>
-                      <div className="flex flex-wrap w-full gap-4">
-                        {TopicTags.map((tag) => (
-                          <div
-                            className={
-                              uploadData.topicTag.includes(tag)
-                                ? activeClass
-                                : unactiveClass
-                            }
-                            onClick={() => {
-                              if (uploadData.topicTag.includes(tag)) {
-                                setUploadData({
-                                  ...uploadData,
-                                  topicTag: uploadData.topicTag.filter(
-                                    (t) => t !== tag
-                                  ),
-                                });
-                              } else {
-                                setUploadData({
-                                  ...uploadData,
-                                  topicTag: [...uploadData.topicTag, tag],
-                                });
-                              }
-                            }}
-                          >
-                            {tag}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    <div className={divStyle}>
-                      <label className={labelStyle}>Company Tags</label>
-                      <div className="flex flex-wrap w-full gap-4">
-                        {CompanyTags.map((tag) => (
-                          <div
-                            className={
-                              uploadData.companyTag.includes(tag)
-                                ? activeClass
-                                : unactiveClass
-                            }
-                            onClick={() => {
-                              if (uploadData.companyTag.includes(tag)) {
-                                setUploadData({
-                                  ...uploadData,
-                                  companyTag: uploadData.companyTag.filter(
-                                    (t) => t !== tag
-                                  ),
-                                });
-                              } else {
-                                setUploadData({
-                                  ...uploadData,
-                                  companyTag: [...uploadData.companyTag, tag],
-                                });
-                              }
-                            }}
-                          >
-                            {tag}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    <div className={divStyle}>
-                      <label className={labelStyle}>Hints</label>
-                      <input
-                        className={inputStyle}
-                        value={uploadData.hints.hint1}
-                        placeholder="Hint 1"
-                        onChange={(e) =>
-                          setUploadData({
-                            ...uploadData,
-                            hints: {
-                              ...uploadData.hints,
-                              hint1: e.target.value,
-                            },
-                          })
-                        }
-                      />
-                      <input
-                        className={inputStyle}
-                        value={uploadData.hints.hint2}
-                        placeholder="Hint 2"
-                        onChange={(e) =>
-                          setUploadData({
-                            ...uploadData,
-                            hints: {
-                              ...uploadData.hints,
-                              hint2: e.target.value,
-                            },
-                          })
-                        }
-                      />
-                      <input
-                        className={inputStyle}
-                        value={uploadData.hints.hint3}
-                        placeholder="Hint 3"
-                        onChange={(e) =>
-                          setUploadData({
-                            ...uploadData,
-                            hints: {
-                              ...uploadData.hints,
-                              hint3: e.target.value,
-                            },
-                          })
-                        }
-                      />
-                      <input
-                        className={inputStyle}
-                        value={uploadData.hints.hint4}
-                        placeholder="Hint 4"
-                        onChange={(e) =>
-                          setUploadData({
-                            ...uploadData,
-                            hints: {
-                              ...uploadData.hints,
-                              hint4: e.target.value,
-                            },
-                          })
-                        }
-                      />
-                      <input
-                        className={inputStyle}
-                        value={uploadData.hints.hint5}
-                        placeholder="Hint 5"
-                        onChange={(e) =>
-                          setUploadData({
-                            ...uploadData,
-                            hints: {
-                              ...uploadData.hints,
-                              hint5: e.target.value,
-                            },
-                          })
-                        }
-                      />
-                    </div>
-                    <div className={divStyle}>
-                      <label className={labelStyle}>Sample Test Cases</label>
-                      {uploadData.testCases.map((testCase, index) => (
-                        <div className="w-full flex flex-col gap-2 border p-4 rounded-lg">
-                          <label className={labelStyle}>
-                            Test Case {index + 1}
-                          </label>
-                          <textarea
-                            className={inputStyle}
-                            name="input"
-                            value={testCase.input}
-                            placeholder="Input"
-                            onChange={(e) => {
-                              if (uploadData.testCases) {
-                                const updatedTestCases = [
-                                  ...uploadData.testCases,
-                                ];
-                                updatedTestCases[index][e.target.name] =
-                                  e.target.value;
-                                setUploadData({
-                                  ...uploadData,
-                                  testCases: updatedTestCases,
-                                });
-                              }
-                            }}
-                          />
-                          <textarea
-                            className={inputStyle}
-                            name="output"
-                            value={testCase.output}
-                            placeholder="Output"
-                            onChange={(e) => {
-                              if (uploadData.testCases) {
-                                const updatedTestCases = [
-                                  ...uploadData.testCases,
-                                ];
-                                updatedTestCases[index][e.target.name] =
-                                  e.target.value;
-                                setUploadData({
-                                  ...uploadData,
-                                  testCases: updatedTestCases,
-                                });
-                              }
-                            }}
-                          />
-                          <ReactQuill
-                            theme="snow"
-                            value={testCase.explaination}
-                            placeholder="explaination"
-                            name="explanation"
-                            modules={{
-                              toolbar: {
-                                container: [
-                                  [{ header: [1, 2, 3, 4, 5, 6, false] }],
-                                  ["bold", "italic", "underline"],
-                                  [{ list: "ordered" }, { list: "bullet" }],
-                                  [{ align: [] }],
-                                  ["link", "image"],
-                                  ["clean"],
-                                  [{ color: [] }],
-                                ],
-                              },
-                            }}
-                            onChange={(e) => {
-                              if (uploadData.testCases) {
-                                const updatedTestCases = [
-                                  ...uploadData.testCases,
-                                ];
-                                updatedTestCases[index]["explaination"] = e;
-                                setUploadData({
-                                  ...uploadData,
-                                  testCases: updatedTestCases,
-                                });
-                              }
-                            }}
-                          />
-                        </div>
-                      ))}
+													<th
+														scope="col"
+														className="py-3 px-6"
+													>Edit</th>
+													<th
+														scope="col"
+														className="py-3 px-6"
+													>Delete</th>
+												</tr>
+											</thead>
+											{questions.length > 0 && (
+												<tbody>
+													{questions.length &&
+														questions.map(
+															(value, index) => {
+																return (
+																	<TableComponent
+																		key={
+																			index
+																		}
+																		item={
+																			value
+																		}
+																	/>
+																);
+															},
+														)}
+												</tbody>
+											)}
+										</table>
+									</div>
+									{questions.length === 0 && (
+										<div className="w-full flex flex-col gap-12 justify-center items-center py-12">
+											<img
+												src={Void}
+												alt="Void"
+												className="w-[20rem] h-[20rem]"
+											/>
+											<h1 className="text-2xl font-bold text-[#BDA9A9]">
+												No Questions Found
+											</h1>
+										</div>
+									)}
+								</div>
+							</div>
+							{/* Solution Modal */}
+							<Modal
+								visible={solutionOpen}
+								onClickAway={() => setSolutionOpen(false)}
+								title="Solution"
+								width="90%"
+								height="90%"
+							>
+								<div className="h-[100%] overflow-auto modals text-[0.76rem]">
+									<div className="flex w-full justify-end px-4 py-4">
+										<AiOutlineClose
+											className="text-black hover:font-bold text-[20px] cursor-pointer"
+											onClick={() =>
+												setSolutionOpen(false)
+											}
+										/>
+									</div>
+									<div className="w-full flex flex-col gap-4 justify-center items-center">
+										<h1 className="text-center font-bold text-2xl">
+											Solution
+										</h1>{" "}
+										<div className="relative w-full flex items-center justify-center">
+											<select
+												value={solutionLanguage}
+												onChange={(e) => {
+													setSolutionLanguage(
+														e.target.value,
+													);
+												}}
+												className="block appearance-none w-[40%] text-center justify-between border border-white hover:border-gray-800 bg-black text-white px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline"
+											>
+												<option value="java">
+													Java
+												</option>
+												<option value="cpp">C++</option>
+												<option value="python">
+													Python
+												</option>
+											</select>
+											<div className="pointer-events-none inset-y-0 absolute ml-[37%] flex items-center px-2 text-white">
+												<svg
+													className="fill-current h-4 w-4"
+													viewBox="0 0 20 20"
+												>
+													<path d="M10 12l-5-5 1.41-1.41L10 9.17l3.59-3.58L15 7l-5 5z" />
+												</svg>
+											</div>
+										</div>
+										{editData?.solution?.java && (
+											<div className="w-full flex justify-center items-center flex-col py-4">
+												<div className="w-[90%] h-[30px] bg-[#1E1E1E] rounded-t-2xl"></div>
+												<Editor
+													height="60vh"
+													width={`90%`}
+													theme="vs-dark"
+													defaultLanguage="java"
+													language={solutionLanguage}
+													value={`${editData.solution[solutionLanguage]}`}
+													options={{ readOnly: true }}
+													tabIndex={4}
+												/>
+												<div className="w-[90%] h-[30px] bg-[#1E1E1E] rounded-b-2xl mt-[-4px]"></div>
+											</div>
+										)}
+									</div>
+								</div>
+							</Modal>
+							{/* Upload Modal */}
+							<Modal
+								visible={uploadOpen}
+								onClickAway={() => {
+									swal({
+										title: "Do you want to discard your changes?",
+										icon: "warning",
+										buttons: true,
+									}).then((res) => {
+										if (res) {
+											setUploadOpen(false);
+										}
+									});
+								}}
+								title="Solution"
+								width="90%"
+								height="90%"
+							>
+								<div className="h-[100%] overflow-auto modals text-[0.76rem]">
+									<div className="flex w-full justify-end px-4 py-4">
+										<AiOutlineClose
+											className="text-black hover:font-bold text-[20px] cursor-pointer"
+											onClick={() =>
+												swal({
+													title: "Do you want to discard your changes?",
+													icon: "warning",
+													buttons: true,
+												}).then((res) => {
+													if (res) {
+														setUploadOpen(false);
+													}
+												})
+											}
+										/>
+									</div>
+									<h1 className="text-center text-2xl py-4 text-[#202128]">
+										Upload a Problem
+									</h1>
+									<div className="w-full flex flex-col gap-4  py-8">
+										<div className={divStyle}>
+											<label className={labelStyle}>
+												Problem Title
+											</label>
+											<input
+												type="text"
+												className={inputStyle}
+												value={uploadData.title}
+												placeholder="Problem Title"
+												onChange={(e) =>
+													setUploadData({
+														...uploadData,
+														title: e.target.value,
+													})
+												}
+											/>
+										</div>
+										<div className={divStyle}>
+											<label className={labelStyle}>
+												Problem Description
+											</label>
+											<MarkdownEditor
+												value={uploadData.description}
+												onChange={(e) =>
+													setUploadData({
+														...uploadData,
+														description: e,
+													})
+												}
+											/>
+										</div>
+										<div className={divStyle}>
+											<label className={labelStyle}>
+												Score
+											</label>
+											<input
+												type="number"
+												className={inputStyle}
+												value={uploadData.score}
+												placeholder="Score"
+												onChange={(e) => {
+													setUploadData({
+														...uploadData,
+														score: e.target.value,
+													});
+													console.log(e.target.value);
+												}}
+											/>
+										</div>
+										<div className={divStyle}>
+											<label className={labelStyle}>
+												Difficulty
+											</label>
+											<select
+												value={uploadData.difficulty}
+												onChange={(e) =>
+													setUploadData({
+														...uploadData,
+														difficulty:
+															e.target.value,
+													})
+												}
+											>
+												<option value="easy">
+													Easy
+												</option>
+												<option value="medium">
+													Medium
+												</option>
+												<option value="hard">
+													Hard
+												</option>
+											</select>
+										</div>
+										<div className={divStyle}>
+											<label className={labelStyle}>
+												Topic Tags
+											</label>
+											<div className="flex flex-wrap w-full gap-4">
+												{TopicTags.map((tag) => (
+													<div
+														className={
+															uploadData.topicTag.includes(
+																tag,
+															)
+																? activeClass
+																: unactiveClass
+														}
+														onClick={() => {
+															if (
+																uploadData.topicTag.includes(
+																	tag,
+																)
+															) {
+																setUploadData({
+																	...uploadData,
+																	topicTag:
+																		uploadData.topicTag.filter(
+																			(
+																				t,
+																			) =>
+																				t !==
+																				tag,
+																		),
+																});
+															} else {
+																setUploadData({
+																	...uploadData,
+																	topicTag: [
+																		...uploadData.topicTag,
+																		tag,
+																	],
+																});
+															}
+														}}
+													>
+														{tag}
+													</div>
+												))}
+											</div>
+										</div>
+										<div className={divStyle}>
+											<label className={labelStyle}>
+												Company Tags
+											</label>
+											<div className="flex flex-wrap w-full gap-4">
+												{CompanyTags.map((tag) => (
+													<div
+														className={
+															uploadData.companyTag.includes(
+																tag,
+															)
+																? activeClass
+																: unactiveClass
+														}
+														onClick={() => {
+															if (
+																uploadData.companyTag.includes(
+																	tag,
+																)
+															) {
+																setUploadData({
+																	...uploadData,
+																	companyTag:
+																		uploadData.companyTag.filter(
+																			(
+																				t,
+																			) =>
+																				t !==
+																				tag,
+																		),
+																});
+															} else {
+																setUploadData({
+																	...uploadData,
+																	companyTag:
+																		[
+																			...uploadData.companyTag,
+																			tag,
+																		],
+																});
+															}
+														}}
+													>
+														{tag}
+													</div>
+												))}
+											</div>
+										</div>
+										<div className={divStyle}>
+											<label className={labelStyle}>
+												Hints
+											</label>
+											<input
+												className={inputStyle}
+												value={uploadData.hints.hint1}
+												placeholder="Hint 1"
+												onChange={(e) =>
+													setUploadData({
+														...uploadData,
+														hints: {
+															...uploadData.hints,
+															hint1: e.target
+																.value,
+														},
+													})
+												}
+											/>
+											<input
+												className={inputStyle}
+												value={uploadData.hints.hint2}
+												placeholder="Hint 2"
+												onChange={(e) =>
+													setUploadData({
+														...uploadData,
+														hints: {
+															...uploadData.hints,
+															hint2: e.target
+																.value,
+														},
+													})
+												}
+											/>
+											<input
+												className={inputStyle}
+												value={uploadData.hints.hint3}
+												placeholder="Hint 3"
+												onChange={(e) =>
+													setUploadData({
+														...uploadData,
+														hints: {
+															...uploadData.hints,
+															hint3: e.target
+																.value,
+														},
+													})
+												}
+											/>
+											<input
+												className={inputStyle}
+												value={uploadData.hints.hint4}
+												placeholder="Hint 4"
+												onChange={(e) =>
+													setUploadData({
+														...uploadData,
+														hints: {
+															...uploadData.hints,
+															hint4: e.target
+																.value,
+														},
+													})
+												}
+											/>
+											<input
+												className={inputStyle}
+												value={uploadData.hints.hint5}
+												placeholder="Hint 5"
+												onChange={(e) =>
+													setUploadData({
+														...uploadData,
+														hints: {
+															...uploadData.hints,
+															hint5: e.target
+																.value,
+														},
+													})
+												}
+											/>
+										</div>
+										<div className={divStyle}>
+											<label className={labelStyle}>
+												Sample Test Cases
+											</label>
+											{uploadData.testCases.map(
+												(testCase, index) => (
+													<div className="w-full flex flex-col gap-2 border p-4 rounded-lg">
+														<label
+															className={
+																labelStyle
+															}
+														>
+															Test Case{" "}
+															{index + 1}
+														</label>
+														<textarea
+															className={
+																inputStyle
+															}
+															name="input"
+															value={
+																testCase.input
+															}
+															placeholder="Input"
+															onChange={(e) => {
+																if (
+																	uploadData.testCases
+																) {
+																	const updatedTestCases =
+																		[
+																			...uploadData.testCases,
+																		];
+																	updatedTestCases[
+																		index
+																	][
+																		e.target.name
+																	] =
+																		e.target.value;
+																	setUploadData(
+																		{
+																			...uploadData,
+																			testCases:
+																				updatedTestCases,
+																		},
+																	);
+																}
+															}}
+														/>
+														<textarea
+															className={
+																inputStyle
+															}
+															name="output"
+															value={
+																testCase.output
+															}
+															placeholder="Output"
+															onChange={(e) => {
+																if (
+																	uploadData.testCases
+																) {
+																	const updatedTestCases =
+																		[
+																			...uploadData.testCases,
+																		];
+																	updatedTestCases[
+																		index
+																	][
+																		e.target.name
+																	] =
+																		e.target.value;
+																	setUploadData(
+																		{
+																			...uploadData,
+																			testCases:
+																				updatedTestCases,
+																		},
+																	);
+																}
+															}}
+														/>
+														<ReactQuill
+															theme="snow"
+															value={
+																testCase.explaination
+															}
+															placeholder="explaination"
+															name="explanation"
+															modules={{
+																toolbar: {
+																	container: [
+																		[
+																			{
+																				header: [
+																					1,
+																					2,
+																					3,
+																					4,
+																					5,
+																					6,
+																					false,
+																				],
+																			},
+																		],
+																		[
+																			"bold",
+																			"italic",
+																			"underline",
+																		],
+																		[
+																			{
+																				list: "ordered",
+																			},
+																			{
+																				list: "bullet",
+																			},
+																		],
+																		[
+																			{
+																				align: [],
+																			},
+																		],
+																		[
+																			"link",
+																			"image",
+																		],
+																		[
+																			"clean",
+																		],
+																		[
+																			{
+																				color: [],
+																			},
+																		],
+																	],
+																},
+															}}
+															onChange={(e) => {
+																if (
+																	uploadData.testCases
+																) {
+																	const updatedTestCases =
+																		[
+																			...uploadData.testCases,
+																		];
+																	updatedTestCases[
+																		index
+																	][
+																		"explaination"
+																	] = e;
+																	setUploadData(
+																		{
+																			...uploadData,
+																			testCases:
+																				updatedTestCases,
+																		},
+																	);
+																}
+															}}
+														/>
+													</div>
+												),
+											)}
 
 											<button
 												onClick={(e) => {
@@ -1033,16 +1206,14 @@ const AdminProgramming = () => {
 												<label className={labelStyle}>
 													Problem Description
 												</label>
-												<ReactQuill
-													theme="snow"
+												<MarkdownEditor
 													value={editData.description}
-													placeholder="Problem Description"
-													onChange={(e) => {
+													onChange={(e) =>
 														setEditData({
 															...editData,
 															description: e,
-														});
-													}}
+														})
+													}
 												/>
 											</div>
 											<div className={divStyle}>

@@ -9,7 +9,8 @@ import {
 	MCQ,
 	Table,
 	SqlQuestion,
-	SqlQuestions
+	SqlQuestions,
+	Test
 } from "./pages";
 import {
 	Admin,
@@ -55,6 +56,7 @@ const App = () => {
 					<Route path="/admin/sql" element={<AdminSql />} />
 					<Route path="/admin/createSql" element={<CreateSql />} />
 					<Route path="/admin/profile" element={<Profile />} />
+					<Route path="/test" element={<Test />} />
 				</Routes>
 			</Router>
 		</div>

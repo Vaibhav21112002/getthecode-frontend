@@ -54,7 +54,17 @@
 }
 
 .boxes {
-  -webkit-box-shadow: 8px -7px 0px 0px rgba(237,138,17,1);
--moz-box-shadow: 8px -7px 0px 0px rgba(237,138,17,1);
-box-shadow: 8px -7px 0px 0px rgba(237,138,17,1);
+  -webkit-box-shadow: 8px -7px 0px 0px rgba(237, 138, 17, 1);
+  -moz-box-shadow: 8px -7px 0px 0px rgba(237, 138, 17, 1);
+  box-shadow: 8px -7px 0px 0px rgba(237, 138, 17, 1);
+}
+
+.markdown > .wmde-markdown {
+  -webkit-text-size-adjust: 100%;
+  font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+  font-size: 16px;
+  line-height: 1.5;
+  word-wrap: break-word;
+  color: white !important;
+  background-color: #222629 !important;
 }
