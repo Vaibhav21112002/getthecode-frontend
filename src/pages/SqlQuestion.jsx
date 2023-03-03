@@ -39,6 +39,9 @@ const SqlQuestion = () => {
               <div key={tableIndex} className=" pb-3 pt-2 mr-5 min-w-[20%]">
                 <table className="table-auto w-full">
                   <tbody>
+                  <tr>
+                    <td>{table.name}</td>
+                  </tr>
                     {table.tableData.map((row, rowIndex) => (
                       <tr key={rowIndex}>
                         {row.map((cell, colIndex) => (

@@ -12,7 +12,6 @@ function Navbar({ question }) {
         { title: "Home", path: "/" },
         { title: "Programming", path: "/programming" },
         { title: "Blogs", path: "/blogs" },
-        { title: "Articles", path: "/articles" },
         {title:"MCQs",path:'/mcqs'},
         {title:"SQL",path:'/sql'}
     ];

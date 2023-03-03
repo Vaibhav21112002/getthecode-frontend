@@ -217,30 +217,33 @@ const AdminSql = () => {
                             >
                               <table className="table-auto w-full">
                                 <tbody>
+                                  <tr>
+                                    <td className="text-center font-bold">{table.name}</td>
+                                  </tr>
                                   {table.tableData.map((row, rowIndex) => (
-                                    <tr key={rowIndex}>
-                                      {row.map((cell, colIndex) => (
-                                        <td
-                                          key={colIndex}
-                                          className={` max-w-[${
-                                            100 / table.numCols
-                                          }%]`}
-                                        >
-                                          <input
-                                            type="text"
-                                            className={`text-black px-3 ${
-                                              rowIndex === 0
-                                                ? "bg-white border-b-black border-2 font-extrabold border-t-0 border-x-0"
-                                                : rowIndex % 2 === 0
-                                                ? "bg-[#d6efe1]"
-                                                : "bg-white"
-                                            }`}
-                                            value={`${cell}`}
-                                            disabled={true}
-                                          />
-                                        </td>
-                                      ))}
-                                    </tr>
+                                      <tr key={rowIndex}>
+                                        {row.map((cell, colIndex) => (
+                                          <td
+                                            key={colIndex}
+                                            className={` max-w-[${
+                                              100 / table.numCols
+                                            }%]`}
+                                          >
+                                            <input
+                                              type="text"
+                                              className={`text-black px-3 ${
+                                                rowIndex === 0
+                                                  ? "bg-white border-b-black border-2 font-extrabold border-t-0 border-x-0"
+                                                  : rowIndex % 2 === 0
+                                                  ? "bg-[#d6efe1]"
+                                                  : "bg-white"
+                                              }`}
+                                              value={`${cell}`}
+                                              disabled={true}
+                                            />
+                                          </td>
+                                        ))}
+                                      </tr>
                                   ))}
                                 </tbody>
                               </table>
@@ -299,17 +302,15 @@ const AdminSql = () => {
                             <Media>
                               <div className="media mt-4 w-full flex justify-center items-center">
                                 <div className="media-player">
-                                  <Player
-                                    src={
-									  viewData.viewLink
-                                    }
-                                  />
+                                  <Player src={viewData.viewLink} />
                                 </div>
                               </div>
                             </Media>
-                          ):(<div className="my-4 mx-auto justify-center text-center">
-							No Video Solution for this question
-						  </div>)}
+                          ) : (
+                            <div className="my-4 mx-auto justify-center text-center">
+                              No Video Solution for this question
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>

@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
 import { darkTheme } from "../../assets/Constants";
-import { Navbar, AdminNavbar, AdminTopBar } from "../../components";
+import { Navbar, AdminNavbar, AdminTopBar, Footer } from "../../components";
 import { MdAdminPanelSettings } from "react-icons/md";
+
 import codeContext from "../../context/CodeContext";
 import swal from "sweetalert";
 
 const Admin = () => {
   const [form, setForm] = useState({ username: "", password: "" });
+  const topics = ["questions","mcqs","sqls","blogs","more"];
 
   const {
     login,
@@ -25,11 +27,10 @@ const Admin = () => {
     "w-full h-[40px] rounded-md border-[#33343B] border-2 p-2 mb-4 focus:outline-none focus:border-[#33343B] focus:ring-2 focus:ring-[#33343B] focus:ring-opacity-50";
 
   useEffect(() => {
-	getSqls();
-	getQuestions();
-	getBlogs();
-	getMcqs();
-	
+    getSqls();
+    getQuestions();
+    getBlogs();
+    getMcqs();
   }, []);
   useEffect(() => {
     const d = localStorage.getItem("token");
@@ -60,70 +61,65 @@ const Admin = () => {
     }
     swal({ title: "Login Failed", icon: "error", button: "Ok" });
   };
+
+  const Card = ({ topic }) => {
+    const topicHeadingDict = {
+      questions: "Problem Solving",
+      mcqs: "MCQ",
+      sqls: "SQL Queries",
+      blogs: "Technical Blogs",
+      more:"More to be added soon..."
+      
+    };
+    console.log(topic);
+    return (
+      <div className={`${topic!=="more"?'bg-[#E97500]':'bg-white'} h-[184px] mb-10 rounded-lg  relative w-[95%]`}>
+        <div className={`absolute p-4 rounded-lg flex-wrap items-center shadow-md  justify-between top-[10px] left-[10px] flex ${topic!=="more"?'bg-[white] text-black':'bg-[#E97500] text-white'}  rounded-t-lg h-full w-full`}>
+          <div className={`flex flex-wrap ${topic!=='more'?'w-[70%]':'text-center'}`}>
+            <h2
+              className={`text-[48px] ${topic!=='more'?'w-[70%]':''} font-normal mb-2 font-serif`}
+              style={{ fontFamily: "IBM Plex Serif" }}
+            >
+              {topicHeadingDict[topic]}
+            </h2>
+          </div>
+          {topic !== "more" && (
+            <div className="flex items-center bg-[#E97500] rounded-full h-[80px] text-center justify-center w-[80px]">
+              <span className="text-4xl font-bold mr-2 text-white">
+                {`${topic.length}`}
+              </span>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  };
   return (
     <div>
       {login ? (
-        <div>
-          <div
-            className={`w-full min-h-[100vh] flex bg-[${darkTheme.bgPrimary}]`}
-          >
+        <div className="flex flex-col">
+          <div className={`w-full flex bg-[${darkTheme.bgPrimary}]`}>
             <div className="w-2/12 ">
               {" "}
-              <AdminNavbar />{" "}
+              <AdminNavbar admin={true} />{" "}
             </div>
-            <div className="w-10/12 flex flex-col">
+            <div className="w-10/12 flex flex-col flex-grow">
               {" "}
               <AdminTopBar />{" "}
-              <div className=" max-h-[100vh]">
-                <div className="grid grid-cols-3 mt-10 w-[90%] mx-auto gap-4">
-                  {/* Programming questions */}
-                  <div className="bg-white p-4 rounded-lg items-center shadow-md flex justify-between">
-                    <h2 className="text-lg font-medium mb-2">
-                      Programming Questions
-                    </h2>
-                    <div className="flex items-center bg-[#E97500] rounded-full h-[100px] text-center justify-center w-[100px]">
-                      <span className="text-3xl font-bold mr-2 text-white">
-                        500
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* MCQs */}
-                  <div className="bg-white p-4 rounded-lg items-center shadow-md flex justify-between">
-                    <h2 className="text-lg font-medium mb-2">MCQs</h2>
-                    <div className="flex items-center bg-[#E97500] rounded-full h-[100px] text-center justify-center w-[100px]">
-                      <span className="text-3xl font-bold mr-2 text-white">
-                        200
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Blogs */}
-                  <div className="bg-white p-4 rounded-lg items-center shadow-md flex justify-between">
-                    <h2 className="text-lg font-medium mb-2">Blogs</h2>
-                    <div className="flex items-center bg-[#E97500] rounded-full h-[100px] text-center justify-center w-[100px]">
-                      <span className="text-3xl font-bold mr-2 text-white">
-                        100
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* SQL problems */}
-                  <div className="bg-white p-4 rounded-lg items-center shadow-md flex justify-between">
-                    <h2 className="text-lg font-medium mb-2">SQL Problems</h2>
-                    <div className="flex items-center bg-[#E97500] rounded-full h-[100px] text-center justify-center w-[100px]">
-                      <span className="text-3xl font-bold mr-2 text-white">
-                        50
-                      </span>
-                    </div>
+              {sqls?.length >= 0 && (
+                <div className="">
+                  <div className="grid grid-cols-3 mt-10 w-[90%] mx-auto gap-4">
+                    {topics.map(topic=>(
+                      <Card topic={topic}/>
+                    ))}
                   </div>
                 </div>
-              </div>{" "}
+              )}{" "}
             </div>
           </div>
         </div>
       ) : (
-        <div className={`w-full h-[100vh] flex bg-[${darkTheme.bgPrimary}]`}>
+        <div className={`w-full flex bg-[${darkTheme.bgPrimary}]`}>
           <Navbar />
           <div className="w-full h-full flex justify-center items-center">
             <div className="w-[70%] h-[70%] bg-white rounded-md shadow-[0_50px_25px_-24px_rgb(0,0,0,0.3)] flex flex-col items-center">

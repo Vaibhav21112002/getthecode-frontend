@@ -18,7 +18,6 @@ const AdminNav = () => {
 		{ title: "Dashboard", path: "/admin", icon: <MdDashboard /> },
 		{ title: "Programming", path: "/admin/programming", icon: <BsCodeSlash />, },
 		{ title: "Blogs", path: "/admin/blogs", icon: <BsInfoLg /> },
-		{ title: "Articles", path: "/admin/articles", icon: <HiOutlineNewspaper />, },
 		{ title: "MCQs", path: "/admin/mcqs", icon: <BsQuestionCircle />, },
 		{ title: "SQL", path: "/admin/sql", icon: <AiOutlineConsoleSql />, },
 	];

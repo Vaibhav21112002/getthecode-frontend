@@ -31,6 +31,7 @@ const CreateSql = () => {
   const [newTableData, setNewTableData] = useState({
     numRows: 1,
     numCols: 2,
+    name:"",
     tableData: Array.from({ length: 1 }, (_, rowIndex) =>
       Array.from({ length: 2 }, (_, colIndex) => {
         return rowIndex === 0 && colIndex === 0
@@ -102,9 +103,27 @@ const CreateSql = () => {
     }
   };
 
+  const handleNameChange = (event, edit = false) => {
+    const name = event.target.value;
+    if (edit === true) {
+      setEditTableData((prevTableData) => {
+        const newTableData = {
+          ...prevTableData,
+          name: name,
+        };
+        return newTableData;
+      });
+    } else {
+      setNewTableData((prevTableData) => {
+        const newTabledata = { ...prevTableData, name: name };
+        return newTableData;
+      });
+    }
+  };
+
   const handleNumColsChange = (event, edit = false) => {
     const numCols = parseInt(event.target.value);
-    if (edit == true) {
+    if (edit === true) {
       setEditTableData((prevTableData) => {
         const newTableData = {
           ...prevTableData,
@@ -209,7 +228,7 @@ const CreateSql = () => {
 
     const rows = tableData.tableData.length;
     const cols = tableData.tableData[0].length;
-    if (rows * cols !== nonEmptyCellCount) {
+    if (rows * cols !== nonEmptyCellCount || tableData.name.trim(" ") === "") {
       swal({
         title: "Error",
         text: "Please fill all the cells",
@@ -371,11 +390,14 @@ const CreateSql = () => {
                 </div>
                 <label className={labelStyle}>Tables</label>
                 <div className="mx-10 text-white w-full ">
-                <div className="flex flex-wrap">
+                  <div className="flex flex-wrap">
                     {tables.map((table, tableIndex) => (
                       <div key={tableIndex} className="mr-10 min-w-[20%]">
                         <table className="table-auto w-full">
                           <tbody>
+                            <tr className="">
+                              <td className="font-bold">{table.name}</td>
+                            </tr>
                             {table.tableData.map((row, rowIndex) => (
                               <tr key={rowIndex}>
                                 {row.map((cell, colIndex) => (
@@ -590,6 +612,18 @@ const CreateSql = () => {
                             onChange={(event) => handleNumColsChange(event)}
                             className="text-black px-3 border-black border"
                           />
+                          <div className="mb-3">
+                            <label htmlFor={`newTableName`} className="mr-3">
+                              Name of Table:
+                            </label>
+                            <input
+                              type="text"
+                              id={`newTableName`}
+                              value={newTableData.name}
+                              onChange={(event) => handleNameChange(event)}
+                              className="text-black px-3 border-black border"
+                            />
+                          </div>
                         </div>
                         <div className="max-h-[50vh] overflow-y-auto">
                           <table className="table-auto w-full">
@@ -674,7 +708,7 @@ const CreateSql = () => {
                             buttons: true,
                           }).then((res) => {
                             if (res) {
-                                setEditTable(false);
+                              setEditTable(false);
                             }
                           });
                         }}
@@ -707,6 +741,20 @@ const CreateSql = () => {
                               value={editTableData.numCols}
                               onChange={(event) =>
                                 handleNumColsChange(event, true)
+                              }
+                              className="text-black px-3 border-black border"
+                            />
+                          </div>
+                          <div className="mb-3">
+                            <label htmlFor={`newTableName`} className="mr-3">
+                              Name of Table:
+                            </label>
+                            <input
+                              type="text"
+                              id={`newTableName`}
+                              value={editTableData.name}
+                              onChange={(event) =>
+                                handleNameChange(event, true)
                               }
                               className="text-black px-3 border-black border"
                             />
