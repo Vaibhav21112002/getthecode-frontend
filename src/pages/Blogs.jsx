@@ -140,7 +140,7 @@ const Blogs = () => {
 										: blog.content,
 								)}
 							</h1>
-							<button className="bg-[#ED8A11] px-6 py-2 mt-4 rounded-full mt-2 flex justify-center items-center hover:bg-[#F2A03F] transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 cursor-pointer 	">
+							<button className="bg-[#ED8A11] px-6 py-2 mt-4 rounded-lg mt-2 flex justify-center items-center hover:bg-[#F2A03F] transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 cursor-pointer 	">
 								<h1 className="text-white text-sm font-bold">
 									Read More
 								</h1>

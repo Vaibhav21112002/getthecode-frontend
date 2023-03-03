@@ -8,83 +8,87 @@ import Void from "../assets/Images/Void.svg";
 import Modal from "react-awesome-modal";
 import Editor from "@monaco-editor/react";
 import { AiOutlineClose } from "react-icons/ai";
-import MarkdownEditor from "@uiw/react-markdown-editor";
+import { topics, companies, pagination } from "../assets/Constants";
 
 const Programming = () => {
-  const { questions, getQuestions } = useContext(CodeContext);
-  const [activeFilter, setActiveFilter] = useState("All Questions");
-  const [language, setLanguage] = useState("java");
-  
-  const handleTopicFilter = (topic) => {
-    if (activeFilter === topic) return;
-    setActiveFilter(topic);
-    if (topic === "All Questions") {
-      setData(questions);
-    } else {
-      const newData = questions.filter((item) => item.topicTag.includes(topic));
-      setData(newData);
-    }
-  };
-  const navigate = useNavigate();
-  // const [solutionOpen, setSolutionOpen] = useState(false);
-  const [data, setData] = useState([]);
-  const [editData, setEditData] = useState({});
-  const [solutionOpen, setSolutionOpen] = useState(false);
-  let count = 0;
-  useEffect(() => {
-    if (activeFilter !== "All Questions") return;
-    getQuestions();
-    // eslint-disable-next-line
-  }, []);
-  
-  console.log(editData);
-  useEffect(() => {
-    if (activeFilter !== "All Questions") return;
-    setData(questions);
-  }, [questions]);
-  const topics = [
-    { title: "All Questions" },
-    { title: "Arrays" },
-    { title: "Strings" },
-    { title: "Linked List" },
-    { title: "Stacks" },
-    { title: "Queues" },
-    { title: "Trees" },
-    { title: "Graphs" },
-    { title: "Sorting" },
-    { title: "Searching" },
-    { title: "Dynamic Programming" },
-    { title: "Greedy" },
-    { title: "Backtracking" },
-    { title: "Bit Manipulation" },
-    { title: "Math" },
-    { title: "Miscellaneous" },
-  ];
-  const TopicCard = ({ title }) => {
-    return (
-      <div
-        className="sm:w-[16rem] w-[10rem] text-[white]  flex justify-center items-center sm:px-6 px-4 py-2 rounded-lg shadow-xl cursor-pointer border bg-[#E97500] border-[#E97500] hover:bg-[#202128] hover:text-[white]"
-        onClick={() => handleTopicFilter(title)}
-      >
-        <h1 className="sm:text-sm text-xs text-center  hover:text-[white]">
-          {title}
-        </h1>
-      </div>
-    );
-  };
-  const TableComponent = ({ item }) => {
-    return (
-      <tr className="bg-white border-b dark:bg-gray-800 text-[0.76rem]">
-        <th
-          scope="row"
-          className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white hover:text-blue-600 dark:hover:text-blue-500 cursor-pointer"
-          onClick={() => navigate("/programming/" + item._id)}
-        >
-          {item.title}
-        </th>
-        <td className="py-4 px-6">
-          <BsFileEarmarkSpreadsheet
-            className="text-2xl cursor-pointer hover:text-blue-600 dark:hover:text-blue-500
+	const navigate = useNavigate();
+	const [data, setData] = useState([]);
+	const [editData, setEditData] = useState({});
+	const [solutionOpen, setSolutionOpen] = useState(false);
+	const { questions, getQuestions } = useContext(CodeContext);
+	const [qpp, setQpp] = useState(10);
+	const [page, setPage] = useState(1);
+	const [activeFilter, setActiveFilter] = useState("All Questions");
+	const [language, setLanguage] = useState("java");
+	const totalPages = Math.ceil(data.length / qpp);
+	const handleTopicFilter = (topic) => {
+		if (activeFilter === topic) return;
+		setActiveFilter(topic);
+		if (topic === "All Questions") {
+			setData(questions);
+		} else {
+			const newData = questions.filter((item) =>
+				item.topicTag.includes(topic),
+			);
+			setData(newData);
+		}
+	};
+
+	const difficultyFilter = (difficulty) => {
+		if (activeFilter === difficulty) return;
+		setActiveFilter(difficulty);
+		if (difficulty === "All Questions") {
+			setData(questions);
+		} else {
+			const newData = questions.filter(
+				(item) => item.difficulty === difficulty,
+			);
+			setData(newData);
+		}
+	};
+
+	const companyFilter = (company) => {
+		if (company === "All Questions") {
+			setData(questions);
+		} else {
+			const newData = questions.filter((item) =>
+				item.companyTag.includes(company),
+			);
+			setData(newData);
+		}
+	};
+
+	const setSearch = (e) => {
+		const newData = questions.filter((item) =>
+			item.title.toLowerCase().includes(e.toLowerCase()),
+		);
+		setData(newData);
+	};
+
+	useEffect(() => {
+		if (activeFilter !== "All Questions") return;
+		getQuestions();
+		// eslint-disable-next-line
+	}, []);
+
+	console.log(editData);
+	useEffect(() => {
+		if (activeFilter !== "All Questions") return;
+		setData(questions);
+	}, [questions]);
+	const TableComponent = ({ item }) => {
+		return (
+			<tr className="bg-white border-b dark:bg-gray-800 text-[0.76rem]">
+				<th
+					scope="row"
+					className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white hover:text-blue-600 dark:hover:text-blue-500 cursor-pointer"
+					onClick={() => navigate("/programming/" + item._id)}
+				>
+					{item.title}
+				</th>
+				<td className="py-4 px-6">
+					<BsFileEarmarkSpreadsheet
+						className="text-2xl cursor-pointer hover:text-blue-600 dark:hover:text-blue-500
                         
                     "
 						onClick={() => {
@@ -104,20 +108,146 @@ const Programming = () => {
 			</tr>
 		);
 	};
+
+	const dropdownClass =
+		"w-full h-full border-none outline-none text-[0.8rem] text-gray-500 dark:text-gray-400 pl-4 pr-8 rounded-lg bg-white bg-no-repeat bg-right-4 bg-[#E97500] cursor-pointer";
+
+	const paginateButtons = `w-24 h-8 rounded-md bg-[#E97500] text-white text-[0.8rem] font-bold flex justify-center items-center cursor-pointer hover:bg-[#FFA500]`;
 	return (
 		<div className="back">
 			<Navbar />
-			<div className="w-full sm:px-4 px-2 py-16  bg-[#222629] ">
-				<div className="w-full flex flex-wrap justify-center items-center gap-4 ">
-					{topics.map((topic, index) => {
-						return <TopicCard key={index} title={topic.title} />;
-					})}
-				</div>
-				<div className="py-8 w-full flex flex-col justify-center items-center mt-24">
+			<div className="w-full sm:px-4 px-2 py-8  bg-[#222629] ">
+				<div className="py-8 w-full flex flex-col justify-center items-center mt-4">
 					<h1 className="text-center text-[white] text-2xl font-bold px-4 py-12">
 						Your Programming Questions
 					</h1>
-					<div className="w-[90%]">
+					<div className="w-full flex  px-16 gap-4 ">
+						<div className="w-full flex flex-wrap gap-4">
+							<div
+								className="h-10 
+							relative inline-flex rounded-md shadow-sm"
+							>
+								<select
+									className={dropdownClass}
+									onChange={(e) =>
+										difficultyFilter(e.target.value)
+									}
+									placeholder="Difficulty"
+								>
+									<option
+										value="All Questions"
+										className="text-[#000]"
+									>
+										Difficulty
+									</option>
+									<option
+										value="All Questions"
+										className="text-[#000]"
+									>
+										All Questions
+									</option>
+									<option
+										value="easy"
+										className="text-[#008000]"
+									>
+										Easy
+									</option>
+									<option
+										value="medium"
+										className="text-[#FFA500]"
+									>
+										Medium
+									</option>
+									<option
+										value="hard"
+										className="text-[#FF0000]"
+									>
+										Hard
+									</option>
+								</select>
+							</div>
+							<div
+								className="h-10 
+							relative inline-flex rounded-md shadow-sm"
+							>
+								<select
+									className={dropdownClass}
+									onChange={(e) =>
+										companyFilter(e.target.value)
+									}
+									placeholder="Companies"
+								>
+									<option
+										value="All Questions"
+										className="text-[#000]"
+									>
+										Companies
+									</option>
+									<option
+										value="All Questions"
+										className="text-[#000]"
+									>
+										All Questions
+									</option>
+									{companies.map((topic, index) => {
+										return (
+											<option
+												key={index}
+												value={topic.title}
+												className="text-[#000]"
+											>
+												{topic.title}
+											</option>
+										);
+									})}
+								</select>
+							</div>
+							<div
+								className="h-10 
+							relative inline-flex rounded-md shadow-sm"
+							>
+								<select
+									className={dropdownClass}
+									onChange={(e) =>
+										handleTopicFilter(e.target.value)
+									}
+									placeholder="Topics"
+								>
+									<option
+										value="All Questions"
+										className="text-[#000]"
+									>
+										Topics
+									</option>
+									{topics.map((topic, index) => {
+										return (
+											<option
+												key={index}
+												value={topic.title}
+												className="text-[#000]"
+											>
+												{topic.title}
+											</option>
+										);
+									})}
+								</select>
+							</div>
+						</div>
+						<div className="w-full flex ">
+							{/* //Implement Search Bar Based on Index Based Search on the title of the questions */}
+							<div className="w-full flex flex-col justify-end text-sm">
+								<input
+									type="text"
+									className="w-full h-10 px-4 text-base text-gray-500 placeholder-gray-500 border rounded-lg focus:shadow-outline placeholder-[#E97500] border-[#E97500] focus:outline-none focus:border-[#E97500] "
+									placeholder="Search"
+									onChange={(e) => {
+										setSearch(e.target.value);
+									}}
+								/>
+							</div>
+						</div>
+					</div>
+					<div className="w-[90%] mt-4">
 						<div className="overflow-x-auto relative shadow-md sm:rounded-lg">
 							<table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 								<thead
@@ -141,16 +271,18 @@ const Programming = () => {
 
 								{data.length > 0 ? (
 									<tbody>
-										{data.map((item, index) => {
-											return (
-												<TableComponent
-													key={index}
-													title={item.title}
-													id={item._id}
-													item={item}
-												/>
-											);
-										})}
+										{data
+											.slice((page - 1) * qpp, page * qpp)
+											.map((item, index) => {
+												return (
+													<TableComponent
+														key={index}
+														title={item.title}
+														id={item._id}
+														item={item}
+													/>
+												);
+											})}
 									</tbody>
 								) : (
 									<></>
@@ -169,6 +301,49 @@ const Programming = () => {
 								</h1>
 							</div>
 						)}
+					</div>
+					{/* //Pagination */}
+					<div className="w-full flex justify-between items-center mt-4 gap-4">
+						<div className="w-full flex justify-center items-center mt-4 gap-4">
+							<select
+								className="
+								w-36 h-8 px-4 text-sm text-gray-500 placeholder-gray-500 border rounded-lg focus:shadow-outline placeholder-[#E97500] border-[#E97500] focus:outline-none focus:border-[#E97500] 
+								"
+								onChange={(e) => setQpp(e.target.value)}
+							>
+								{pagination.map((item, index) => {
+									return (
+										<option
+											key={index}
+											value={item.value}
+											className="text-[#000]"
+										>
+											{item.text}
+										</option>
+									);
+								})}
+							</select>
+						</div>
+
+						<div className="w-full flex justify-center items-center mt-4 gap-4">
+							<button
+								className={paginateButtons}
+								onClick={() => setPage(page - 1)}
+								disabled={page === 1}
+							>
+								Prev
+							</button>
+							<h1 className=" text-white font-bold text-sm">
+								{page} of {totalPages}
+							</h1>
+							<button
+								className={paginateButtons}
+								onClick={() => setPage(page + 1)}
+								disabled={page === totalPages}
+							>
+								Next
+							</button>
+						</div>
 					</div>
 					{/* Solution Modal */}
 					<Modal
