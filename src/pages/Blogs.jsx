@@ -125,7 +125,7 @@ const Blogs = () => {
 						/>
 					</div>
 				</div>
-				<div className="h-full w-9/12 bg-white h-full rounded-md boxes text-[#BDA9A9]">
+				<div className="w-9/12 bg-white h-full rounded-md boxes text-[#BDA9A9]">
 					<div className="h-full w-full pl-[8rem] py-4 pr-8 flex flex-col justify-between">
 						<div>
 							<h1 className="text-[#222629] text-lg font-bold">
@@ -140,7 +140,7 @@ const Blogs = () => {
 										: blog.content,
 								)}
 							</h1>
-							<button className="bg-[#ED8A11] px-6 py-2 mt-4 rounded-lg mt-2 flex justify-center items-center hover:bg-[#F2A03F] transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 cursor-pointer 	">
+							<button className="bg-[#ED8A11] px-6 py-2 rounded-lg mt-2 flex justify-center items-center hover:bg-[#F2A03F] transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 cursor-pointer" onClick={()=>navigate(`/blogs/${blog?._id}`)}>
 								<h1 className="text-white text-sm font-bold">
 									Read More
 								</h1>
