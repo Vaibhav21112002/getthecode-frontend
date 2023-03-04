@@ -12,6 +12,7 @@ import swal from "sweetalert";
 import Void from "../../assets/Images/Void.svg";
 import { useNavigate } from "react-router-dom";
 import MarkdownEditor from "@uiw/react-markdown-editor";
+import {companies as CompanyTags } from "../../assets/Constants"
 
 const AdminProgramming = () => {
   const navigate = useNavigate();
@@ -187,64 +188,56 @@ const AdminProgramming = () => {
     "Miscellaneous",
   ];
 
-  const CompanyTags = [
-    "Amazon",
-    "Apple",
-    "Facebook",
-    "Google",
-    "Microsoft",
-    "Oracle",
-    "Uber",
-    "Miscellaneous",
-  ];
-  const divStyle = `flex w-full flex-col sm:px-12 px-4 gap-2 text-[#202128] py-2`;
-  const labelStyle = ``;
-  const inputStyle = `w-full border rounded-md p-2`;
-  const activeClass = `bg-[#E97500] border-[#E97500] text-white px-4 py-2 rounded-xl cursor-pointer`;
-  const unactiveClass = `bg-[#F2F2F2] text-[#3A355C] px-4 py-2 rounded-xl cursor-pointer `;
-  // const buttonStyle = `w-full flex justify-center items-center gap-2`;
-  useEffect(() => {
-    getQuestions();
-    setData(questions);
-    // eslint-disable-next-line
-  }, []);
-  const handleUpload = () => {
-    console.log(uploadData);
-    if (
-      uploadData.title === "" ||
-      uploadData.description === "" ||
-      uploadData.description === "<p><br></p>" ||
-      uploadData.difficulty === "" ||
-      uploadData.score === 0 ||
-      uploadData.topicTag.length === 0 ||
-      uploadData.companyTag.length === 0 ||
-      (uploadData.solution.java === "" &&
-        uploadData.solution.cpp === "" &&
-        uploadData.solution.python === "") ||
-      uploadData.testCases.length == 0 ||
-      uploadData.testCases[uploadData.testCases.length - 1].input === "" ||
-      uploadData.testCases[uploadData.testCases.length - 1].output === "" ||
-      uploadData.testCases[uploadData.testCases.length - 1].explaination ===
-        "" ||
-      uploadData.testCases[uploadData.testCases.length - 1].explaination ===
-        "<p><br></p>"
-    ) {
-      swal({
-        title: "Error",
-        text: "Please fill all the fields",
-        icon: "error",
-      });
-      return;
-    } else {
-      addQuestion(uploadData);
-      swal({
-        title: "Success",
-        text: "Question added successfully",
-        icon: "success",
-      });
-      setUploadOpen(false);
-    }
-  };
+	const divStyle = `flex w-full flex-col sm:px-12 px-4 gap-2 text-[#202128] py-2`;
+	const labelStyle = ``;
+	const inputStyle = `w-full border rounded-md p-2`;
+	const activeClass = `bg-[#E97500] border-[#E97500] text-white px-4 py-2 rounded-xl cursor-pointer`;
+	const unactiveClass = `bg-[#F2F2F2] text-[#3A355C] px-4 py-2 rounded-xl cursor-pointer `;
+	// const buttonStyle = `w-full flex justify-center items-center gap-2`;
+	useEffect(() => {
+		getQuestions();
+		setData(questions);
+		// eslint-disable-next-line
+	}, []);
+	const handleUpload = () => {
+		console.log(uploadData);
+		if (
+			uploadData.title === "" ||
+			uploadData.description === "" ||
+			uploadData.description === "<p><br></p>" ||
+			uploadData.difficulty === "" ||
+			uploadData.score === 0 ||
+			uploadData.topicTag.length === 0 ||
+			uploadData.companyTag.length === 0 ||
+			(uploadData.solution.java === "" &&
+				uploadData.solution.cpp === "" &&
+				uploadData.solution.python === "") ||
+			uploadData.testCases.length == 0 ||
+			uploadData.testCases[uploadData.testCases.length - 1].input ===
+				"" ||
+			uploadData.testCases[uploadData.testCases.length - 1].output ===
+				"" ||
+			uploadData.testCases[uploadData.testCases.length - 1]
+				.explaination === "" ||
+			uploadData.testCases[uploadData.testCases.length - 1]
+				.explaination === "<p><br></p>"
+		) {
+			swal({
+				title: "Error",
+				text: "Please fill all the fields",
+				icon: "error",
+			});
+			return;
+		} else {
+			addQuestion(uploadData);
+			swal({
+				title: "Success",
+				text: "Question added successfully",
+				icon: "success",
+			});
+			setUploadOpen(false);
+		}
+	};
 
   const handleEdit = () => {
     if (
