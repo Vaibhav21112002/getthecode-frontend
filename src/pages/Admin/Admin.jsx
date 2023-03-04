@@ -22,9 +22,9 @@ const Admin = () => {
     mcqs,
     getMcqs,
   } = useContext(codeContext);
-  const lableStyle = "text-[#33343B] font-bold text-sm mb-2  ";
+  const lableStyle = "text-[#33343B] font-bold mx-auto text-sm mb-2  ";
   const inputStyle =
-    "w-full h-[40px] rounded-md border-[#33343B] border-2 p-2 mb-4 focus:outline-none focus:border-[#33343B] focus:ring-2 focus:ring-[#33343B] focus:ring-opacity-50";
+    "w-[40%] mx-auto h-[40px] rounded-md border-[#33343B] border-2 p-2 mb-4 focus:outline-none focus:border-[#33343B] focus:ring-2 focus:ring-[#33343B] focus:ring-opacity-50";
 
   useEffect(() => {
     getSqls();
@@ -119,9 +119,9 @@ const Admin = () => {
           </div>
         </div>
       ) : (
-        <div className={`w-full flex bg-[${darkTheme.bgPrimary}]`}>
+        <div className={`w-full flex min-h-[100vh] bg-[${darkTheme.bgPrimary}]`}>
           <Navbar />
-          <div className="w-full h-full flex justify-center items-center">
+          <div className="w-full h-full flex justify-center items-center my-auto">
             <div className="w-[70%] h-[70%] bg-white rounded-md shadow-[0_50px_25px_-24px_rgb(0,0,0,0.3)] flex flex-col items-center">
               <div className="flex items-center gap-4">
                 <h1 className="text-center text-[#222629]  font-bold text-2xl mt-10 mb-10  ">
@@ -130,8 +130,8 @@ const Admin = () => {
                 </h1>
                 <MdAdminPanelSettings className="text-[#33343B] text-4xl" />
               </div>
-              <div className="flex flex-col w-[80%] justify-center items-center">
-                <div className="flex flex-col">
+              <div className="flex flex-col w-full justify-center items-center">
+                <div className="flex flex-col w-full">
                   <label className={lableStyle}> Username </label>
                   <input
                     className={inputStyle}
