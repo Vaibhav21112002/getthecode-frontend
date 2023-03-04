@@ -46,16 +46,31 @@ const EditBlog = () => {
       return;
     } else if (
       editData.company !== "" &&
-      editData.tag !== "Interview Experiences"
+      editData.tag=== "Interview Experiences"
     ) {
       setEditData({ ...editData, company: "" });
-      editBlog(editData);
       swal({
-        title: "Success",
-        text: "Blog added successfully",
-        icon: "success",
+        title: "Do you stil want to edit the blog ?",
+        icon: "warning",
+        buttons: true,
+      }).then((res) => {
+        if (res) {
+          console.log(editData);
+          editBlog(id, editData);
+          swal({
+            title: "Success",
+            text: "Blog edited successfully",
+            icon: "success",
+          });
+          navigate("/admin/blogs");
+        } else {
+          swal({
+            title: "Cancelled",
+            text: "Question not edited",
+            icon: "error",
+          });
+        }
       });
-      navigate("/admin/blogs");
     } else {
       swal({
         title: "Do you stil want to edit the blog ?",
@@ -63,6 +78,7 @@ const EditBlog = () => {
         buttons: true,
       }).then((res) => {
         if (res) {
+          console.log(editData);
           editBlog(id, editData);
           swal({
             title: "Success",
@@ -152,7 +168,8 @@ const EditBlog = () => {
               <div className={divStyle}>
                 <label className="text-white">Tags</label>
                 <div class="relative inline-block w-full">
-                  <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline">
+                  <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline" value={editData.tag} onChange={(e)=>
+                  setEditData({...editData,tag:e.target.value})}>
                     {topics.map((tag) => (
                       <option key={tag} value={tag}>
                         {tag}

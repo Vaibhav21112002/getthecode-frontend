@@ -46,12 +46,12 @@ const AdminSql = () => {
   const TableComponent = ({ item, index }) => {
     return (
       <tr className="text-[0.76rem] bg-gray-800">
-        <th className="py-4 px-6 font-medium  text-white whitespace-nowrap">
+        <th className="py-4 px-6 font-medium  text-gray-900 dark:text-white whitespace-nowrap">
           {index + 1}
         </th>
         <th
           scope="row"
-          className="py-4 px-6 font-medium text-white whitespace-nowrap dark:text-white hover:text-blue-600 dark:hover:text-blue-500 cursor-pointer"
+          className="py-4 px-6 font-medium text-gray-900 dark:text-white whitespace-nowrap hover:text-blue-600 dark:hover:text-blue-500 cursor-pointer"
           //redirect to new page
           onClick={() => {
             navigate(`/sql/${item._id}`);
@@ -60,7 +60,7 @@ const AdminSql = () => {
           {item.title ? item.title : "Two Sum"}
         </th>
 
-        <th className="py-4 px-6 font-bold text-xl text-white whitespace-nowrap">
+        <th className="py-4 px-6 font-bold text-xl text-gray-900 dark:text-white whitespace-nowrap">
           <CgMoreR
             className="cursor-pointer"
             onClick={() => {
@@ -72,7 +72,7 @@ const AdminSql = () => {
         </th>
         {/* Edit Icon */}
         <th
-          className="py-4 px-6 font-bold text-xl text-white whitespace-nowrap"
+          className="py-4 px-6 font-bold text-xl text-gray-900 dark:text-white whitespace-nowrap"
           onClick={() => {
             navigate(`/admin/sql/${item._id}`);
           }}
@@ -81,7 +81,7 @@ const AdminSql = () => {
         </th>
 
         <th
-          className="py-4 px-6 font-bold text-xl text-white whitespace-nowrap"
+          className="py-4 px-6 font-bold text-xl text-gray-900 dark:text-white whitespace-nowrap"
           onClick={() => {
             swal({
               title: "Are you sure?",
