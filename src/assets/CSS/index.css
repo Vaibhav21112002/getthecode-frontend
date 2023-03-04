@@ -3,9 +3,6 @@
 @tailwind utilities;
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 @layer base {
-  h1 {
-    @apply text-3xl;
-  }
   h2 {
     @apply text-2xl;
   }
