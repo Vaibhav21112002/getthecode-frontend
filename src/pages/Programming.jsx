@@ -135,8 +135,11 @@ const Programming = () => {
 									placeholder="Difficulty"
 								>
 									<option
-										value="All Questions"
+										value=""
 										className="text-[#000]"
+										disabled
+										selected
+										hidden
 									>
 										Difficulty
 									</option>
@@ -180,6 +183,9 @@ const Programming = () => {
 									<option
 										value="All Questions"
 										className="text-[#000]"
+										disabled
+										selected
+										hidden
 									>
 										Companies
 									</option>
@@ -216,6 +222,9 @@ const Programming = () => {
 									<option
 										value="All Questions"
 										className="text-[#000]"
+										disabled
+										selected
+										hidden
 									>
 										Topics
 									</option>

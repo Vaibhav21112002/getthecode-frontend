@@ -12,6 +12,7 @@ import swal from "sweetalert";
 import Void from "../../assets/Images/Void.svg";
 import { useNavigate } from "react-router-dom";
 import MarkdownEditor from "@uiw/react-markdown-editor";
+import {companies as CompanyTags } from "../../assets/Constants"
 
 const AdminProgramming = () => {
 	const navigate = useNavigate();
@@ -190,16 +191,6 @@ const AdminProgramming = () => {
 		"Miscellaneous",
 	];
 
-	const CompanyTags = [
-		"Amazon",
-		"Apple",
-		"Facebook",
-		"Google",
-		"Microsoft",
-		"Oracle",
-		"Uber",
-		"Miscellaneous",
-	];
 	const divStyle = `flex w-full flex-col sm:px-12 px-4 gap-2 text-[#202128] py-2`;
 	const labelStyle = ``;
 	const inputStyle = `w-full border rounded-md p-2`;
