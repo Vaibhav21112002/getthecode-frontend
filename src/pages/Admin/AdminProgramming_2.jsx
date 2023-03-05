@@ -903,7 +903,7 @@ const AdminProgramming = () => {
 											)}
 
                       <button
-					  className="border border-black bg-[#F2F2F2] text-[#3A355C] rounded-lg h-[5vh] w-[50%] mx-auto"
+					  className="border-2 border-[#E97500] hover:bg-black bg-[#E97500] text-[white]  rounded-lg h-[5vh] mx-auto px-4"
                         onClick={(e) => {
                           e.preventDefault();
                           if (

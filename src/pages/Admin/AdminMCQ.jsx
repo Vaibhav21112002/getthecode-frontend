@@ -41,7 +41,7 @@ const AdminMCQ = () => {
 	const TableComponent = ({ item, index }) => {
 		return (
 			<tr className="bg-white dark:bg-gray-800 text-[0.76rem]">
-				<th className="py-4 px-6 font-medium text-white whitespace-nowrap">
+				<th className="py-4 px-6 font-medium dark:text-white text-gray-900 whitespace-nowrap">
 					{index + 1}
 				</th>
 				<th className="py-4 px-6 font-medium text-white whitespace-nowrap">
@@ -51,7 +51,7 @@ const AdminMCQ = () => {
 						<p>{item.question}</p>
 					)}
 				</th>
-				<th className="py-4 px-6 font-bold text-xl text-white whitespace-nowrap">
+				<th className="py-4 px-6 font-bold text-xl dark:text-white text-gray-900 whitespace-nowrap">
 					<CgMoreR
 						className="cursor-pointer"
 						onClick={() => {
@@ -62,7 +62,7 @@ const AdminMCQ = () => {
 				</th>
 				{/* Edit Icon */}
 				<th
-					className="py-4 px-6 font-bold text-xl text-white whitespace-nowrap"
+					className="py-4 px-6 font-bold text-xl dark:text-white text-gray-900 whitespace-nowrap"
 					onClick={() => {
 						setEditOpen(true);
 						setEditData(item);
@@ -73,7 +73,7 @@ const AdminMCQ = () => {
 				</th>
 
 				<th
-					className="py-4 px-6 font-bold text-xl text-white whitespace-nowrap"
+					className="py-4 px-6 font-bold text-xl dark:text-white text-gray-900 whitespace-nowrap"
 					onClick={() => {
 						swal({
 							title: "Are you sure?",
