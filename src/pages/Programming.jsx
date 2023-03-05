@@ -8,7 +8,7 @@ import Void from "../assets/Images/Void.svg";
 import Modal from "react-awesome-modal";
 import Editor from "@monaco-editor/react";
 import { AiOutlineClose } from "react-icons/ai";
-import { topics, companies, pagination } from "../assets/Constants";
+import { topics, companies_new as companies, pagination } from "../assets/Constants";
 
 const Programming = () => {
 	const navigate = useNavigate();

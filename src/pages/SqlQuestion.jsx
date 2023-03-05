@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Navbar, Accordian } from "../components";
+import { Navbar, Footer} from "../components";
 import "../assets/CSS/index.css";
 import { useParams } from "react-router-dom";
 import CodeContext from "../context/CodeContext";
@@ -17,7 +17,6 @@ const SqlQuestion = () => {
     getSql(id);
     // eslint-disable-next-line
   }, []);
-  const testStyle = "bg-[#25272E] w-full rounded-xl text-[0.76rem] p-4 mt-2";
   const QuestionComponent = ({ sql }) => {
     if(sql?.title)
     return (
@@ -177,6 +176,7 @@ const SqlQuestion = () => {
           </div>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Navbar, Accordian } from "../components";
+import { Navbar, Accordian, Footer } from "../components";
 import "../assets/CSS/index.css";
 import { useParams } from "react-router-dom";
 import CodeContext from "../context/CodeContext";
@@ -20,7 +20,7 @@ const Question = () => {
     getQuestion(id);
     // eslint-disable-next-line
   }, []);
-  
+
   const testStyle = "bg-[#25272E] w-full rounded-xl text-[0.76rem] p-4 mt-2";
   const QuestionComponent = ({ question }) => {
     return (
@@ -268,6 +268,7 @@ const Question = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
