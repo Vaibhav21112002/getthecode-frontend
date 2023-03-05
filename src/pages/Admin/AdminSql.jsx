@@ -45,7 +45,7 @@ const AdminSql = () => {
 
   const TableComponent = ({ item, index }) => {
     return (
-      <tr className="text-[0.76rem] bg-gray-800">
+      <tr className="text-[0.76rem] dark:bg-gray-800 bg-white">
         <th className="py-4 px-6 font-medium  text-gray-900 dark:text-white whitespace-nowrap">
           {index + 1}
         </th>
