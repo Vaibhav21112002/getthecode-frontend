@@ -257,8 +257,7 @@ const AdminProgramming = () => {
 			editData.testCases.length == 0 ||
 			editData.testCases[editData.testCases.length - 1].input === "" ||
 			editData.testCases[editData.testCases.length - 1].output === "" ||
-			editData.testCases[editData.testCases.length - 1].explaination ===
-				"" ||
+			editData.testCases[editData.testCases.length - 1].explaination === "" ||
 			editData.testCases[editData.testCases.length - 1].explaination ===
 				"<p><br></p>"
 		) {
