@@ -51,7 +51,7 @@ const Footer = () => {
 	return (
 		<div className="w-full  bg-[#222629] border-t border-[#33343B]">
 			<div className="w-full flex flex-col sm:flex-row gap-2 py-4">
-				<div className="w-4/12 flex flex-col gap-2 justify-center items-center">
+				<div className="w-6/12 flex flex-col gap-2 justify-center items-center">
 					<h1 className="text-gray-400 text-2xl font-bold text-center">
 						{" "}
 						Contact{" "}
@@ -61,10 +61,10 @@ const Footer = () => {
 							<GrMail className="text-gray-500 text-2xl" />
 							<a
 								className="text-gray-400 hover:text-gray-200"
-								href="mailto: getthecode@gmail.com"
+								href="mailto: codetoday@gmail.com"
 							>
 								{" "}
-								getthecode@gmail.com{" "}
+								codetoday@gmail.com{" "}
 							</a>
 						</div>
 					</div>
@@ -72,9 +72,7 @@ const Footer = () => {
 						Contact Us
 					</button>
 				</div>
-				<div className="w-4/12 flex justify-evenly">
-					{/* //links */}
-
+				{/* <div className="w-4/12 flex justify-evenly">
 					{footLinks.map((link) => (
 						<div key={link.heading} className="flex flex-col gap-2">
 							<h1 className="text-gray-400 text-2xl font-bold text-center">
@@ -98,8 +96,8 @@ const Footer = () => {
 							</div>
 						</div>
 					))}
-				</div>
-				<div className="w-4/12 flex justify-center items-center">
+				</div> */}
+				<div className="w-6/12 flex justify-center items-center">
 					<div className="flex flex-col gap-4">
 						<h1 className="text-gray-400 text-xl font-bold text-center">
 							Connect With Us
@@ -212,7 +210,7 @@ const Footer = () => {
 			{/* //copyright reverved */}
 			<div className="py-2">
 				<h1 className="text-center text-sm text-gray-400">
-					&copy; 2023 GetTheCode. All rights reserved.
+					&copy; 2023 Code Today. All rights reserved.
 				</h1>
 			</div>
 		</div>

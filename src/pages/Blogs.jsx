@@ -4,8 +4,11 @@ import "../assets/CSS/index.css";
 import { useNavigate } from "react-router-dom";
 import Parser from "html-react-parser";
 import codeContext from "../context/CodeContext";
+import { pagination } from "../assets/Constants";
 
 const Blogs = () => {
+	const [qpp, setQpp] = useState(10);
+	const [page, setPage] = useState(1);
 	const [data, setData] = useState([]);
 	const [activeFilter, setActiveFilter] = useState("All Blogs");
 	const { getBlogs, blogs } = useContext(codeContext);
@@ -16,11 +19,10 @@ const Blogs = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [blogsPerPage] = useState(2);
-
+	const totalPages = Math.ceil(data.length / qpp);
 	const indexOfLastBlog = currentPage * blogsPerPage;
 	const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
-
-	const paginate = (pageNumber) => setCurrentPage(pageNumber);
+	const paginateButtons = `w-24 h-8 rounded-md bg-[#E97500] text-white text-[0.8rem] font-bold flex justify-center items-center cursor-pointer hover:bg-[#FFA500]`;
 
 	const toggleDropdown = () => setIsOpen(!isOpen);
 
@@ -110,9 +112,6 @@ const Blogs = () => {
 		{ title: "Miscellaneous" },
 	];
 
-	const currentBlogs = data.slice(indexOfFirstBlog, indexOfLastBlog);
-	console.log(currentBlogs);
-
 	const BlogCard = ({ blog, index }) => {
 		return (
 			<div className="w-[75vw] h-[15rem] flex">
@@ -140,7 +139,10 @@ const Blogs = () => {
 										: blog.content,
 								)}
 							</h1>
-							<button className="bg-[#ED8A11] px-6 py-2 rounded-lg mt-2 flex justify-center items-center hover:bg-[#F2A03F] transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 cursor-pointer" onClick={()=>navigate(`/blogs/${blog?._id}`)}>
+							<button
+								className="bg-[#ED8A11] px-6 py-2 rounded-lg mt-2 flex justify-center items-center hover:bg-[#F2A03F] transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 cursor-pointer"
+								onClick={() => navigate(`/blogs/${blog?._id}`)}
+							>
 								<h1 className="text-white text-sm font-bold">
 									Read More
 								</h1>
@@ -254,49 +256,54 @@ const Blogs = () => {
 						</div>
 					)}
 					<div className="py-1 flex flex-wrap gap-16">
-						{currentBlogs.map((blog, index) => (
-							<BlogCard blog={blog} key={index} />
-						))}
+						{data
+							.slice((page - 1) * qpp, page * qpp)
+							.map((blog, index) => (
+								<BlogCard blog={blog} key={index} />
+							))}
 					</div>
-
-					{Math.ceil(data.length / blogsPerPage) === 0 ? (
-						<div>No Blogs with the selected filters</div>
-					) : (
-						<div className="flex justify-center items-center mt-8">
-							{
-								<button
-									onClick={() => {
-										if (currentPage <= 1) return;
-										paginate(currentPage - 1);
-									}}
-									className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50"
-								>
-									Previous
-								</button>
-							}
-							<div className="rounded-full h-10 w-10 mx-5 flex items-center justify-center bg-white text-black">{`${currentPage}/${Math.ceil(
-								data.length / blogsPerPage,
-							)}`}</div>
-
-							{
-								<button
-									onClick={() => {
-										if (
-											currentBlogs.length <
-												blogsPerPage ||
-											data.length <=
-												blogsPerPage * currentPage
-										)
-											return;
-										paginate(currentPage + 1);
-									}}
-									className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50"
-								>
-									Next
-								</button>
-							}
+					<div className="w-full flex justify-between items-center mt-4 gap-4">
+						<div className="w-full flex justify-center items-center mt-4 gap-4">
+							<select
+								className="
+								w-36 h-8 px-4 text-sm text-gray-500 placeholder-gray-500 border rounded-lg focus:shadow-outline placeholder-[#E97500] border-[#E97500] focus:outline-none focus:border-[#E97500] 
+								"
+								onChange={(e) => setQpp(e.target.value)}
+							>
+								{pagination.map((item, index) => {
+									return (
+										<option
+											key={index}
+											value={item.value}
+											className="text-[#000]"
+										>
+											{item.text}
+										</option>
+									);
+								})}
+							</select>
 						</div>
-					)}
+
+						<div className="w-full flex justify-center items-center mt-4 gap-4">
+							<button
+								className={paginateButtons}
+								onClick={() => setPage(page - 1)}
+								disabled={page === 1}
+							>
+								Prev
+							</button>
+							<h1 className=" text-white font-bold text-sm">
+								{page} of {totalPages}
+							</h1>
+							<button
+								className={paginateButtons}
+								onClick={() => setPage(page + 1)}
+								disabled={page === totalPages}
+							>
+								Next
+							</button>
+						</div>
+					</div>
 				</div>
 			</div>
 			<Footer />

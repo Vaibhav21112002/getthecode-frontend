@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Navbar, Accordian } from "../components";
+import { Navbar, Accordian, Footer } from "../components";
 import "../assets/CSS/index.css";
 import { useParams } from "react-router-dom";
 import CodeContext from "../context/CodeContext";
@@ -79,7 +79,13 @@ const Question = () => {
 				<br />
 				{question.hints && (
 					<div>
-						<h1 className="font-bold text-lg">Hints</h1>
+						{question.hints.hint1 != "" ||
+							question.hints.hint2 != "" ||
+							question.hints.hint3 != "" ||
+							question.hints.hint4 != "" ||
+							(question.hints.hint5 != "" && (
+								<h1 className="font-bold text-lg">Hints</h1>
+							))}
 						<br />
 						{question.hints.hint1 != "" && (
 							<div>
@@ -286,6 +292,7 @@ const Question = () => {
 					</div>
 				</div>
 			</div>
+			<Footer />
 		</div>
 	);
 };
