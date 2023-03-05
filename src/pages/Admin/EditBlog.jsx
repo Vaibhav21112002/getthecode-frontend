@@ -6,6 +6,7 @@ import "react-quill/dist/quill.snow.css";
 import swal from "sweetalert";
 import { useNavigate, useParams } from "react-router-dom";
 import codeContext from "../../context/CodeContext";
+import MarkdownEditor from "@uiw/react-markdown-editor";
 
 const EditBlog = () => {
   const navigate = useNavigate();
@@ -207,32 +208,17 @@ const EditBlog = () => {
                 )}
                 <label className="text-white">Your Blog</label>
                 <div className=" bg-white min-h-[200px] mb-10">
-                  <ReactQuill
-                    theme="snow"
+                  <MarkdownEditor
                     value={editData.content}
-                    placeholder="blog"
-                    name="blog"
-                    className="w-full bg-white"
-                    modules={{
-                      toolbar: {
-                        container: [
-                          [{ header: [1, 2, 3, 4, 5, 6, false] }],
-                          ["bold", "italic", "underline"],
-                          [{ list: "ordered" }, { list: "bullet" }],
-                          [{ align: [] }],
-                          ["link", "image"],
-                          ["clean"],
-                          [{ color: [] }],
-                        ],
-                      },
-                    }}
                     onChange={(e) => {
                       setEditData({
                         ...editData,
                         content: e,
                       });
                     }}
-                  />
+                    
+                 />
+                    
                 </div>
                 <div>
                   <button

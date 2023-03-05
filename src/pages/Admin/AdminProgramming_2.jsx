@@ -257,7 +257,8 @@ const AdminProgramming = () => {
 			editData.testCases.length == 0 ||
 			editData.testCases[editData.testCases.length - 1].input === "" ||
 			editData.testCases[editData.testCases.length - 1].output === "" ||
-			editData.testCases[editData.testCases.length - 1].explaination === "" ||
+			editData.testCases[editData.testCases.length - 1].explaination ===
+				"" ||
 			editData.testCases[editData.testCases.length - 1].explaination ===
 				"<p><br></p>"
 		) {
@@ -819,62 +820,10 @@ const AdminProgramming = () => {
 																}
 															}}
 														/>
-														<ReactQuill
-															theme="snow"
+														<MarkdownEditor
 															value={
 																testCase.explaination
 															}
-															placeholder="explaination"
-															name="explanation"
-															modules={{
-																toolbar: {
-																	container: [
-																		[
-																			{
-																				header: [
-																					1,
-																					2,
-																					3,
-																					4,
-																					5,
-																					6,
-																					false,
-																				],
-																			},
-																		],
-																		[
-																			"bold",
-																			"italic",
-																			"underline",
-																		],
-																		[
-																			{
-																				list: "ordered",
-																			},
-																			{
-																				list: "bullet",
-																			},
-																		],
-																		[
-																			{
-																				align: [],
-																			},
-																		],
-																		[
-																			"link",
-																			"image",
-																		],
-																		[
-																			"clean",
-																		],
-																		[
-																			{
-																				color: [],
-																			},
-																		],
-																	],
-																},
-															}}
 															onChange={(e) => {
 																if (
 																	uploadData.testCases
@@ -902,74 +851,98 @@ const AdminProgramming = () => {
 												),
 											)}
 
-                      <button
-					  className="border-2 border-[#E97500] hover:bg-black bg-[#E97500] text-[white]  rounded-lg h-[5vh] mx-auto px-4"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          if (
-                            uploadData.testCases.length == 0 ||
-                            (uploadData.testCases[
-                              uploadData.testCases.length - 1
-                            ].input !== "" &&
-                              uploadData.testCases[
-                                uploadData.testCases.length - 1
-                              ].output !== "" &&
-                              uploadData.testCases[
-                                uploadData.testCases.length - 1
-                              ].explaination !== "" &&
-                              uploadData.testCases[
-                                uploadData.testCases.length - 1
-                              ].explaination !== "<p><br></p>")
-                          ) {
-                            setUploadData({
-                              ...uploadData,
-                              testCases: [
-                                ...uploadData.testCases,
-                                {
-                                  input: "",
-                                  output: "",
-                                  explaination: "",
-                                },
-                              ],
-                            });
-                          } else {
-                            swal({
-                              title: "Error",
-                              text: "Please fill in the last testcase completely",
-                              icon: "error",
-                            });
-                          }
-                        }}
-                      >
-                        Add Test Cases
-                      </button>
-                    </div>
-                    <div className={divStyle}>
-                      <div className="flex">
-                        <label className={labelStyle}>Solution</label>
-                        <div className="relative w-full">
-                          <select
-                            value={language}
-                            onChange={(e) => {
-                              setLanguage(e.target.value);
-                            }}
-                            className="block appearance-none h-[30px] w-[40%] float-right text-center justify-between bg-black border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline text-white"
-                          >
-                            <option value="java">Java</option>
-                            <option value="cpp">C++</option>
-                            <option value="python">Python</option>
-                          </select>
-                          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
-                            <svg
-                              className="fill-current h-4 w-4"
-                              viewBox="0 0 20 20"
-                            >
-                              <path d="M10 12l-5-5 1.41-1.41L10 9.17l3.59-3.58L15 7l-5 5z" />
-                            </svg>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="w-[90%] h-[30px] bg-[#1E1E1E] rounded-t-2xl mb-[-8px]"></div>
+											<button
+												className="border border-black bg-[#F2F2F2] text-[#3A355C] rounded-lg h-[5vh] w-[50%] mx-auto"
+												onClick={(e) => {
+													e.preventDefault();
+													if (
+														uploadData.testCases
+															.length == 0 ||
+														(uploadData.testCases[
+															uploadData.testCases
+																.length - 1
+														].input !== "" &&
+															uploadData
+																.testCases[
+																uploadData
+																	.testCases
+																	.length - 1
+															].output !== "" &&
+															uploadData
+																.testCases[
+																uploadData
+																	.testCases
+																	.length - 1
+															].explaination !==
+																"" &&
+															uploadData
+																.testCases[
+																uploadData
+																	.testCases
+																	.length - 1
+															].explaination !==
+																"<p><br></p>")
+													) {
+														setUploadData({
+															...uploadData,
+															testCases: [
+																...uploadData.testCases,
+																{
+																	input: "",
+																	output: "",
+																	explaination:
+																		"",
+																},
+															],
+														});
+													} else {
+														swal({
+															title: "Error",
+															text: "Please fill in the last testcase completely",
+															icon: "error",
+														});
+													}
+												}}
+											>
+												Add Test Cases
+											</button>
+										</div>
+										<div className={divStyle}>
+											<div className="flex">
+												<label className={labelStyle}>
+													Solution
+												</label>
+												<div className="relative w-full">
+													<select
+														value={language}
+														onChange={(e) => {
+															setLanguage(
+																e.target.value,
+															);
+														}}
+														className="block appearance-none h-[30px] w-[40%] float-right text-center justify-between bg-black border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline text-white"
+													>
+														<option value="java">
+															Java
+														</option>
+														<option value="cpp">
+															C++
+														</option>
+														<option value="python">
+															Python
+														</option>
+													</select>
+													<div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
+														<svg
+															className="fill-current h-4 w-4"
+															viewBox="0 0 20 20"
+														>
+															<path d="M10 12l-5-5 1.41-1.41L10 9.17l3.59-3.58L15 7l-5 5z" />
+														</svg>
+													</div>
+												</div>
+											</div>
+											<div className="w-[90%] h-[30px] bg-[#1E1E1E] rounded-t-2xl mb-[-8px]"></div>
 
 											<Editor
 												height="60vh"
@@ -1483,63 +1456,10 @@ const AdminProgramming = () => {
 																	}
 																}}
 															/>
-															<ReactQuill
-																theme="snow"
+															<MarkdownEditor
 																value={
 																	testCase.explaination
 																}
-																placeholder="explaination"
-																name="explaination"
-																modules={{
-																	toolbar: {
-																		container:
-																			[
-																				[
-																					{
-																						header: [
-																							1,
-																							2,
-																							3,
-																							4,
-																							5,
-																							6,
-																							false,
-																						],
-																					},
-																				],
-																				[
-																					"bold",
-																					"italic",
-																					"underline",
-																				],
-																				[
-																					{
-																						list: "ordered",
-																					},
-																					{
-																						list: "bullet",
-																					},
-																				],
-																				[
-																					{
-																						align: [],
-																					},
-																				],
-																				[
-																					"link",
-																					"image",
-																				],
-																				[
-																					"clean",
-																				],
-																				[
-																					{
-																						color: [],
-																					},
-																				],
-																			],
-																	},
-																}}
 																onChange={(
 																	e,
 																) => {
