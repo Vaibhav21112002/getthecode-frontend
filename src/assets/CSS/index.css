@@ -79,3 +79,7 @@
   color: white !important;
   background-color: #222629 !important;
 }
+
+.markdown > .wmde-markdown pre > code {
+  color : #24292F !important
+}

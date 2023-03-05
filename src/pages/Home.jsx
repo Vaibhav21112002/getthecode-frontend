@@ -35,7 +35,7 @@ const Home = () => {
 									className="w-[20rem] h-[2.5rem] px-4 text-[#2D4763] bg-[#D4D4D4] focus:outline-none"
 								></input>
 							</div>
-							<div className="bg-[#FF9424] w-[5rem] h-[2.5rem] rounded-r-full flex justify-center items-center">
+							<div className="bg-[#FF9424] w-[5rem] h-[2.5rem] rounded-r-full flex justify-center items-center cursor-pointer hover:text-white">
 								Search
 							</div>
 						</div>
@@ -45,7 +45,7 @@ const Home = () => {
 									return (
 										<div
 											key={index}
-											className="bg-[#263A42] px-8 py-2 rounded-full"
+											className="bg-[#263A42] px-8 py-2 rounded-full cursor-pointer hover:bg-[#FF9424] hover:text-[#222629]"
 										>
 											<h1 className="text-white font-bold text-xl">
 												{item}
@@ -59,7 +59,7 @@ const Home = () => {
 									return (
 										<div
 											key={index}
-											className="bg-[#263A42] px-8 py-2 rounded-full"
+											className="bg-[#263A42] px-8 py-2 rounded-full cursor-pointer hover:bg-[#FF9424] hover:text-[#222629]"
 										>
 											<h1 className="text-white font-bold text-xl">
 												{item}

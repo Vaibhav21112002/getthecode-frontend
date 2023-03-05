@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from "react";
-import ReactQuill from "react-quill";
 import "../../assets/CSS/index.css";
 import { AdminTopBar, AdminNavbar } from "../../components";
 import "react-quill/dist/quill.snow.css";
@@ -7,6 +6,7 @@ import swal from "sweetalert";
 import { useNavigate } from "react-router-dom";
 import codeContext from "../../context/CodeContext";
 import Filebase64 from "react-file-base64";
+import MarkdownEditor from "@uiw/react-markdown-editor";
 
 const CreateBlog = () => {
   const navigate = useNavigate();
@@ -201,29 +201,8 @@ const CreateBlog = () => {
                 )}
                 <label className="text-white">Your Blog</label>
                 <div className=" bg-white mb-10">
-                  <ReactQuill
-                    theme="snow"
+                  <MarkdownEditor
                     value={uploadData.content}
-                    placeholder="Blog"
-                    name="blog"
-                    style={{ minHeight: "200px" }}
-                    modules={{
-                      toolbar: {
-                        container: [
-                          [
-                            {
-                              header: [1, 2, 3, 4, 5, 6, false],
-                            },
-                          ],
-                          ["bold", "italic", "underline"],
-                          [{ list: "ordered" }, { list: "bullet" }],
-                          [{ align: [] }],
-                          ["link", "image"],
-                          ["clean"],
-                          [{ color: [] }],
-                        ],
-                      },
-                    }}
                     onChange={(e) => {
                       setUploadData({
                         ...uploadData,
