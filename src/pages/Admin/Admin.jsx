@@ -8,7 +8,7 @@ import swal from "sweetalert";
 
 const Admin = () => {
   const [form, setForm] = useState({ username: "", password: "" });
-  const topics = ["questions","mcqs","sqls","blogs","more"];
+  const topics = ["questions", "mcqs", "sqls", "blogs", "more"];
 
   const {
     login,
@@ -24,7 +24,7 @@ const Admin = () => {
   } = useContext(codeContext);
   const lableStyle = "text-[#33343B] font-bold mx-auto text-sm mb-2  ";
   const inputStyle =
-    "w-[40%] mx-auto h-[40px] rounded-md border-[#33343B] border-2 p-2 mb-4 focus:outline-none focus:border-[#33343B] focus:ring-2 focus:ring-[#33343B] focus:ring-opacity-50";
+    "w-[70%] mx-auto h-[40px] rounded-md border-[#33343B] border-2 p-2 mb-4 focus:outline-none focus:border-[#33343B] focus:ring-2 focus:ring-[#33343B] focus:ring-opacity-50";
 
   useEffect(() => {
     getSqls();
@@ -32,6 +32,7 @@ const Admin = () => {
     getBlogs();
     getMcqs();
   }, []);
+  console.log(sqls);
   useEffect(() => {
     const d = localStorage.getItem("token");
     if (!d) {
@@ -68,25 +69,45 @@ const Admin = () => {
       mcqs: "MCQ",
       sqls: "SQL Queries",
       blogs: "Technical Blogs",
-      more:"More to be added soon..."
-      
+      more: "More to be added soon...",
     };
-    console.log(topic);
+    const lengths = {
+      questions: questions.length,
+      mcqs: mcqs.length,
+      sqls: sqls.length,
+      blogs: blogs.length
+    };
     return (
-      <div className={`${topic!=="more"?'bg-[#E97500]':'bg-white'} h-[184px] mb-10 rounded-lg  relative w-[95%]`}>
-        <div className={`absolute p-4 rounded-lg flex-wrap items-center shadow-md  justify-between top-[10px] left-[10px] flex ${topic!=="more"?'bg-[white] text-black':'bg-[#E97500] text-white'}  rounded-t-lg h-full w-full`}>
-          <div className={`flex flex-wrap ${topic!=='more'?'w-[70%]':'text-center'}`}>
-            <h2
-              className={`text-[48px] ${topic!=='more'?'w-[70%]':''} font-normal mb-2 font-serif`}
+      <div
+        className={`${
+          topic !== "more" ? "bg-[#E97500]" : "bg-white"
+        } h-[184px] mb-10 rounded-lg  relative w-[95%]`}
+      >
+        <div
+          className={`absolute p-4 rounded-lg flex-wrap items-center shadow-md  justify-between top-[10px] left-[10px] flex ${
+            topic !== "more"
+              ? "bg-[white] text-black"
+              : "bg-[#E97500] text-white"
+          }  rounded-t-lg h-full w-full`}
+        >
+          <div
+            className={`flex flex-wrap ${
+              topic !== "more" ? "w-[70%]" : "text-center"
+            }`}
+          >
+            <h1
+              className={`text-[48px] ${
+                topic !== "more" ? "w-[70%]" : ""
+              } font-normal mb-2 font-serif`}
               style={{ fontFamily: "IBM Plex Serif" }}
             >
               {topicHeadingDict[topic]}
-            </h2>
+            </h1>
           </div>
           {topic !== "more" && (
             <div className="flex items-center bg-[#E97500] rounded-full h-[80px] text-center justify-center w-[80px]">
               <span className="text-4xl font-bold mr-2 text-white">
-                {`${topic.length}`}
+                {lengths[topic]}
               </span>
             </div>
           )}
@@ -109,8 +130,8 @@ const Admin = () => {
               {sqls?.length >= 0 && (
                 <div className="">
                   <div className="grid grid-cols-3 mt-10 w-[90%] mx-auto gap-4">
-                    {topics.map(topic=>(
-                      <Card topic={topic}/>
+                    {topics.map((topic) => (
+                      <Card topic={topic} />
                     ))}
                   </div>
                 </div>
@@ -119,7 +140,9 @@ const Admin = () => {
           </div>
         </div>
       ) : (
-        <div className={`w-full flex min-h-[100vh] bg-[${darkTheme.bgPrimary}]`}>
+        <div
+          className={`w-full flex min-h-[100vh] bg-[${darkTheme.bgPrimary}]`}
+        >
           <Navbar />
           <div className="w-full h-full flex justify-center items-center my-auto">
             <div className="w-[70%] h-[70%] bg-white rounded-md shadow-[0_50px_25px_-24px_rgb(0,0,0,0.3)] flex flex-col items-center">
