@@ -27,7 +27,7 @@ const AdminNav = () => {
 		>
 			<div className={`w-[90%] h-[2rem] bg-[#222629] rounded-lg flex justify-center items-center text-[#BDA9A9] gap-2 cursor-pointer`} onClick={() => navigate("/admin/profile")} >
 				<BsFillPersonFill className=" text-[1.2rem]" />
-				<h1 >Vaibhav Gupta</h1>
+				<h1>Welcome Gaurav</h1>
 			</div>
 			<div className="w-[90%] h-[0.5px] bg-bg-[#33343B] my-4"></div>
 			<div className="w-[90%]">
