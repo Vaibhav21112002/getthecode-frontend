@@ -44,7 +44,7 @@ const AdminMCQ = () => {
 				<th className="py-4 px-6 font-medium dark:text-white text-gray-900 whitespace-nowrap">
 					{index + 1}
 				</th>
-				<th className="py-4 px-6 font-medium text-white whitespace-nowrap">
+				<th className="py-4 px-6 font-medium dark:text-white text-gray-900	 whitespace-nowrap">
 					{item.question.length > 50 ? (
 						<p>{item.question.slice(0, 50)}...</p>
 					) : (

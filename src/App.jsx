@@ -10,7 +10,8 @@ import {
 	Table,
 	SqlQuestion,
 	SqlQuestions,
-	Test
+	Test,
+	Login
 } from "./pages";
 import {
 	Admin,
@@ -43,6 +44,7 @@ const App = () => {
 					<Route path="/Table" element={<Table />} />
 					<Route path="/programming/:id" element={<Question />} />
 					<Route path="/admin" element={<Admin />} />
+					<Route path="/login" element={<Login />} />
 					<Route
 						path="/admin/programming"
 						element={<AdminProgramming_2 />}
