@@ -10,14 +10,14 @@ const TechNews = () => {
 	const [qpp, setQpp] = useState(10);
 	const [page, setPage] = useState(1);
 	const [data, setData] = useState([]);
-	const [activeFilter, setActiveFilter] = useState("All Blogs");
-	const { getTechNews, TechNews } = useContext(codeContext);
-	const [blogs, setBlogs] = useState([]);
+	const [activeFilter, setActiveFilter] = useState("All Tech News");
+	const { getTechNews, techNews } = useContext(codeContext);
 	const [companies, setCompanies] = useState([]);
 	const [inputValue, setInputValue] = useState("");
 	const [filteredCompanies, setFilteredCompanies] = useState(companies);
 	const [isFocused, setIsFocused] = useState(false);
-	const totalPages = Math.ceil(blogs ? blogs.length / qpp : 1);
+	const [isOpen, setIsOpen] = useState(false);
+	const totalPages = Math.ceil(data.length / qpp);
 	const paginateButtons = `w-24 h-8 rounded-md bg-[#E97500] text-white text-[0.8rem] font-bold flex justify-center items-center cursor-pointer hover:bg-[#FFA500]`;
 
 	const inputRef = useRef(null);
@@ -48,10 +48,11 @@ const TechNews = () => {
 		setInputValue(value);
 		setFilteredCompanies(companies);
 		setData(
-			blogs.filter(
-				(blog) =>
-					blog.company.toLowerCase().indexOf(value.toLowerCase()) !==
-					-1,
+			techNews.filter(
+				(techNew) =>
+					techNew.company
+						.toLowerCase()
+						.indexOf(value.toLowerCase()) !== -1,
 			),
 		);
 		inputRef.current.blur();
@@ -59,17 +60,15 @@ const TechNews = () => {
 
 	useEffect(() => {
 		getTechNews();
-		setBlogs(TechNews);
-		setData(TechNews);
 	}, []);
 
 	useEffect(() => {
-		setData(blogs);
-		if (data && data.length > 0) {
+		setData(techNews);
+		if (data.length > 0) {
 			let comp = [];
-			data.map((blog) => {
-				if (blog.tag === "Interview Experiences") {
-					comp.push(blog.company.toLowerCase());
+			data.map((techNew) => {
+				if (techNew.tag === "Interview Experiences") {
+					comp.push(techNew.company.toLowerCase());
 				}
 			});
 			let uniqueCompanies = comp.filter(
@@ -78,7 +77,7 @@ const TechNews = () => {
 			setCompanies(uniqueCompanies);
 			setFilteredCompanies(companies);
 		}
-	}, [blogs]);
+	}, [techNews]);
 
 	const navigate = useNavigate();
 
@@ -88,35 +87,35 @@ const TechNews = () => {
 			setInputValue("");
 		}
 		setActiveFilter(topic);
-		if (topic === "All Blogs") {
-			setData(blogs);
+		if (topic === "All Tech News") {
+			setData(techNews);
 		} else {
-			const filteredBlogs = [];
-			blogs.map((blog) => {
-				if (blog.tag === topic) {
-					filteredBlogs.push(blog);
+			const filteredTechNews = [];
+			techNews.map((techNew) => {
+				if (techNew.tag === topic) {
+					filteredTechNews.push(techNew);
 				}
 			});
-			setData(filteredBlogs);
+			setData(filteredTechNews);
 		}
 	};
 
 	const topics = [
-		{ title: "All Blogs" },
+		{ title: "All Tech News" },
 		{ title: "Interview Experiences" },
 		{ title: "Latest Tech Innovations" },
 		{ title: "Miscellaneous" },
 	];
 
-	const BlogCard = ({ blog, index }) => {
+	const TechNewsCard = ({ techNew, index }) => {
 		return (
 			<div className="w-[75vw] h-[15rem] flex">
 				<div className="w-3/12 h-full ">
 					<div className="relative w-[16rem] h-[12rem]  mt-[26px] right-[-6rem]  z-[1]">
 						<img
-							src={blog.image}
+							src={techNew.image}
 							className="w-full h-full rounded-md"
-							alt="blog"
+							alt="techNew"
 						/>
 					</div>
 				</div>
@@ -124,20 +123,22 @@ const TechNews = () => {
 					<div className="h-full w-full pl-[8rem] py-4 pr-8 flex flex-col justify-between">
 						<div>
 							<h1 className="text-[#222629] text-lg font-bold">
-								{blog.title}
+								{techNew.title}
 							</h1>
-							<h1 className="text-sm">#{blog.keywords}</h1>
+							<h1 className="text-sm">#{techNew.keywords}</h1>
 
 							<h1 className="text-[#222629] text-sm text-justify mt-2">
 								{Parser(
-									blog.content.length > 150
-										? blog.content.slice(0, 150) + "..."
-										: blog.content,
+									techNew.content.length > 150
+										? techNew.content.slice(0, 150) + "..."
+										: techNew.content,
 								)}
 							</h1>
 							<button
 								className="bg-[#ED8A11] px-6 py-2 rounded-lg mt-2 flex justify-center items-center hover:bg-[#F2A03F] transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 cursor-pointer"
-								onClick={() => navigate(`/blogs/${blog?._id}`)}
+								onClick={() =>
+									navigate(`/techNews/${techNew?._id}`)
+								}
 							>
 								<h1 className="text-white text-sm font-bold">
 									Read More
@@ -147,12 +148,12 @@ const TechNews = () => {
 
 						<div className="flex justify-start">
 							<h1 className="text-sm h-full flex content-end">
-								#{blog.tag}
+								#{techNew.tag}
 							</h1>
 							{"    "}
-							{blog.company && (
+							{techNew.company && (
 								<h1 className="text-sm h-full flex content-end">
-									#{blog.company}
+									#{techNew.company}
 								</h1>
 							)}
 						</div>
@@ -218,9 +219,9 @@ const TechNews = () => {
 										console.log(inputValue);
 										setFilteredCompanies(companies);
 										setData(
-											blogs.filter(
-												(blog) =>
-													blog.company.toLowerCase() ===
+											techNews.filter(
+												(techNew) =>
+													techNew.company.toLowerCase() ===
 													inputValue,
 											),
 										);
@@ -252,12 +253,11 @@ const TechNews = () => {
 						</div>
 					)}
 					<div className="py-1 flex flex-wrap gap-16">
-						{data &&
-							data
-								.slice((page - 1) * qpp, page * qpp)
-								.map((blog, index) => (
-									<BlogCard blog={blog} key={index} />
-								))}
+						{data
+							.slice((page - 1) * qpp, page * qpp)
+							.map((techNew, index) => (
+								<TechNewsCard techNew={techNew} key={index} />
+							))}
 					</div>
 					<div className="w-full flex justify-between items-center mt-4 gap-4">
 						<div className="w-full flex justify-center items-center mt-4 gap-4">

@@ -14,7 +14,7 @@ function Navbar({ question }) {
 		{ title: "Blogs", path: "/blogs" },
 		{ title: "MCQs", path: "/mcqs" },
 		{ title: "SQL", path: "/sql" },
-		// { title: "Tech News", path: "/technews" },
+		{ title: "Tech News", path: "/technews" },
 	];
 
 	const NavLink = ({ link, index }) => {

@@ -11,3 +11,4 @@ export { default as Test } from "./Test.jsx";
 export { default as Table } from "./Table";
 export { default as Login } from "./Login.jsx";
 export { default as TechNews } from "./TechNews.jsx";
+export { default as TechNew } from "./TechNew.jsx";
