@@ -14,9 +14,28 @@ function Navbar({ question }) {
 		{ title: "Blogs", path: "/blogs" },
 		{ title: "MCQs", path: "/mcqs" },
 		{ title: "SQL", path: "/sql" },
-		{ title: "Tech News", path: "/technews" },
+		// { title: "Tech News", path: "/technews" },
 	];
 
+	const NavLink = ({ link, index }) => {
+		return (
+			<li key={index}>
+				<button
+					className="w-full px-4 py-2 text-[white] hover:bg-[#BDA9A9] hover:text-[#202128] rounded-md text-sm"
+					onClick={() => navigate(`${link.path}`)}
+				>
+					{" "}
+					{link.title}{" "}
+				</button>
+				{location.pathname === link.path && (
+					<div className="">
+						{" "}
+						<div className=""></div>{" "}
+					</div>
+				)}
+			</li>
+		);
+	};
 	return (
 		<div className="mb-10">
 			<div
@@ -38,23 +57,7 @@ function Navbar({ question }) {
 					</div>
 					<ul className="sm:flex hidden gap-4 w-full justify-end items-center px-8">
 						{navLinks.map((link, index) => {
-							return (
-								<li key={index} className="w-28">
-									<button
-										className="w-full px-4 py-2 text-[white] hover:bg-[#BDA9A9] hover:text-[#202128] rounded-md text-sm"
-										onClick={() => navigate(`${link.path}`)}
-									>
-										{" "}
-										{link.title}{" "}
-									</button>
-									{location.pathname === link.path && (
-										<div className="">
-											{" "}
-											<div className=""></div>{" "}
-										</div>
-									)}
-								</li>
-							);
+							return <NavLink link={link} index={index} />;
 						})}
 						<BiShieldQuarter
 							className="text-[#BDA9A9] text-2xl hover:text-white cursor-pointer"

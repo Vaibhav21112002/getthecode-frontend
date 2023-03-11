@@ -11,20 +11,14 @@ const TechNews = () => {
 	const [page, setPage] = useState(1);
 	const [data, setData] = useState([]);
 	const [activeFilter, setActiveFilter] = useState("All Blogs");
-	const { getBlogs, blogs } = useContext(codeContext);
+	const { getTechNews, TechNews } = useContext(codeContext);
+	const [blogs, setBlogs] = useState([]);
 	const [companies, setCompanies] = useState([]);
 	const [inputValue, setInputValue] = useState("");
 	const [filteredCompanies, setFilteredCompanies] = useState(companies);
 	const [isFocused, setIsFocused] = useState(false);
-	const [isOpen, setIsOpen] = useState(false);
-	const [currentPage, setCurrentPage] = useState(1);
-	const [blogsPerPage] = useState(2);
-	const totalPages = Math.ceil(data.length / qpp);
-	const indexOfLastBlog = currentPage * blogsPerPage;
-	const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
+	const totalPages = Math.ceil(blogs ? blogs.length / qpp : 1);
 	const paginateButtons = `w-24 h-8 rounded-md bg-[#E97500] text-white text-[0.8rem] font-bold flex justify-center items-center cursor-pointer hover:bg-[#FFA500]`;
-
-	const toggleDropdown = () => setIsOpen(!isOpen);
 
 	const inputRef = useRef(null);
 	const handleInputFocus = () => {
@@ -64,12 +58,14 @@ const TechNews = () => {
 	};
 
 	useEffect(() => {
-		getBlogs();
+		getTechNews();
+		setBlogs(TechNews);
+		setData(TechNews);
 	}, []);
 
 	useEffect(() => {
 		setData(blogs);
-		if (data.length > 0) {
+		if (data && data.length > 0) {
 			let comp = [];
 			data.map((blog) => {
 				if (blog.tag === "Interview Experiences") {
@@ -256,11 +252,12 @@ const TechNews = () => {
 						</div>
 					)}
 					<div className="py-1 flex flex-wrap gap-16">
-						{data
-							.slice((page - 1) * qpp, page * qpp)
-							.map((blog, index) => (
-								<BlogCard blog={blog} key={index} />
-							))}
+						{data &&
+							data
+								.slice((page - 1) * qpp, page * qpp)
+								.map((blog, index) => (
+									<BlogCard blog={blog} key={index} />
+								))}
 					</div>
 					<div className="w-full flex justify-between items-center mt-4 gap-4">
 						<div className="w-full flex justify-center items-center mt-4 gap-4">

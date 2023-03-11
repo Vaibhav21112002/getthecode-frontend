@@ -66,7 +66,7 @@ const MCQ = () => {
 					<div className="flex flex-col w-full mt-8">
 						{data.map((mcq, index) => {
 							return (
-								<div className=" text-black w-full p-4 bg-white rounded-md 	 shadow-lg mb-4 flex flex-col  ">
+								<div className=" text-black w-full p-4 bg-white rounded-md shadow-lg mb-4 flex flex-col">
 									<div
 										className=" px-10 rounded-[16px]flex"
 										key={index}
@@ -84,67 +84,70 @@ const MCQ = () => {
 											<div className="mt-3 mb-3 flex flex-col pl-4">
 												{mcq.options.map(
 													(option, index1) => (
-														<div className="flex">
-															<input
-																type="radio"
-																className="mr-2"
-																name={index}
-																value={
-																	option.no
-																}
-																onChange={() => {
-																	const newSelected =
-																		[
-																			...selected,
-																		];
-																	newSelected[
-																		index
-																	] =
-																		option.no;
-																	setSelected(
-																		newSelected,
-																	);
-																}}
-															/>
-
-															<div>
-																<span
-																	className={`text-sm mb-3 ${
-																		answersVisible[
+														<div className="flex flex-col">
+															<div className="flex">
+																<input
+																	type="checkbox"
+																	className="mr-2"
+																	name={index}
+																	value={
+																		option.no
+																	}
+																	onChange={() => {
+																		const newSelected =
+																			[
+																				...selected,
+																			];
+																		newSelected[
 																			index
-																		] &&
-																		option.no ===
-																			mcq.answer
-																			? "text-green-500"
-																			: answersVisible[
-																					index
-																			  ] &&
-																			  option.no !==
-																					mcq.answer
-																			? "text-red-500"
-																			: ""
-																	}`}
-																	key={index1}
-																>
-																	{" "}
-																	{`${option.no}. ${option.text}`}{" "}
-																</span>
-																{/* Option Image */}
-
-																{option.image &&
-																	option.image !=
-																		"" && (
-																		<div>
-																			<img
-																				src={
-																					option.image
-																				}
-																				className="w-[100px] h-[100px] mt-2 pl-4"
-																				alt="images"
-																			/>
-																		</div>
-																	)}
+																		] =
+																			option.no;
+																		setSelected(
+																			newSelected,
+																		);
+																	}}
+																/>
+																<div>
+																	<span
+																		className={`text-sm mb-3 ${
+																			answersVisible[
+																				index
+																			] &&
+																			mcq.answer.includes(
+																				option.no,
+																			)
+																				? "text-green-500"
+																				: answersVisible[
+																						index
+																				  ] &&
+																				  option.no !==
+																						mcq.answer
+																				? "text-red-500"
+																				: ""
+																		}`}
+																		key={
+																			index1
+																		}
+																	>
+																		{" "}
+																		{`${option.no}. ${option.text}`}{" "}
+																	</span>
+																	{/* Option Image */}
+																</div>
 															</div>
+															{option.image &&
+																option.image !=
+																	"" && (
+																	<div>
+																		<img
+																			src={
+																				option.image
+																			}
+																			className="w-[100px] h-[100px] mt-2 pl-4"
+																			alt="images"
+																		/>
+																	</div>
+																)}
 														</div>
 													),
 												)}

@@ -9,6 +9,9 @@ const CodeState = (props) => {
 	const [blogs, setBlogs] = useState([]);
 	const [blog, setBlog] = useState({});
 
+	const [techNews, setTechNews] = useState([]);
+	const [techNew, setTechNew] = useState({});
+
 	const [mcqs, setMcqs] = useState([]);
 	const [mcq, setMcq] = useState({});
 
@@ -100,7 +103,6 @@ const CodeState = (props) => {
 		setLoading(false);
 	};
 
-
 	const getBlogs = async () => {
 		try {
 			setLoading(true);
@@ -148,7 +150,6 @@ const CodeState = (props) => {
 		setLoading(false);
 	};
 
-
 	const deleteBlog = async (id) => {
 		try {
 			setLoading(true);
@@ -161,6 +162,69 @@ const CodeState = (props) => {
 		setLoading(false);
 	};
 
+	const getTechNews = async () => {
+		try {
+			setLoading(true);
+			const res = await api.get("/technews");
+			setTechNews(res.data);
+			setLoading(false);
+		} catch (err) {
+			console.log(err);
+		}
+		setLoading(false);
+	};
+
+	const getTechNew = async (id) => {
+		try {
+			setLoading(true);
+			const res = await api.get(`/technews/${id}`);
+			setTechNew(res.data);
+			setLoading(false);
+		} catch (err) {
+			console.log(err);
+		}
+		setLoading(false);
+	};
+
+	const addTechNew = async (techNew) => {
+		try {
+			setLoading(true);
+			const res = await api.post("/technews", techNew);
+			setTechNews([...techNews, res.data]);
+			setLoading(false);
+		} catch (err) {
+			console.log(err);
+		}
+		setLoading(false);
+	};
+
+	const editTechNew = async (id, techNew) => {
+		try {
+			setLoading(true);
+			const res = await api.put(`/technews/${id}`, techNew);
+			setTechNews(
+				techNews.map((techNew) =>
+					techNew._id === id ? res.data : techNew,
+				),
+			);
+			setLoading(false);
+		} catch (err) {
+			console.log(err);
+		}
+		setLoading(false);
+	};
+
+	const deleteTechNews = async (id) => {
+		try {
+			setLoading(true);
+			await api.delete(`/technews/${id}`);
+			setTechNews(techNews.filter((techNew) => techNew._id !== id));
+			setLoading(false);
+		} catch (err) {
+			console.log(err);
+		}
+		setLoading(false);
+	};
 	const getMcqs = async () => {
 		try {
 			setLoading(true);
@@ -221,38 +285,35 @@ const CodeState = (props) => {
 		setLoading(false);
 	};
 
-	const getSqls = async()=>{
-		try{
+	const getSqls = async () => {
+		try {
 			setLoading(true);
-			const res = await api.get('/sql');
+			const res = await api.get("/sql");
 			setSqls(res.data);
 			setLoading(false);
-		}
-		catch(err){
-			console.log(err);
-		}
-		setLoading(false);
-	}
-	const getSql = async(id)=>{
-		try{
-			setLoading(true);
-			const res = await api.get(`/sql/${id}`);
-			setSql(res.data);
-			setLoading(false);
-		}
-		catch(err){
+		} catch (err) {
 			console.log(err);
 		}
 		setLoading(false);
 	};
-	const addSql = async(question) =>{
-		try{
+	const getSql = async (id) => {
+		try {
 			setLoading(true);
-			const res = await api.post('/sql',question);
-			setSqls([...sqls,res.data]);
+			const res = await api.get(`/sql/${id}`);
+			setSql(res.data);
 			setLoading(false);
+		} catch (err) {
+			console.log(err);
 		}
-		catch(err){
+		setLoading(false);
+	};
+	const addSql = async (question) => {
+		try {
+			setLoading(true);
+			const res = await api.post("/sql", question);
+			setSqls([...sqls, res.data]);
+			setLoading(false);
+		} catch (err) {
 			console.log(err);
 		}
 		setLoading(false);
@@ -292,6 +353,8 @@ const CodeState = (props) => {
 					question,
 					blog,
 					blogs,
+					techNews,
+					techNew,
 					mcq,
 					mcqs,
 					sqls,
@@ -311,6 +374,11 @@ const CodeState = (props) => {
 					addBlog,
 					editBlog,
 					deleteBlog,
+					getTechNews,
+					getTechNew,
+					addTechNew,
+					editTechNew,
+					deleteTechNews,
 					getMcqs,
 					getMcq,
 					addMcq,
@@ -320,7 +388,7 @@ const CodeState = (props) => {
 					getSql,
 					addSql,
 					editSql,
-					deleteSql
+					deleteSql,
 				}}
 			>
 				{props.children}
