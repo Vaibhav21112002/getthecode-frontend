@@ -3,16 +3,15 @@ import { AdminNavbar, AdminTopBar } from "../../components";
 import { BsFileEarmarkSpreadsheet } from "react-icons/bs";
 import Modal from "react-awesome-modal";
 import Editor from "@monaco-editor/react";
-import { AiOutlineClose, AiFillEdit, AiFillDelete } from "react-icons/ai";
+import {AiOutlineLink,  AiOutlineClose, AiFillEdit, AiFillDelete } from "react-icons/ai";
 import "../../assets/CSS/index.css";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
 import codeContext from "../../context/CodeContext";
 import swal from "sweetalert";
 import Void from "../../assets/Images/Void.svg";
 import { useNavigate } from "react-router-dom";
 import MarkdownEditor from "@uiw/react-markdown-editor";
 import { companies as CompanyTags } from "../../assets/Constants";
+import { FcCancel } from "react-icons/fc";
 
 const AdminProgramming = () => {
 	const navigate = useNavigate();
@@ -54,6 +53,7 @@ const AdminProgramming = () => {
 			python: "",
 		},
 		videoLink: "",
+		link : "",
 	});
 
 	useEffect(() => {
@@ -135,6 +135,16 @@ const AdminProgramming = () => {
 					<td className="py-4 px-6 text-[#FF0000]">Hard</td>
 				)}
 				<td className="py-4 px-6">{item.score ? item.score : 10}</td>
+				<td className="py-4 px-6">
+					{item.link ? (
+						<AiOutlineLink
+							className="text-2xl cursor-pointer text-blue-600"
+							onClick={() => window.open(item.link)}
+						/>
+					) : (
+						<FcCancel className="text-2xl" />
+					)}
+				</td>
 				<td className="py-4 px-6 text-right">
 					<AiFillEdit
 						className="text-xl cursor-pointer text-gray-900 dark:text-white"
@@ -350,6 +360,12 @@ const AdminProgramming = () => {
 														className="py-3 px-6"
 													>
 														Score
+													</th>
+													<th
+														scope="col"
+														className="py-3 px-6"
+													>
+														Link
 													</th>
 
 													<th
@@ -981,6 +997,24 @@ const AdminProgramming = () => {
 													setUploadData({
 														...uploadData,
 														videoLink:
+															e.target.value,
+													})
+												}
+											/>
+										</div>
+										<div className={divStyle}>
+											<label className={labelStyle}>
+												Problem Link
+											</label>
+											<input
+												type="text"
+												className={inputStyle}
+												value={uploadData.link}
+												placeholder="Problem Link"
+												onChange={(e) =>
+													setUploadData({
+														...uploadData,
+														link:
 															e.target.value,
 													})
 												}
@@ -1638,6 +1672,24 @@ const AdminProgramming = () => {
 													}
 												/>
 											</div>
+											<div className={divStyle}>
+											<label className={labelStyle}>
+												Problem Link
+											</label>
+											<input
+												type="text"
+												className={inputStyle}
+												value={editData.link}
+												placeholder="Problem Link"
+												onChange={(e) =>
+													setUploadData({
+														...editData,
+														link:
+															e.target.value,
+													})
+												}
+											/>
+										</div>
 											<div className="w-full flex px-24 justify-center">
 												<button
 													className={activeClass}

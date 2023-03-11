@@ -20,6 +20,7 @@ const AdminNav = () => {
 		{ title: "Blogs", path: "/admin/blogs", icon: <BsInfoLg /> },
 		{ title: "MCQs", path: "/admin/mcqs", icon: <BsQuestionCircle />, },
 		{ title: "SQL", path: "/admin/sql", icon: <AiOutlineConsoleSql />, },
+		{ title : "Tech News", path: "/admin/technews", icon: <HiOutlineNewspaper />}
 	];
 	return (
 		<div

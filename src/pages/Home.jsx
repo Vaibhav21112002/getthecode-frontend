@@ -85,7 +85,7 @@ const Home = () => {
         </div>
       </div>
       <Modal
-        visible={login}
+        visible={false}
         onClickAway={() => setLogin(false)}
         title="Solution"
         width="40%"
