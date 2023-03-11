@@ -262,7 +262,7 @@ const Programming = () => {
 							<div className="w-full flex flex-col justify-end text-sm">
 								<input
 									type="text"
-									className="w-full h-10 px-4 text-base text-gray-500 placeholder-gray-500 border rounded-lg focus:shadow-outline placeholder-[#E97500] border-[#E97500] focus:outline-none focus:border-[#E97500] "
+									className="w-full h-10 px-4 text-base text-gray-500 border rounded-lg focus:shadow-outline placeholder-[#E97500] border-[#E97500] focus:outline-none focus:border-[#E97500] "
 									placeholder="Search"
 									onChange={(e) => {
 										setSearch(e.target.value);
@@ -334,7 +334,7 @@ const Programming = () => {
 						<div className="w-full flex justify-center items-center mt-4 gap-4">
 							<select
 								className="
-								w-36 h-8 px-4 text-sm text-gray-500 placeholder-gray-500 border rounded-lg focus:shadow-outline placeholder-[#E97500] border-[#E97500] focus:outline-none focus:border-[#E97500] 
+								w-36 h-8 px-4 text-sm text-gray-500  border rounded-lg focus:shadow-outline placeholder-[#E97500] border-[#E97500] focus:outline-none focus:border-[#E97500] 
 								"
 								onChange={(e) => setQpp(e.target.value)}
 							>
