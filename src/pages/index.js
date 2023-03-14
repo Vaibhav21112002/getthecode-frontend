@@ -9,3 +9,6 @@ export { default as SqlQuestion } from "./SqlQuestion.jsx";
 export { default as SqlQuestions } from "./SqlQuestions.jsx";
 export { default as Test } from "./Test.jsx";
 export { default as Table } from "./Table";
+export { default as Login } from "../components/Login";
+export { default as TechNews } from "./TechNews.jsx";
+export { default as TechNew } from "./TechNew.jsx";

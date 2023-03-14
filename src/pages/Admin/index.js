@@ -8,6 +8,7 @@ export { default as CreateBlog } from "./CreateBlog";
 export { default as EditBlog } from "./EditBlog";
 export { default as AdminMcq } from "./AdminMCQ";
 export { default as Profile } from "./Profile";
-export {default as EditSql} from "./EditSql"
-
-
+export { default as EditSql } from "./EditSql";
+export { default as AdminTechNews } from "./AdminTechNews";
+export { default as CreateTechNews } from "./CreateTechNews";
+export { default as EditTechNews } from "./EditTechNews";

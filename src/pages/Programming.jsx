@@ -7,8 +7,13 @@ import CodeContext from "../context/CodeContext";
 import Void from "../assets/Images/Void.svg";
 import Modal from "react-awesome-modal";
 import Editor from "@monaco-editor/react";
-import { AiOutlineClose } from "react-icons/ai";
-import { topics, companies_new as companies, pagination } from "../assets/Constants";
+import { AiOutlineLink, AiOutlineClose } from "react-icons/ai";
+import { FcCancel } from "react-icons/fc";
+import {
+	topics,
+	companies_new as companies,
+	pagination,
+} from "../assets/Constants";
 
 const Programming = () => {
 	const navigate = useNavigate();
@@ -105,6 +110,16 @@ const Programming = () => {
 					<td className="py-4 px-6 text-[#FF0000]">Hard</td>
 				)}
 				<td className="py-4 px-6">{item.score}</td>
+				<td className="py-4 px-6">
+					{item.link ? (
+						<AiOutlineLink
+							className="text-2xl cursor-pointer text-blue-600"
+							onClick={() => window.open(item.link)}
+						/>
+					) : (
+						<FcCancel className="text-2xl" />
+					)}
+				</td>
 			</tr>
 		);
 	};
@@ -274,6 +289,9 @@ const Programming = () => {
 										</th>
 										<th scope="col" className="py-3 px-6">
 											Score
+										</th>
+										<th scope="col" className="py-3 px-6">
+											Link
 										</th>
 									</tr>
 								</thead>

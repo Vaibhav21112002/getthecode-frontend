@@ -35,7 +35,7 @@ const AdminMCQ = () => {
 				image: "",
 			},
 		],
-		answer: 0,
+		answer: [],
 		topicTag: "",
 	});
 	const TableComponent = ({ item, index }) => {
@@ -127,10 +127,6 @@ const AdminMCQ = () => {
 		setLogin(true);
 	}, []);
 	const handleUpload = async () => {
-		setUploadData({
-			...uploadData,
-			answer: parseInt(uploadData.answer),
-		});
 		console.log(uploadData);
 		if (
 			uploadData.question === "" ||
@@ -256,7 +252,7 @@ const AdminMCQ = () => {
 							image: "",
 						},
 					],
-					answer: 0,
+					answer: [],
 					topicTag: "",
 				});
 				setUploadOpen(false);
@@ -554,37 +550,68 @@ const AdminMCQ = () => {
 													>
 														Correct Answer
 													</label>
-													<select
-														className={inputStyle}
-														value={
-															uploadData.answer
-														}
-														onChange={(e) =>
-															setUploadData({
-																...uploadData,
-																answer: e.target
-																	.value,
-															})
-														}
-													>
-														<option value="">
-															Select
-														</option>
+													{/* Checkboxes for all options */}
+													<div className="w-full flex justify-center items-center flex-col gap-2">
 														{uploadData.options.map(
 															(item, index) => (
-																<option
-																	value={
-																		index +
-																		1
-																	}
+																<div
+																	className="w-full flex items-center gap-2"
 																	key={index}
 																>
-																	Option{" "}
-																	{index + 1}
-																</option>
+																	<input
+																		type="checkbox"
+																		className="w-4 h-4"
+																		checked={uploadData.answer.includes(
+																			index +
+																				1,
+																		)}
+																		onChange={(
+																			e,
+																		) => {
+																			let temp =
+																				uploadData
+																					.answer
+																					.length >
+																				0
+																					? uploadData.answer
+																					: [];
+
+																			if (
+																				temp.includes(
+																					index +
+																						1,
+																				)
+																			) {
+																				temp.splice(
+																					temp.indexOf(
+																						index +
+																							1,
+																					),
+																					1,
+																				);
+																			} else {
+																				temp.push(
+																					index +
+																						1,
+																				);
+																			}
+																			setUploadData(
+																				{
+																					...uploadData,
+																					answer: temp,
+																				},
+																			);
+																		}}
+																	/>
+																	<label>
+																		Option{" "}
+																		{index +
+																			1}
+																	</label>
+																</div>
 															),
 														)}
-													</select>
+													</div>
 												</div>
 												<div className={divStyle}>
 													<label
@@ -706,9 +733,10 @@ const AdminMCQ = () => {
 																			item.text
 																		}
 																	</span>
-																	{editData.answer ===
+																	{editData.answer.includes(
 																		index +
-																			1 && (
+																			1,
+																	) && (
 																		<span
 																			className={`text-[#E97500] font-bold`}
 																		>
@@ -805,70 +833,27 @@ const AdminMCQ = () => {
 																<input
 																	type="text"
 																	className="w-9/12 border rounded-md p-2"
-																	value={
-																		item.text
-																	}
-																	placeholder={`Option ${
-																		index +
-																		1
-																	}`}
-																	onChange={(
-																		e,
-																	) => {
-																		let temp =
-																			editData.options;
-																		temp[
-																			index
-																		].text =
-																			e.target.value;
-																		setEditData(
-																			{
-																				...editData,
-																				options:
-																					temp,
-																			},
-																		);
+																	value={ item.text }
+																	placeholder={`Option ${ index + 1 }`}
+																	onChange={( e, ) => {
+																		let temp = editData.options; temp[ index ].text = e.target.value;
+																		setEditData( { ...editData, options: temp, }, );
 																	}}
 																/>
 																<div className="border rounded-md p-2">
-																	<h1 className="my-2">
-																		Change /
-																		Update
-																		Image -{" "}
-																	</h1>
+																	<h1 className="my-2"> Change / Update Image -{" "} </h1>
 																	<FileBase64
-																		multiple={
-																			false
-																		}
-																		onDone={(
-																			file,
-																		) => {
-																			let temp =
-																				editData.options;
-																			temp[
-																				index
-																			].image =
-																				file.base64;
-																			setEditData(
-																				{
-																					...editData,
-																					options:
-																						temp,
-																				},
-																			);
+																		multiple={ false }
+																		onDone={( file, ) => {
+																			let temp = editData.options; temp[ index ].image = file.base64;
+																			setEditData( { ...editData, options: temp, }, );
 																		}}
 																	/>
 																</div>
 
 																{/* Show Image if There */}
 																{item.image && (
-																	<img
-																		src={
-																			item.image
-																		}
-																		alt="option"
-																		className="w-[100px] h-[100px] object-contain"
-																	/>
+																	<img src={ item.image } alt="option" className="w-[100px] h-[100px] object-contain" />
 																)}
 															</div>
 															<div className="w-3/12 flex justify-center items-center gap-2">
@@ -934,34 +919,31 @@ const AdminMCQ = () => {
 												<label className={labelStyle}>
 													Correct Answer
 												</label>
-												<select
-													className={inputStyle}
-													value={editData.answer}
-													onChange={(e) =>
-														setEditData({
-															...editData,
-															answer: e.target
-																.value,
-														})
-													}
-												>
-													<option value="">
-														Select
-													</option>
-													{editData.options.map(
-														(item, index) => (
-															<option
-																value={
-																	index + 1
-																}
-																key={index}
-															>
-																Option{" "}
-																{index + 1}
-															</option>
-														),
-													)}
-												</select>
+												<div className="w-full flex justify-center items-center flex-col gap-2">
+														{editData.options.map(
+															(item, index) => (
+																<div className="w-full flex items-center gap-2" key={index} >
+																	<input
+																		type="checkbox"
+																		className="w-4 h-4"
+																		checked={editData.answer.includes( index + 1, )}
+																		onChange={(
+																			e,
+																		) => {
+																			let temp = editData.answer.length > 0 ? editData.answer : [];
+																			if ( temp.includes( index + 1, ) ) {
+																				temp.splice( temp.indexOf( index + 1, ), 1, );
+																			} else {
+																				temp.push( index + 1, );
+																			}
+																			setEditData( { ...editData, answer: temp, }, );
+																		}}
+																	/>
+																	<label> Option{" "} {index + 1} </label>
+																</div>
+															),
+														)}
+													</div>
 											</div>
 											<div className={divStyle}>
 												<label className={labelStyle}>
@@ -996,13 +978,7 @@ const AdminMCQ = () => {
 											</div>
 
 											{/* Submit Question */}
-											<button
-												className="min-w-[100px] h-[40px] bg-[#1E1E1E] text-white rounded-md px-8"
-												onClick={handleEdit}
-											>
-												{" "}
-												Save Changes{" "}
-											</button>
+											<button className="min-w-[100px] h-[40px] bg-[#1E1E1E] text-white rounded-md px-8" onClick={handleEdit} > {" "} Save Changes{" "} </button>
 										</div>
 									</div>
 								</Modal>

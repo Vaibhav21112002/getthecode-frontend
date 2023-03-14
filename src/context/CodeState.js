@@ -9,6 +9,9 @@ const CodeState = (props) => {
   const [blogs, setBlogs] = useState([]);
   const [blog, setBlog] = useState({});
 
+  const [techNews, setTechNews] = useState([]);
+  const [techNew, setTechNew] = useState({});
+
   const [mcqs, setMcqs] = useState([]);
   const [mcq, setMcq] = useState({});
 
@@ -21,8 +24,6 @@ const CodeState = (props) => {
   const [token, setToken] = useState("");
   const [usrData, setUsrData] = useState("");
   const [msg, setMsg] = useState("");
-
-  const [email, setEmail] = useState("");
 
   const addUploadImage = async (image) => {
     const res = await api.post("/cloudinary/upload", {
@@ -163,6 +164,67 @@ const CodeState = (props) => {
     setLoading(false);
   };
 
+  const getTechNews = async () => {
+    try {
+      setLoading(true);
+      const res = await api.get("/technews");
+      setTechNews(res.data);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+    setLoading(false);
+  };
+
+  const getTechNew = async (id) => {
+    try {
+      setLoading(true);
+      const res = await api.get(`/technews/${id}`);
+      setTechNew(res.data);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+    setLoading(false);
+  };
+
+  const addTechNew = async (techNew) => {
+    try {
+      setLoading(true);
+      const res = await api.post("/technews", techNew);
+      setTechNews([...techNews, res.data]);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+    setLoading(false);
+  };
+
+  const editTechNew = async (id, techNew) => {
+    try {
+      setLoading(true);
+      const res = await api.put(`/technews/${id}`, techNew);
+      setTechNews(
+        techNews.map((techNew) => (techNew._id === id ? res.data : techNew))
+      );
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+    setLoading(false);
+  };
+
+  const deleteTechNews = async (id) => {
+    try {
+      setLoading(true);
+      await api.delete(`/technews/${id}`);
+      setTechNews(techNews.filter((techNew) => techNew._id !== id));
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+    setLoading(false);
+  };
   const getMcqs = async () => {
     try {
       setLoading(true);
@@ -281,66 +343,6 @@ const CodeState = (props) => {
     }
     setLoading(false);
   };
-  const sendOtp = async (email) => {
-    try {
-      setLoading(true);
-      setEmail(email);
-      const res = await api.post("/auth/sendotp", email);
-      if (res.data?.message !== "") {
-        setToken(res.data);
-      } else {
-        setMsg(res.data.message);
-      }
-      setLoading(false);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const verifyOtp = async (otp) => {
-    try {
-      setLoading(true);
-      const res = await api.post("/auth/verifyotp", { token, otp });
-      setMsg(res.data.message);
-      setLoading(false);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const changePassword = async (passowrd) => {
-    try {
-      setLoading(true);
-      const res = await api.post("/auth/changepassword", { passowrd, email });
-      setMsg(res.data.msg);
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const Login = async (user) => {
-    try {
-      setLoading(true);
-      const res = await api.post("/auth/login", user);
-      setUsrData(res.data);
-      setLoading(false);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const Register = async (user)=>{
-	try {
-		setLoading(true);
-		const res = await api.post('/auth/register',user);
-		setUsrData(res.data);
-		setLoading(false);
-	} catch (err) {
-		console.log(err)
-	}
-  }
-
   return (
     <div>
       <CodeContext.Provider
@@ -349,15 +351,14 @@ const CodeState = (props) => {
           question,
           blog,
           blogs,
+          techNews,
+          techNew,
           mcq,
           mcqs,
           sqls,
           sql,
           loading,
           login,
-          msg,
-          token,
-          usrData,
           setLogin,
           contactForm,
           addUploadImage,
@@ -371,6 +372,11 @@ const CodeState = (props) => {
           addBlog,
           editBlog,
           deleteBlog,
+          getTechNews,
+          getTechNew,
+          addTechNew,
+          editTechNew,
+          deleteTechNews,
           getMcqs,
           getMcq,
           addMcq,
@@ -381,11 +387,6 @@ const CodeState = (props) => {
           addSql,
           editSql,
           deleteSql,
-          sendOtp,
-          verifyOtp,
-          changePassword,
-		  Login,
-		  Register
         }}
       >
         {props.children}
