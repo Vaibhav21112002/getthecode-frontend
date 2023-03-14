@@ -1,20 +1,51 @@
-import React from "react";
 import { Navbar, Footer } from "../components";
 import Hero from "../assets/Images/hero.svg";
 import { BiSearchAlt } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-awesome-modal";
-import Login from "./Login";
-import { useState } from "react";
+import { Login } from "../components";
+import { useState, useContext, useEffect } from "react";
+import codeContext from "../context/CodeContext";
+import { BsFillPersonFill } from "react-icons/bs";
+import swal from "sweetalert";
 
 const Home = () => {
   const navigate = useNavigate();
-  const [login, setLogin] = useState(true);
+  const [login, setLogin] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const { usrData } = useContext(codeContext);
+  useEffect(() => {
+    const usrToken = localStorage.getItem("token");
+    if (usrToken !== undefined) {
+      setLoggedIn(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (usrData.status === true) {
+      localStorage.setItem("token", usrData.token);
+      setLogin(false);
+    }
+  }, [usrData]);
+
   const Tabs = ["Arrays", "Linked Lists", "Queues", "Stacks"];
   return (
     <div className="bg-[#222629] min-h-[100vh] w-full">
       <Navbar />
       <div className="min-h-[100vh] w-full pt-12">
+        <div className="absolute flex right-10">
+          <h1 className="text-white mr-5">Login to see More</h1>
+          <BsFillPersonFill
+            className=" text-[white] text-2xl hover:text-white cursor-pointer"
+            onClick={() => {
+              if (loggedIn) {
+                swal({ title: "Already logged in", icon: "success", button: "Ok" });
+                return;
+              }
+              setLogin(true);
+            }}
+          />
+        </div>
         <div className="px-8 flex gap-4 items-center">
           <div className="w-[2px] h-[2rem] bg-[#FF9424]"></div>
           <h1 className="text-[#FF9424] font-bold">Code - today</h1>

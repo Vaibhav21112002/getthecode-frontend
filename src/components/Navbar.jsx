@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AiOutlineClose, AiOutlineMenu, AiOutlineHome } from "react-icons/ai";
 import { BiArrowBack } from "react-icons/bi"
-import { BiShieldQuarter } from "react-icons/bi";
+import { BiShieldQuarter,BsFillPersonFill } from "react-icons/bi";
 
 function Navbar({ question }) {
     const [open, setOpen] = useState(false);
@@ -55,7 +55,7 @@ function Navbar({ question }) {
                     </div>
                 )}
             </div>
-            <div className="flex w-full justify-center">
+            <div className="flex w-full justify-center">    
                 <div className="w-[90%] h-[0.5px] bg-[#33343B]"></div>
             </div>
         </div>
