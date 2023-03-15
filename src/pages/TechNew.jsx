@@ -17,7 +17,6 @@ const TechNew = () => {
     getTechNews();
     const usrToken = localStorage.getItem("token");
     if (usrToken === undefined) {
-      alert("Login First to view this content");
       navigate("/");
     }
   }, []);

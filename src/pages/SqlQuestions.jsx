@@ -18,7 +18,6 @@ const SqlQuestions = () => {
     getSqls(); // eslint-disable-next-line
     const usrToken = localStorage.getItem("token");
     if (usrToken === undefined||usrToken===null) {
-      alert("Login First to view this content");
       navigate("/");
     }
   }, []);

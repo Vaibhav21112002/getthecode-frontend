@@ -19,7 +19,6 @@ const SqlQuestion = () => {
     getSql(id);
     const usrToken = localStorage.getItem("token");
     if (usrToken === undefined||usrToken===null) {
-      alert("Login First to view this content");
       navigate("/");
     } 
     // eslint-disable-next-line
