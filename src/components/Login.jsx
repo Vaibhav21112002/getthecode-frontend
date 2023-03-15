@@ -70,9 +70,9 @@ const Login = () => {
   };
   useEffect(() => {
     if (loading === false) {
-      if (usrData.status === false) {
+      if (usrData?.status === false) {
         swal({ title: usrData.message, icon: "error", button: "Ok" });
-      } else if (usrData.status === true) {
+      } else if (usrData?.status === true) {
         swal({ title: usrData.message, icon: "success", button: "Ok" });
       }
     }

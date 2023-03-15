@@ -14,15 +14,14 @@ const Home = () => {
   const [login, setLogin] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const { usrData } = useContext(codeContext);
-  useEffect(() => {
-    const usrToken = localStorage.getItem("token");
-    if (usrToken !== undefined) {
-      setLoggedIn(true);
-    }
-  }, []);
+  console.log(loggedIn)
 
   useEffect(() => {
-    if (usrData.status === true) {
+    const usrToken = localStorage.getItem("token");
+    if (usrToken !== undefined || usrToken !== null) {
+      setLoggedIn(true);
+    }
+    if (usrData?.status === true) {
       localStorage.setItem("token", usrData.token);
       setLogin(false);
     }
@@ -39,10 +38,13 @@ const Home = () => {
             className=" text-[white] text-2xl hover:text-white cursor-pointer"
             onClick={() => {
               if (loggedIn) {
-                swal({ title: "Already logged in", icon: "success", button: "Ok" });
-                return;
+                swal({
+                  title: "Already logged in",
+                  icon: "success",
+                  button: "Ok",
+                });
               }
-              setLogin(true);
+              else{setLogin(true)};
             }}
           />
         </div>
@@ -116,7 +118,7 @@ const Home = () => {
         </div>
       </div>
       <Modal
-        visible={false}
+        visible={login}
         onClickAway={() => setLogin(false)}
         title="Solution"
         width="40%"

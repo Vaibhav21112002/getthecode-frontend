@@ -6,48 +6,52 @@ import Parser from "html-react-parser";
 import codeContext from "../context/CodeContext";
 
 const Blog = () => {
-	const { id } = useParams();
-	const [data, setData] = useState(undefined);
-	const { getBlog, getBlogs, blog, blogs } = useContext(codeContext);
-	const [allBlogs, setAllBlogs] = useState([]);
-	const navigate = useNavigate();
-	useEffect(() => {
-		getBlog(id);
-		getBlogs();
-	}, []);
-	useEffect(() => {
-		setData(blog[0]);
-		setAllBlogs(blogs);
-	}, [blog]);
+  const { id } = useParams();
+  const [data, setData] = useState(undefined);
+  const { getBlog, getBlogs, blog, blogs } = useContext(codeContext);
+  const [allBlogs, setAllBlogs] = useState([]);
+  const navigate = useNavigate();
+  useEffect(() => {
+    getBlog(id);
+    getBlogs();
+    const usrToken = localStorage.getItem("token");
+    if (usrToken === undefined||usrToken===null) {
+      alert("Login First to view this content");
+      navigate("/");
+    } 
+  }, []);
+  useEffect(() => {
+    setData(blog[0]);
+    setAllBlogs(blogs);
+  }, [blog]);
 
-	if (data === undefined) {
-		return <div>Loading.....</div>;
-	}
-	console.log(data.content);
-	return (
-		<div className="back">
-			<Navbar />
-			<div className="w-full flex bg-[#25272E]">
-				<div className="w-12/12 flex flex-col py-8 text-[white] px-20">
-					<h1 className="text-7xl my-10 text-center font-bold text-[white]">
-						{data.title ? data.title : "First Blog"}
-					</h1>
+  if (data === undefined) {
+    return <div>Loading.....</div>;
+  }
+  console.log(data.content);
+  return (
+    <div className="back">
+      <Navbar />
+      <div className="w-full flex bg-[#25272E]">
+        <div className="w-12/12 flex flex-col py-8 text-[white] px-20">
+          <h1 className="text-7xl my-10 text-center font-bold text-[white]">
+            {data.title ? data.title : "First Blog"}
+          </h1>
 
-					<div className="mb-3 text-center">
-						<span className=" text-sm text-white">
-							#{data.tag}
-							{data.company &&
-								data.tag === "Interview Experiences" &&
-								":" + data.company + " "}
-						</span>
-					</div>
-					<div className="ml-1 mt-10">{Parser(data.content)}</div>
-				</div>
-				
-			</div>
-			<Footer />
-		</div>
-	);
+          <div className="mb-3 text-center">
+            <span className=" text-sm text-white">
+              #{data.tag}
+              {data.company &&
+                data.tag === "Interview Experiences" &&
+                ":" + data.company + " "}
+            </span>
+          </div>
+          <div className="ml-1 mt-10">{Parser(data.content)}</div>
+        </div>
+      </div>
+      <Footer />
+    </div>
+  );
 };
 
 export default Blog;
