@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import CodeContext from "./CodeContext";
 import api from "../api";
+import swal from "sweetalert";
 
 const CodeState = (props) => {
   const [questions, setQuestions] = useState([]);
@@ -9,11 +10,11 @@ const CodeState = (props) => {
   const [blogs, setBlogs] = useState([]);
   const [blog, setBlog] = useState({});
 
-	const [techNews, setTechNews] = useState([]);
-	const [techNew, setTechNew] = useState({});
+  const [techNews, setTechNews] = useState([]);
+  const [techNew, setTechNew] = useState({});
 
-	const [mcqs, setMcqs] = useState([]);
-	const [mcq, setMcq] = useState({});
+  const [mcqs, setMcqs] = useState([]);
+  const [mcq, setMcq] = useState({});
 
   const [sqls, setSqls] = useState([]);
   const [sql, setSql] = useState({});
@@ -167,68 +168,66 @@ const CodeState = (props) => {
   };
 
   const getTechNews = async () => {
-	try {
-		setLoading(true);
-		const res = await api.get("/technews");
-		setTechNews(res.data);
-		setLoading(false);
-	} catch (err) {
-		console.log(err);
-	}
-	setLoading(false);
-};
+    try {
+      setLoading(true);
+      const res = await api.get("/technews");
+      setTechNews(res.data);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+    setLoading(false);
+  };
 
-const getTechNew = async (id) => {
-	try {
-		setLoading(true);
-		const res = await api.get(`/technews/${id}`);
-		setTechNew(res.data);
-		setLoading(false);
-	} catch (err) {
-		console.log(err);
-	}
-	setLoading(false);
-};
+  const getTechNew = async (id) => {
+    try {
+      setLoading(true);
+      const res = await api.get(`/technews/${id}`);
+      setTechNew(res.data);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+    setLoading(false);
+  };
 
-const addTechNew = async (techNew) => {
-	try {
-		setLoading(true);
-		const res = await api.post("/technews", techNew);
-		setTechNews([...techNews, res.data]);
-		setLoading(false);
-	} catch (err) {
-		console.log(err);
-	}
-	setLoading(false);
-};
+  const addTechNew = async (techNew) => {
+    try {
+      setLoading(true);
+      const res = await api.post("/technews", techNew);
+      setTechNews([...techNews, res.data]);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+    setLoading(false);
+  };
 
-const editTechNew = async (id, techNew) => {
-	try {
-		setLoading(true);
-		const res = await api.put(`/technews/${id}`, techNew);
-		setTechNews(
-			techNews.map((techNew) =>
-				techNew._id === id ? res.data : techNew,
-			),
-		);
-		setLoading(false);
-	} catch (err) {
-		console.log(err);
-	}
-	setLoading(false);
-};
+  const editTechNew = async (id, techNew) => {
+    try {
+      setLoading(true);
+      const res = await api.put(`/technews/${id}`, techNew);
+      setTechNews(
+        techNews.map((techNew) => (techNew._id === id ? res.data : techNew))
+      );
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+    setLoading(false);
+  };
 
-const deleteTechNews = async (id) => {
-	try {
-		setLoading(true);
-		await api.delete(`/technews/${id}`);
-		setTechNews(techNews.filter((techNew) => techNew._id !== id));
-		setLoading(false);
-	} catch (err) {
-		console.log(err);
-	}
-	setLoading(false);
-};
+  const deleteTechNews = async (id) => {
+    try {
+      setLoading(true);
+      await api.delete(`/technews/${id}`);
+      setTechNews(techNews.filter((techNew) => techNew._id !== id));
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+    setLoading(false);
+  };
 
   const getMcqs = async () => {
     try {
@@ -352,15 +351,12 @@ const deleteTechNews = async (id) => {
     try {
       setLoading(true);
       setEmail(email);
-      const res = await api.post("/auth/sendotp", email);
-      if (res.data?.message !== "") {
-        setToken(res.data);
-      } else {
-        setMsg(res.data.message);
-      }
+      const res = await api.post("/auth/sendotp", { email });
+      setToken(res.data);
       setLoading(false);
+      return (res.data);
     } catch (err) {
-      console.log(err);
+      swal({ title: err.response.data.msg, icon: "error", button: "Ok" });
     }
   };
 
@@ -368,21 +364,26 @@ const deleteTechNews = async (id) => {
     try {
       setLoading(true);
       const res = await api.post("/auth/verifyotp", { token, otp });
-      setMsg(res.data.message);
+      setMsg(res.data.msg);
       setLoading(false);
+      return res.data.msg
     } catch (err) {
       console.log(err);
+      swal({ title: err.response.data.msg, icon: "error", button: "Ok" });
     }
   };
 
-  const changePassword = async (passowrd) => {
+  const changePassword = async (password) => {
     try {
       setLoading(true);
-      const res = await api.post("/auth/changepassword", { passowrd, email });
+      const res = await api.post("/auth/changepassword", { password, email });
       setMsg(res.data.msg);
       setLoading(false);
-    } catch (error) {
-      console.log(error);
+      return res.data.msg;
+    } catch (err) {
+      console.log(err);
+      swal({ title: err.response.data.msg, icon: "error", button: "Ok" });
+      return undefined
     }
   };
 
@@ -397,16 +398,26 @@ const deleteTechNews = async (id) => {
     }
   };
 
-  const Register = async (user)=>{
-	try {
-		setLoading(true);
-		const res = await api.post('/auth/register',user);
-		setUsrData(res.data);
-		setLoading(false);
-	} catch (err) {
-		console.log(err)
-	}
-  }
+  const Register = async (user) => {
+    try {
+      setLoading(true);
+      const res = await api.post("/auth/register", user);
+      setUsrData(res.data);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const logout = async () => {
+    try {
+      setLoading(true);
+      setUsrData(null);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div>
@@ -416,8 +427,8 @@ const deleteTechNews = async (id) => {
           question,
           blog,
           blogs,
-		  techNews,
-					techNew,
+          techNews,
+          techNew,
           mcq,
           mcqs,
           sqls,
@@ -440,11 +451,11 @@ const deleteTechNews = async (id) => {
           addBlog,
           editBlog,
           deleteBlog,
-		  getTechNews,
-					getTechNew,
-					addTechNew,
-					editTechNew,
-					deleteTechNews,
+          getTechNews,
+          getTechNew,
+          addTechNew,
+          editTechNew,
+          deleteTechNews,
           getMcqs,
           getMcq,
           addMcq,
@@ -458,8 +469,9 @@ const deleteTechNews = async (id) => {
           sendOtp,
           verifyOtp,
           changePassword,
-		  Login,
-		  Register
+          Login,
+          Register,
+          logout,
         }}
       >
         {props.children}

@@ -1,12 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AiOutlineClose, AiOutlineMenu, AiOutlineHome } from "react-icons/ai";
-import { BiArrowBack } from "react-icons/bi";
+import { BiArrowBack, BiLogOut } from "react-icons/bi";
 import { BiShieldQuarter } from "react-icons/bi";
+import Login from "./Login";
+import Modal from "react-awesome-modal";
+import { BsFillPersonFill } from "react-icons/bs";
+import swal from "sweetalert";
+import codeContext from "../context/CodeContext";
 
 function Navbar({ question }) {
   const [open, setOpen] = useState(false);
+  const usrToken = localStorage.getItem("token");
+  const [loggedIn, setLoggedIn] = useState(false);
+  function logout() {
+    localStorage.removeItem('token');
+    setLoggedIn(false);
+    swal({ title: "User logged out successfully", icon: "success", button: "Ok" });
+  }
+  
+  console.log(loggedIn,usrToken);
+  const [login, setLogin] = useState(false);
   const navigate = useNavigate();
+  const { usrData } = useContext(codeContext);
+
+  useEffect(() => {
+    if (usrToken !== undefined && usrToken !== null) {
+      setLoggedIn(true);
+    }
+    else if(usrData===null){
+      setLoggedIn(false);
+      localStorage.removeItem("token");
+    }
+    if (usrData?.status === true) {
+      localStorage.setItem("token", usrData.token);
+      setLogin(false);
+    }
+  }, [usrData]);
   const location = useLocation();
   const navLinks = [
     { title: "Home", path: "/" },
@@ -16,7 +46,6 @@ function Navbar({ question }) {
     { title: "SQL", path: "/sql" },
     { title: "Tech News", path: "/technews" },
   ];
-  const usrToken = localStorage.getItem("token");
   const loggedOutNavLinks = [
     { title: "Home", path: "/" },
     { title: "Programming", path: "/programming" },
@@ -65,9 +94,27 @@ function Navbar({ question }) {
               ? navLinks.map((link, index) => {
                   return <NavLink link={link} index={index} />;
                 })
-              : loggedOutNavLinks.map((link,index)=>{
-                return <NavLink link={link} index={index}/>
-              })}
+              : loggedOutNavLinks.map((link, index) => {
+                  return <NavLink link={link} index={index} />;
+                })}
+            <BsFillPersonFill
+              className=" text-[#BDA9A9] text-2xl hover:text-white cursor-pointer"
+              onClick={() => {
+                if (usrToken!==null) {
+                  swal({
+                    title: "Already logged in",
+                    icon: "success",
+                    button: "Ok",
+                  });
+                } else {
+                  setLogin(true);
+                }
+              }}
+            />
+            {loggedIn===true&&<BiLogOut
+              className=" text-[#BDA9A9] text-2xl hover:text-white cursor-pointer"
+              onClick={logout}
+            />}
             <BiShieldQuarter
               className="text-[#BDA9A9] text-2xl hover:text-white cursor-pointer"
               onClick={() => navigate("/admin")}
@@ -106,6 +153,15 @@ function Navbar({ question }) {
           </div>
         )}
       </div>
+      <Modal
+        visible={login}
+        onClickAway={() => setLogin(false)}
+        title="Solution"
+        width="40%"
+        height="70%"
+      >
+        <Login />
+      </Modal>
       <div className="flex w-full justify-center">
         <div className="w-[90%] h-[0.5px] bg-[#33343B]"></div>
       </div>

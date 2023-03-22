@@ -9,6 +9,9 @@ const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [passwordVis, setPasswordVis] = useState(false);
   const [confirmPasswordVis, setConfirmPasswordVis] = useState(false);
+  const [forgotPassword, setForgotPassword] = useState(false);
+  const [checkOtp, setCheckOtp] = useState(false);
+  const [email, setEmail] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -16,9 +19,77 @@ const Login = () => {
     confirmPassword: "",
     number: "",
   });
+  const [enterNewPassword, setEnterNewPassword] = useState(false);
+  const [newPassword, setNewPassword] = useState("");
+  const [cnfrmPassword, setCnfrmPassword] = useState("");
+  const [otp, setOtp] = useState("");
+  const {
+    setLogin,
+    Login,
+    usrData,
+    loading,
+    Register,
+    sendOtp,
+    verifyOtp,
+    changePassword,
+  } = useContext(codeContext);
 
-  const { setLogin, Login, usrData, loading, Register } =
-    useContext(codeContext);
+  const handleSendOtp = async () => {
+    const token = await sendOtp(email);
+    swal({
+      title: `OTP sent successfull on ${email}`,
+      icon: "success",
+      button: "Ok",
+    });
+    if(token ===undefined){
+      setCheckOtp(false);
+      return;
+    }
+    console.log(token);
+
+    setCheckOtp(true);
+    
+  };
+
+  const handleVerifyOtp = async () => {
+    const msg = await verifyOtp(Number(otp));
+
+    console.log(msg);
+  };
+
+  const handlePasswordChange = async () => {
+    if (newPassword !== cnfrmPassword) {
+      swal({ title: "Passwords don't match", icon: "error", button: "Ok" });
+      return;
+    }
+    const msg = await changePassword(newPassword);
+    console.log(msg);
+    if (msg === "Password updated successfully") {
+      swal({
+        title: msg + ". Please log back in",
+        icon: "success",
+        button: "Ok",
+      });
+      setIsLogin(true);
+      setPasswordVis(false);
+      setConfirmPasswordVis(false);
+      setForgotPassword(false);
+      setCheckOtp(false);
+      setEmail("");
+      setFormData({
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        number: "",
+      });
+      setEnterNewPassword(false);
+      setNewPassword("");
+      setCnfrmPassword("");
+      setOtp("");
+    }
+  };
+
   const lableStyle = "text-[#33343B] font-bold mx-auto text-sm mb-2  ";
   const inputStyle =
     "w-[70%] mx-auto h-[40px] rounded-md border-[#33343B] border-2 p-2 mb-4 focus:outline-none focus:border-[#33343B] focus:ring-2 focus:ring-[#33343B] focus:ring-opacity-50";
@@ -29,7 +100,6 @@ const Login = () => {
       setLogin(false);
       return;
     }
-
     const date = new Date(parseInt(d));
     const now = new Date();
     const diff = now.getTime() - date.getTime();
@@ -43,7 +113,6 @@ const Login = () => {
   }, []);
 
   const handleLogin = async () => {
-    console.log(formData);
     if (isLogin) {
       const email = formData.email;
       const password = formData.password;
@@ -80,7 +149,8 @@ const Login = () => {
 
   return (
     <div className=" h-full pt-[50px]">
-      {isLogin ? (
+      {/* This is the login part */}
+      {isLogin && !forgotPassword ? (
         <div cclassName="w-full flex h-full bg-[white] items-center justify-center">
           <div className="w-full h-full flex justify-center items-center my-auto">
             <div className="w-[70%] h-[70%] bg-white rounded-md flex flex-col items-center">
@@ -103,7 +173,7 @@ const Login = () => {
                     }
                   />
                   <label className={lableStyle}> Password </label>
-                  <div className="flex">
+                  <div className="flex ml-4">
                     <input
                       className={inputStyle}
                       type={`${passwordVis ? "text" : "password"}`}
@@ -143,6 +213,155 @@ const Login = () => {
                   }}
                 >
                   Not a user? Sign Up
+                </button>
+                <button
+                  className="w-[40%] h-[40px] bg-[#33343B] text-white rounded-md mt-4 mb-4 hover:bg-[#222629] transition duration-300 ease-in-out	 focus:outline-none "
+                  onClick={() => {
+                    setForgotPassword(true);
+                  }}
+                >
+                  Forgot Password?
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : forgotPassword && !checkOtp ? (
+        <div className="w-full flex h-full bg-[white] items-center justify-center">
+          {/* This is the forgot password part of the code */}
+          <div className="w-full h-full flex justify-center items-center my-auto">
+            <div className="w-[70%] h-[70%] bg-white rounded-md flex flex-col items-center">
+              <div className="flex items-center gap-4">
+                <h1 className="text-center text-[#222629]  font-bold text-2xl mt-10 mb-10  ">
+                  {" "}
+                  Forgot Password?{" "}
+                </h1>
+              </div>
+              <div className="flex flex-col w-full justify-center items-center">
+                <div className="flex flex-col w-full">
+                  <label className={lableStyle}> Email </label>
+                  <input
+                    className={inputStyle}
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+                <button
+                  className="w-[40%] h-[40px] bg-[#33343B] text-white rounded-md mt-4 mb-4 hover:bg-[#222629] transition duration-300 ease-in-out	 focus:outline-none "
+                  onClick={() => {
+                    handleSendOtp();
+                  }}
+                >
+                  Send OTP
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : checkOtp && !enterNewPassword ? (
+        <div className="w-full flex h-full bg-[white] items-center justify-center">
+          {/* This is the forgot password part of the code */}
+          <div className="w-full h-full flex justify-center items-center my-auto">
+            <div className="w-[70%] h-[70%] bg-white rounded-md flex flex-col items-center">
+              <div className="flex items-center gap-4">
+                <h1 className="text-center text-[#222629]  font-bold text-2xl mt-10 mb-10  ">
+                  {" "}
+                  Verify OTP{" "}
+                </h1>
+              </div>
+              <div className="flex flex-col w-full justify-center items-center">
+                <div className="flex flex-col w-full">
+                  <label className={lableStyle}>
+                    {" "}
+                    {`Enter OTP sent on ${email}`}{" "}
+                  </label>
+                  <input
+                    className={inputStyle}
+                    type="number"
+                    value={otp}
+                    onChange={(e) => setOtp(e.target.value)}
+                  />
+                </div>
+                <button
+                  className="w-[40%] h-[40px] bg-[#33343B] text-white rounded-md mt-4 mb-4 hover:bg-[#222629] transition duration-300 ease-in-out	 focus:outline-none "
+                  onClick={() => {
+                    handleVerifyOtp();
+                  }}
+                >
+                  Confirm OTP
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : enterNewPassword ? (
+        <div className={` bg-[white]`}>
+          <div className="w-full h-full flex justify-center">
+            <div className="w-[70%] h-[100%] bg-white rounded-md  flex flex-col items-center">
+              <div className="flex items-center gap-4">
+                <h1 className="text-center text-[#222629]  font-bold text-2xl mt-3 mb-3 ">
+                  {" "}
+                  Enter new password{" "}
+                </h1>
+              </div>
+              <div className="flex flex-col w-full justify-center items-center">
+                <div className="flex flex-col w-full">
+                  <label className={lableStyle}> New Password </label>
+                  <div className="flex ml-4">
+                    <input
+                      className={inputStyle}
+                      type={`${passwordVis ? "text" : "password"}`}
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                    />
+                    <div className="relative right-[19%] top-2.5">
+                      {passwordVis ? (
+                        <AiFillEye
+                          onClick={() =>
+                            setPasswordVis((prevState) => !prevState)
+                          }
+                        />
+                      ) : (
+                        <AiFillEyeInvisible
+                          onClick={() =>
+                            setPasswordVis((prevState) => !prevState)
+                          }
+                        />
+                      )}
+                    </div>
+                  </div>
+                  <label className={lableStyle}> Confirm New Password </label>
+                  <div className="flex ml-4">
+                    <input
+                      className={inputStyle}
+                      type={`${confirmPasswordVis ? "text" : "password"}`}
+                      value={cnfrmPassword}
+                      onChange={(e) => setCnfrmPassword(e.target.value)}
+                    />
+                    <div className="relative right-[19%] top-2.5">
+                      {passwordVis ? (
+                        <AiFillEye
+                          onClick={() =>
+                            setConfirmPasswordVis((prevState) => !prevState)
+                          }
+                        />
+                      ) : (
+                        <AiFillEyeInvisible
+                          onClick={() =>
+                            setConfirmPasswordVis((prevState) => !prevState)
+                          }
+                        />
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <button
+                  className="w-[40%] h-[40px] bg-[#33343B] text-white rounded-md mt-4 mb-4 hover:bg-[#222629] transition duration-300 ease-in-out	 focus:outline-none "
+                  onClick={handlePasswordChange}
+                >
+                  {" "}
+                  Change my Password{" "}
                 </button>
               </div>
             </div>
@@ -189,26 +408,60 @@ const Login = () => {
                     }
                   />
                   <label className={lableStyle}> Password </label>
-                  <input
-                    className={inputStyle}
-                    type="password"
-                    value={formData.password}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        password: e.target.value,
-                      })
-                    }
-                  />
+                  <div className="flex ml-4">
+                    <input
+                      className={inputStyle}
+                      type={`${passwordVis ? "text" : "password"}`}
+                      value={formData.password}
+                      onChange={(e) =>
+                        setFormData({ ...formData, password: e.target.value })
+                      }
+                    />
+                    <div className="relative right-[19%] top-2.5">
+                      {passwordVis ? (
+                        <AiFillEye
+                          onClick={() =>
+                            setPasswordVis((prevState) => !prevState)
+                          }
+                        />
+                      ) : (
+                        <AiFillEyeInvisible
+                          onClick={() =>
+                            setPasswordVis((prevState) => !prevState)
+                          }
+                        />
+                      )}
+                    </div>
+                  </div>
                   <label className={lableStyle}> Confirm Password </label>
-                  <input
-                    className={inputStyle}
-                    type="password"
-                    value={formData.confirmPassword}
-                    onChange={(e) =>
-                      setFormData({ ...formData, confirmPassword: e.target.value })
-                    }
-                  />
+                  <div className="flex ml-4">
+                    <input
+                      className={inputStyle}
+                      type={`${confirmPasswordVis ? "text" : "password"}`}
+                      value={formData.confirmPassword}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          confirmPassword: e.target.value,
+                        })
+                      }
+                    />
+                    <div className="relative right-[19%] top-2.5">
+                      {passwordVis ? (
+                        <AiFillEye
+                          onClick={() =>
+                            setConfirmPasswordVis((prevState) => !prevState)
+                          }
+                        />
+                      ) : (
+                        <AiFillEyeInvisible
+                          onClick={() =>
+                            setConfirmPasswordVis((prevState) => !prevState)
+                          }
+                        />
+                      )}
+                    </div>
+                  </div>
                 </div>
                 <button
                   className="w-[40%] h-[40px] bg-[#33343B] text-white rounded-md mt-4 mb-4 hover:bg-[#222629] transition duration-300 ease-in-out	 focus:outline-none "
