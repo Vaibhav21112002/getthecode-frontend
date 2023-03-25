@@ -194,7 +194,7 @@ function Navbar({ question }) {
         onClickAway={() => setLogin(false)}
         title="Solution"
         width="40%"
-        height="70%"
+        height="90%"
       >
         <Login />
       </Modal>

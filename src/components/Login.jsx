@@ -156,7 +156,7 @@ const Login = () => {
 
 
   return (
-    <div className=" h-full pt-[50px]">
+    <div className=" h-[90%] pt-[50px]">
       {/* This is the login part */}
       {isLogin && !forgotPassword ? (
         <div cclassName="w-full flex h-full bg-[white] items-center justify-center">
