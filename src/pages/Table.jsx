@@ -144,7 +144,9 @@ function Table() {
       </div>
       <button onClick={handleAddTable}>Add Table</button>
       <br />
-      <button onClick={()=>console.log(tables)} className="border border-black">Submit</button>
+      <button
+      //  onClick={()=>console.log(tables)} 
+       className="border border-black">Submit</button>
     </div>
   );
 }

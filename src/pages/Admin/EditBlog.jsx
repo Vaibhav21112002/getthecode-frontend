@@ -13,9 +13,18 @@ const EditBlog = () => {
   const [editData, setEditData] = useState(undefined);
   const { id } = useParams();
 
-  const { editBlog, getBlog, blog } = useContext(codeContext);
+  const { editBlog, getBlog, blog,getRole } = useContext(codeContext);
   useEffect(() => {
-    getBlog(id);
+    (async () => {
+      const id = localStorage.getItem("role");
+      const role = await getRole(id);
+      console.log(role);
+      if (role !== "admin") {
+        navigate("/");
+      }
+    })();
+    const d = localStorage.getItem("token");
+    getBlog(id,d)
   }, []);
   useEffect(() => {
     setEditData(blog[0]);

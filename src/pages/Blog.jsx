@@ -12,13 +12,14 @@ const Blog = () => {
   const [allBlogs, setAllBlogs] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
-    getBlog(id);
-    getBlogs();
     const usrToken = localStorage.getItem("token");
     if (usrToken === undefined||usrToken===null) {
       alert("Login First to view this content");
       navigate("/");
     } 
+    
+    getBlogs(usrToken);
+    getBlog(id,usrToken);
   }, []);
   useEffect(() => {
     setData(blog[0]);
@@ -28,7 +29,6 @@ const Blog = () => {
   if (data === undefined) {
     return <div>Loading.....</div>;
   }
-  console.log(data.content);
   return (
     <div className="back">
       <Navbar />

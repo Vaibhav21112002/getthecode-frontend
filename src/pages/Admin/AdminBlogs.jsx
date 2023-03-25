@@ -9,11 +9,21 @@ import { useState } from "react";
 
 const AdminBlogs = () => {
   const navigate = useNavigate();
-  const { getBlogs, blogs, setLogin, deleteBlog } = useContext(codeContext);
+  const { getBlogs, blogs, setLogin, deleteBlog,getRole } = useContext(codeContext);
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    getBlogs();
+    (async () => {
+      const id = localStorage.getItem("role");
+      const role = await getRole(id);
+      // console.log(role);
+      if (role !== "admin") {
+        navigate("/");
+      }
+    })();
+    const d = localStorage.getItem("token");
+    getBlogs(d);
+   
     // eslint-disable-next-line
   }, []);
   useEffect(() => {

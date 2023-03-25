@@ -19,7 +19,7 @@ const EditSql = () => {
   const [editTableData, setEditTableData] = useState({});
   const [editIndex, setEditIndex] = useState(undefined);
   const [editData, setEditData] = useState(undefined);
-  const { getSql, sql, setLogin, editSql } = useContext(codeContext);
+  const { getSql, sql, setLogin, editSql,getRole } = useContext(codeContext);
   const [newTableData, setNewTableData] = useState({
     numRows: 1,
     numCols: 2,
@@ -35,7 +35,16 @@ const EditSql = () => {
     ),
   });
   useEffect(() => {
-    getSql(id);
+    (async () => {
+      const id = localStorage.getItem("role");
+      const role = await getRole(id);
+      console.log(role);
+      if (role !== "admin") {
+        navigate("/");
+      }
+    })();
+    const d = localStorage.getItem("token");
+    getSql(id,d);
   }, []);
   useEffect(() => {
     setEditData(sql);

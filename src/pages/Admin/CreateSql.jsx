@@ -17,6 +17,7 @@ const CreateSql = () => {
   const [editTable, setEditTable] = useState(false);
   const [editTableData, setEditTableData] = useState({});
   const [editIndex, setEditIndex] = useState(undefined);
+  const { addSql, setLogin,getRole } = useContext(codeContext);
   const [uploadData, setUploadData] = useState({
     title: "",
     description: "",
@@ -31,7 +32,7 @@ const CreateSql = () => {
   const [newTableData, setNewTableData] = useState({
     numRows: 1,
     numCols: 2,
-    name:"",
+    name: "",
     tableData: Array.from({ length: 1 }, (_, rowIndex) =>
       Array.from({ length: 2 }, (_, colIndex) => {
         return rowIndex === 0 && colIndex === 0
@@ -42,6 +43,17 @@ const CreateSql = () => {
       })
     ),
   });
+
+  useEffect(() => {
+    (async () => {
+      const id = localStorage.getItem("role");
+      const role = await getRole(id);
+      console.log(role);
+      if (role !== "admin") {
+        navigate("/");
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     const d = localStorage.getItem("token");
@@ -278,7 +290,6 @@ const CreateSql = () => {
     setUploadData(updatedUploadData);
   };
 
-  const { addSql, setLogin } = useContext(codeContext);
   const handleUpload = () => {
     // return;
     if (

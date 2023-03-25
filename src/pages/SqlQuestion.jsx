@@ -15,14 +15,16 @@ const SqlQuestion = () => {
   const navigate = useNavigate();
   const questionTab =
     "w-36 py-2  border rounded-lg text-white bg-[#E97500] border border-[#E97500] hover:bg-[#202128] hover:text-[white] text-sm";
+
   useEffect(() => {
-    getSql(id);
     const usrToken = localStorage.getItem("token");
     if (usrToken === undefined||usrToken===null) {
       navigate("/");
     } 
+    getSql(id,usrToken);
     // eslint-disable-next-line
   }, []);
+
   const QuestionComponent = ({ sql }) => {
     if(sql?.title)
     return (

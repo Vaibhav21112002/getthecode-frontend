@@ -9,12 +9,21 @@ import { useState } from "react";
 
 const AdminTechNews = () => {
 	const navigate = useNavigate();
-	const { getTechNews, techNews, setLogin, deleteTechNews } =
+	const { getTechNews, techNews, setLogin, deleteTechNews,getRole } =
 		useContext(codeContext);
 	const [data, setData] = useState([]);
 
 	useEffect(() => {
-		getTechNews();
+		(async () => {
+			const id = localStorage.getItem("role");
+			const role = await getRole(id);
+			console.log(role);
+			if (role !== "admin") {
+			  navigate("/");
+			}
+    })();
+	const d = localStorage.getItem('token');
+		getTechNews(d);
 		// eslint-disable-next-line
 	}, []);
 	useEffect(() => {

@@ -17,7 +17,7 @@ const MCQ = () => {
 	  if (usrToken === undefined||usrToken===null) {
 		navigate("/");
 	  }
-    getMcqs();
+    getMcqs(usrToken);
   }, []);
 
   useEffect(() => {

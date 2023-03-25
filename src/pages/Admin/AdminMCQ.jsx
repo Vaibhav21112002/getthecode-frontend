@@ -22,6 +22,7 @@ const AdminMCQ = () => {
 		addUploadImage,
 		loading,
 		setLogin,
+		getRole
 	} = useContext(CodeContext);
 	const [editData, setEditData] = React.useState({});
 	const [uploadOpen, setUploadOpen] = React.useState(false);
@@ -66,7 +67,7 @@ const AdminMCQ = () => {
 					onClick={() => {
 						setEditOpen(true);
 						setEditData(item);
-						console.log(item);
+						// console.log(item);
 					}}
 				>
 					<AiFillEdit className="cursor-pointer" />
@@ -102,7 +103,16 @@ const AdminMCQ = () => {
 	const labelStyle = ``;
 	const inputStyle = `w-full border rounded-md p-2`;
 	useEffect(() => {
-		getMcqs();
+		(async () => {
+			const id = localStorage.getItem("role");
+			const role = await getRole(id);
+			// console.log(role);
+			if (role !== "admin") {
+			  navigate("/");
+			}
+		})();
+		const d = localStorage.getItem("token");
+		getMcqs(d);
 		// eslint-disable-next-line
 	}, []);
 
@@ -127,7 +137,7 @@ const AdminMCQ = () => {
 		setLogin(true);
 	}, []);
 	const handleUpload = async () => {
-		console.log(uploadData);
+		// console.log(uploadData);
 		if (
 			uploadData.question === "" ||
 			uploadData.options[0].text === "" ||

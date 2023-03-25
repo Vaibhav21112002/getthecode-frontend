@@ -32,6 +32,7 @@ const Login = () => {
     sendOtp,
     verifyOtp,
     changePassword,
+    
   } = useContext(codeContext);
 
   const handleSendOtp = async () => {
@@ -41,20 +42,19 @@ const Login = () => {
       icon: "success",
       button: "Ok",
     });
-    if(token ===undefined){
+    if (token === undefined) {
       setCheckOtp(false);
       return;
     }
-    console.log(token);
+    // console.log(token);
 
     setCheckOtp(true);
-    
   };
 
   const handleVerifyOtp = async () => {
     const msg = await verifyOtp(Number(otp));
 
-    console.log(msg);
+    // console.log(msg);
   };
 
   const handlePasswordChange = async () => {
@@ -63,7 +63,7 @@ const Login = () => {
       return;
     }
     const msg = await changePassword(newPassword);
-    console.log(msg);
+    // console.log(msg);
     if (msg === "Password updated successfully") {
       swal({
         title: msg + ". Please log back in",
@@ -116,7 +116,12 @@ const Login = () => {
     if (isLogin) {
       const email = formData.email;
       const password = formData.password;
-      await Login({ email, password });
+      const data = await Login({ email, password });
+      if (data?.status === true) {
+        swal({ title: data.message, icon: "success", button: "Ok" });
+      } else {
+        swal({ title: data.message, icon: "error", button: "Ok" });
+      }
     } else {
       const email = formData.email;
       const password = formData.password;
@@ -132,20 +137,23 @@ const Login = () => {
         return;
       }
 
-      await Register({ email, password, name, number });
-    }
-    // localStorage.setItem("token", new Date().getTime());
-    // swal({ title: "Login Failed", icon: "error", button: "Ok" });
-  };
-  useEffect(() => {
-    if (loading === false) {
-      if (usrData?.status === false) {
-        swal({ title: usrData.message, icon: "error", button: "Ok" });
-      } else if (usrData?.status === true) {
-        swal({ title: usrData.message, icon: "success", button: "Ok" });
+      const data = await Register({ email, password, name, number });
+      if (data?.status === true) {
+        swal({ title: data.message, icon: "success", button: "Ok" });
+      } else {
+        swal({ title: data.message, icon: "error", button: "Ok" });
       }
     }
-  }, [usrData]);
+
+    setFormData({
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      number: "",
+    });
+  };
+
 
   return (
     <div className=" h-full pt-[50px]">

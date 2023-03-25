@@ -14,49 +14,83 @@ function Navbar({ question }) {
   const usrToken = localStorage.getItem("token");
   const [loggedIn, setLoggedIn] = useState(false);
   function logout() {
-    localStorage.removeItem('token');
-    setLoggedIn(false);
-    swal({ title: "User logged out successfully", icon: "success", button: "Ok" });
+    swal({
+      title: "Are you sure you want to log out?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("role");
+        setLoggedIn(false);
+        navigate("/");
+      }
+    });
   }
-  
-  console.log(loggedIn,usrToken);
+
   const [login, setLogin] = useState(false);
   const navigate = useNavigate();
-  const { usrData } = useContext(codeContext);
+  const { usrData, getRole } = useContext(codeContext);
 
   useEffect(() => {
+    // console.log(usrData);
     if (usrToken !== undefined && usrToken !== null) {
       setLoggedIn(true);
-    }
-    else if(usrData===null){
+    } else if (usrData === null) {
       setLoggedIn(false);
       localStorage.removeItem("token");
     }
     if (usrData?.status === true) {
       localStorage.setItem("token", usrData.token);
+      localStorage.setItem("role", usrData?.user._id);
       setLogin(false);
+      setLoggedIn(true);
     }
   }, [usrData]);
   const location = useLocation();
   const navLinks = [
-    { title: "Home", path: "/" },
-    { title: "Programming", path: "/programming" },
-    { title: "Blogs", path: "/blogs" },
-    { title: "MCQs", path: "/mcqs" },
-    { title: "SQL", path: "/sql" },
-    { title: "Tech News", path: "/technews" },
+    { title: "Home", path: "/", loginReq: false },
+    { title: "Programming", path: "/programming", loginReq: false },
+    { title: "Blogs", path: "/blogs", loginReq: true },
+    { title: "MCQs", path: "/mcqs", loginReq: true },
+    { title: "SQL", path: "/sql", loginReq: true },
+    { title: "Tech News", path: "/technews", loginReq: true },
   ];
-  const loggedOutNavLinks = [
-    { title: "Home", path: "/" },
-    { title: "Programming", path: "/programming" },
-  ];
+
+  async function handleAdminClick() {
+    const id = localStorage.getItem("role");
+    const role = await getRole(id);
+    if (role?.error) {
+      // console.log(role.error);
+      if(loggedIn)
+        swal({ title: role.error.message+"Please log back in", icon: "error", button: "Ok" });
+      localStorage.removeItem("token");
+      localStorage.removeItem("role");
+      setLoggedIn(false);
+      navigate("/");
+    }
+    if (loggedIn === false) {
+      setLogin(true);
+    } else if (role?.toLowerCase() !== "admin") {
+      swal({
+        title: "You are not an admin",
+        icon: "error",
+        button: "Ok",
+      });
+    } else navigate("/admin");
+  }
 
   const NavLink = ({ link, index }) => {
     return (
       <li key={index}>
         <button
           className="w-full px-4 py-2 text-[white] hover:bg-[#BDA9A9] hover:text-[#202128] rounded-md text-sm"
-          onClick={() => navigate(`${link.path}`)}
+          onClick={() => {
+            if (link.loginReq === true && loggedIn === false) {
+              setLogin(true);
+            } else navigate(`${link.path}`);
+          }}
         >
           {" "}
           {link.title}{" "}
@@ -90,34 +124,36 @@ function Navbar({ question }) {
             />
           </div>
           <ul className="sm:flex hidden gap-4 w-full justify-end items-center px-8">
-            {usrToken !== null
-              ? navLinks.map((link, index) => {
-                  return <NavLink link={link} index={index} />;
-                })
-              : loggedOutNavLinks.map((link, index) => {
-                  return <NavLink link={link} index={index} />;
-                })}
-            <BsFillPersonFill
-              className=" text-[#BDA9A9] text-2xl hover:text-white cursor-pointer"
-              onClick={() => {
-                if (usrToken!==null) {
-                  swal({
-                    title: "Already logged in",
-                    icon: "success",
-                    button: "Ok",
-                  });
-                } else {
-                  setLogin(true);
-                }
-              }}
-            />
-            {loggedIn===true&&<BiLogOut
-              className=" text-[#BDA9A9] text-2xl hover:text-white cursor-pointer"
-              onClick={logout}
-            />}
+            {navLinks.map((link, index) => {
+              return <NavLink link={link} index={index} />;
+            })}
+            {loggedIn !== true && (
+              <BsFillPersonFill
+                className=" text-[#BDA9A9] text-2xl hover:text-white cursor-pointer"
+                onClick={() => {
+                  if (usrToken !== null) {
+                    swal({
+                      title: "Already logged in",
+                      icon: "success",
+                      button: "Ok",
+                    });
+                  } else {
+                    setLogin(true);
+                  }
+                }}
+              />
+            )}
+            {loggedIn === true && (
+              <BiLogOut
+                className=" text-[#BDA9A9] text-2xl hover:text-white cursor-pointer"
+                onClick={logout}
+              />
+            )}
             <BiShieldQuarter
               className="text-[#BDA9A9] text-2xl hover:text-white cursor-pointer"
-              onClick={() => navigate("/admin")}
+              onClick={() => {
+                handleAdminClick();
+              }}
             />
           </ul>
         </div>

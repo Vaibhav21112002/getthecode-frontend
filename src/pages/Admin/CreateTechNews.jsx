@@ -10,6 +10,7 @@ import MarkdownEditor from "@uiw/react-markdown-editor";
 
 const CreateTechNews = () => {
   const navigate = useNavigate();
+  const { addTechNew, addUploadImage,getRole } = useContext(codeContext);
   const [uploadData, setUploadData] = useState({
     title: "",
     tag: "",
@@ -18,8 +19,17 @@ const CreateTechNews = () => {
     content: "",
     image: "",
   });
+   useEffect(() => {
+    (async () => {
+      const id = localStorage.getItem("role");
+      const role = await getRole(id);
+      console.log(role);
+      if (role !== "admin") {
+        navigate("/");
+      }
+    })();
+  }, []);
 
-  const { addTechNew, addUploadImage } = useContext(codeContext);
   const handleUpload = async () => {
     console.log(uploadData);
     if (uploadData.image != "") {

@@ -11,7 +11,7 @@ const Blogs = () => {
   const [page, setPage] = useState(1);
   const [data, setData] = useState([]);
   const [activeFilter, setActiveFilter] = useState("All Blogs");
-  const { getBlogs, blogs } = useContext(codeContext);
+  const { getBlogs, blogs, usrData } = useContext(codeContext);
   const [companies, setCompanies] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [filteredCompanies, setFilteredCompanies] = useState(companies);
@@ -60,13 +60,14 @@ const Blogs = () => {
   };
 
   useEffect(() => {
-    getBlogs();
-	const usrToken = localStorage.getItem("token");
-	if (usrToken === undefined||usrToken===null) {
-	  navigate("/");
-	  return;
-	}
-  }, []);
+    const usrToken = localStorage.getItem("token");
+
+    if (usrToken === undefined || usrToken === null) {
+      navigate("/");
+      return;
+    }
+    getBlogs(usrToken);
+  }, [usrData]);
 
   useEffect(() => {
     setData(blogs);
@@ -208,7 +209,7 @@ const Blogs = () => {
                 ref={inputRef}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
-                    console.log(inputValue);
+                    // console.log(inputValue);
                     setFilteredCompanies(companies);
                     setData(
                       blogs.filter(

@@ -13,12 +13,21 @@ import Parser from "html-react-parser";
 import Editor from "@monaco-editor/react";
 const AdminSql = () => {
   const navigate = useNavigate();
-  const { getSqls, sqls, setLogin, deleteSql } = useContext(codeContext);
+  const { getSqls, sqls, setLogin, deleteSql,getRole } = useContext(codeContext);
   const [preview, setPreview] = useState(false);
   const [viewData, setViewData] = useState({});
 
   useEffect(() => {
-    getSqls();
+    (async () => {
+			const id = localStorage.getItem("role");
+			const role = await getRole(id);
+			console.log(role);
+			if (role !== "admin") {
+			  navigate("/");
+			}
+    })();
+    const d = localStorage.getItem("token");
+    getSqls(d);
     // eslint-disable-next-line
   }, []);
 

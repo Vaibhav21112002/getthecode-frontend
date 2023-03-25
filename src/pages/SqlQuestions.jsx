@@ -15,14 +15,15 @@ const SqlQuestions = () => {
   const [editData, setEditData] = useState({});
   const [solutionOpen, setSolutionOpen] = useState(false);
   useEffect(() => {
-    getSqls(); // eslint-disable-next-line
     const usrToken = localStorage.getItem("token");
     if (usrToken === undefined||usrToken===null) {
       navigate("/");
     }
+    getSqls(usrToken); // eslint-disable-next-line
+
   }, []);
 
-  console.log(editData);
+  // console.log(editData);
 
   const TableComponent = ({ item }) => {
     return (

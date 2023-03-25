@@ -13,12 +13,12 @@ const TechNew = () => {
   const [allBlogs, setAllBlogs] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
-    getTechNew(id);
-    getTechNews();
     const usrToken = localStorage.getItem("token");
-    if (usrToken === undefined) {
+    if (usrToken === undefined||usrToken===null) {
       navigate("/");
-    }
+    } 
+    getTechNew(id,usrToken);
+    getTechNews(usrToken);
   }, []);
   useEffect(() => {
     setData(techNew[0]);

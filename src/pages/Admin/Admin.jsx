@@ -2,13 +2,14 @@ import React, { useState, useEffect, useContext } from "react";
 import { darkTheme } from "../../assets/Constants";
 import { Navbar, AdminNavbar, AdminTopBar, Footer } from "../../components";
 import { MdAdminPanelSettings } from "react-icons/md";
-
 import codeContext from "../../context/CodeContext";
 import swal from "sweetalert";
+import { useNavigate } from "react-router-dom";
 
 const Admin = () => {
   const [form, setForm] = useState({ username: "", password: "" });
   const topics = ["questions", "mcqs", "sqls", "blogs", "more"];
+  const navigate = useNavigate();
 
   const {
     login,
@@ -21,22 +22,33 @@ const Admin = () => {
     getBlogs,
     mcqs,
     getMcqs,
+    getRole,
   } = useContext(codeContext);
   const lableStyle = "text-[#33343B] font-bold mx-auto text-sm mb-2  ";
   const inputStyle =
     "w-[70%] mx-auto h-[40px] rounded-md border-[#33343B] border-2 p-2 mb-4 focus:outline-none focus:border-[#33343B] focus:ring-2 focus:ring-[#33343B] focus:ring-opacity-50";
 
   useEffect(() => {
-    getSqls();
-    getQuestions();
-    getBlogs();
-    getMcqs();
+    (async () => {
+      const id = localStorage.getItem("role");
+      const role = await getRole(id);
+      // console.log(role);
+      if (role !== "admin") {
+        navigate("/");
+      }
+      const d = localStorage.getItem("token");
+      getSqls(d);
+      getQuestions(d);
+      getBlogs(d);
+      getMcqs(d);
+    })();
   }, []);
-  console.log(sqls);
+  // console.log(sqls);
   useEffect(() => {
     const d = localStorage.getItem("token");
     if (!d) {
       setLogin(false);
+      navigate("/");
       return;
     }
 
@@ -75,7 +87,7 @@ const Admin = () => {
       questions: questions.length,
       mcqs: mcqs.length,
       sqls: sqls.length,
-      blogs: blogs.length
+      blogs: blogs.length,
     };
     return (
       <div

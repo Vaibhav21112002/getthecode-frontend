@@ -11,7 +11,7 @@ const TechNews = () => {
 	const [page, setPage] = useState(1);
 	const [data, setData] = useState([]);
 	const [activeFilter, setActiveFilter] = useState("All Tech News");
-	const { getTechNews, techNews } = useContext(codeContext);
+	const { getTechNews, techNews,getRole } = useContext(codeContext);
 	const [companies, setCompanies] = useState([]);
 	const [inputValue, setInputValue] = useState("");
 	const [filteredCompanies, setFilteredCompanies] = useState(companies);
@@ -59,11 +59,11 @@ const TechNews = () => {
 	};
 
 	useEffect(() => {
-		getTechNews();
 		const usrToken = localStorage.getItem("token");
-    if (usrToken === undefined||usrToken===null) {
-      navigate("/");
-    } 
+	  if (usrToken === undefined||usrToken===null) {
+		navigate("/");
+	  }
+    getTechNews(usrToken);
 	}, []);
 
 	useEffect(() => {
@@ -220,7 +220,7 @@ const TechNews = () => {
 								ref={inputRef}
 								onKeyDown={(e) => {
 									if (e.key === "Enter") {
-										console.log(inputValue);
+										// console.log(inputValue);
 										setFilteredCompanies(companies);
 										setData(
 											techNews.filter(

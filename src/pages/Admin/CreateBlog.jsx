@@ -19,7 +19,19 @@ const CreateBlog = () => {
     image: "",
   });
 
-  const { addBlog, addUploadImage } = useContext(codeContext);
+  const { addBlog, addUploadImage, getRole } = useContext(codeContext);
+
+  useEffect(() => {
+    (async () => {
+      const id = localStorage.getItem("role");
+      const role = await getRole(id);
+      console.log(role);
+      if (role !== "admin") {
+        navigate("/");
+      }
+    })();
+  }, []);
+
   const handleUpload = async () => {
     console.log(uploadData);
     if (uploadData.image != "") {
