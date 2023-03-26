@@ -114,7 +114,7 @@ const Login = () => {
 
   const handleLogin = async () => {
     if (isLogin) {
-      const email = formData.email;
+      const email = formData.email.trim();
       const password = formData.password;
       const data = await Login({ email, password });
       if (data?.status === true) {
@@ -123,7 +123,7 @@ const Login = () => {
         swal({ title: data.message, icon: "error", button: "Ok" });
       }
     } else {
-      const email = formData.email;
+      const email = formData.email.trim();
       const password = formData.password;
       const name = formData.name;
       const number = formData.number;
