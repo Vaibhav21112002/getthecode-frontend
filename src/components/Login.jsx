@@ -156,7 +156,7 @@ const Login = () => {
 
 
   return (
-    <div className=" h-[90%] pt-[50px]">
+    <div className=" h-[90%] pt-[50px] overflow-auto modals">
       {/* This is the login part */}
       {isLogin && !forgotPassword ? (
         <div cclassName="w-full flex h-full bg-[white] items-center justify-center">
@@ -207,23 +207,24 @@ const Login = () => {
                     </div>
                   </div>
                 </div>
-                <button
-                  className="w-[40%] h-[40px] bg-[#33343B] text-white rounded-md mt-4 mb-4 hover:bg-[#222629] transition duration-300 ease-in-out	 focus:outline-none "
-                  onClick={handleLogin}
-                >
-                  {" "}
-                  Login{" "}
-                </button>
-                <button
-                  className="w-[40%] h-[40px] bg-[#33343B] text-white rounded-md mt-4 mb-4 hover:bg-[#222629] transition duration-300 ease-in-out	 focus:outline-none "
+                <h1
+                  className="text-left cursor-pointer"
                   onClick={() => {
                     setIsLogin((prevState) => !prevState);
                   }}
                 >
                   Not a user? Sign Up
-                </button>
+                </h1>
                 <button
-                  className="w-[40%] h-[40px] bg-[#33343B] text-white rounded-md mt-4 mb-4 hover:bg-[#222629] transition duration-300 ease-in-out	 focus:outline-none "
+                  className="min-w-[40%] h-[40px] bg-[#33343B] text-white rounded-md mt-2 px-4 hover:bg-[#222629] transition duration-300 ease-in-out	 focus:outline-none "
+                  onClick={handleLogin}
+                >
+                  {" "}
+                  Login{" "}
+                </button>
+               
+                <button
+                  className="min-w-[40%] h-[40px] bg-[#33343B] text-white rounded-md mt-2 px-4 hover:bg-[#222629] transition duration-300 ease-in-out	 focus:outline-none "
                   onClick={() => {
                     setForgotPassword(true);
                   }}
@@ -472,20 +473,21 @@ const Login = () => {
                   </div>
                 </div>
                 <button
-                  className="w-[40%] h-[40px] bg-[#33343B] text-white rounded-md mt-4 mb-4 hover:bg-[#222629] transition duration-300 ease-in-out	 focus:outline-none "
-                  onClick={handleLogin}
-                >
-                  {" "}
-                  Sign Up{" "}
-                </button>
-                <button
-                  className="w-[40%] h-[40px] bg-[#33343B] text-white rounded-md mt-4 mb-4 hover:bg-[#222629] transition duration-300 ease-in-out	 focus:outline-none "
+                  className="text-left cursor-pointer"
                   onClick={() => {
                     setIsLogin((prevState) => !prevState);
                   }}
                 >
                   Already a user? Login
                 </button>
+                <button
+                  className="min-w-[40%] h-[40px] bg-[#33343B] text-white rounded-md px-4 mt-2 hover:bg-[#222629] transition duration-300 ease-in-out	 focus:outline-none "
+                  onClick={handleLogin}
+                >
+                  {" "}
+                  Sign Up{" "}
+                </button>
+                
               </div>
             </div>
           </div>
