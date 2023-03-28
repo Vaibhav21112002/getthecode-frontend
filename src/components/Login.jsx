@@ -159,7 +159,7 @@ const Login = () => {
     <div className=" h-[90%] pt-[50px] overflow-auto modals">
       {/* This is the login part */}
       {isLogin && !forgotPassword ? (
-        <div cclassName="w-full flex h-full bg-[white] items-center justify-center">
+        <div className="w-full flex h-full bg-[white] items-center justify-center">
           <div className="w-full h-full flex justify-center items-center my-auto">
             <div className="w-[70%] h-[70%] bg-white rounded-md flex flex-col items-center">
               <div className="flex items-center gap-4">

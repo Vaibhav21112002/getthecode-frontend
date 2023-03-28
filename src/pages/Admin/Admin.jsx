@@ -7,72 +7,89 @@ import swal from "sweetalert";
 import { useNavigate } from "react-router-dom";
 
 const Admin = () => {
-  const [form, setForm] = useState({ username: "", password: "" });
+  const [form, setForm] = useState({ email: "", password: "" });
   const topics = ["questions", "mcqs", "sqls", "blogs", "more"];
   const navigate = useNavigate();
+  const [login, setLogin] = useState(false);
+    const {
+      sqls,
+      getSqls,
+      questions,
+      getQuestions,
+      blogs,
+      getBlogs,
+      mcqs,
+      getMcqs,
+      adminLogin,
+      adminData,
+      getAdmin,
+    } = useContext(codeContext);
 
-  const {
-    login,
-    setLogin,
-    sqls,
-    getSqls,
-    questions,
-    getQuestions,
-    blogs,
-    getBlogs,
-    mcqs,
-    getMcqs,
-    getRole,
-  } = useContext(codeContext);
   const lableStyle = "text-[#33343B] font-bold mx-auto text-sm mb-2  ";
   const inputStyle =
     "w-[70%] mx-auto h-[40px] rounded-md border-[#33343B] border-2 p-2 mb-4 focus:outline-none focus:border-[#33343B] focus:ring-2 focus:ring-[#33343B] focus:ring-opacity-50";
-
   useEffect(() => {
     (async () => {
-      const id = localStorage.getItem("role");
-      const role = await getRole(id);
-      // console.log(role);
-      if (role !== "admin") {
-        navigate("/");
+      const d = localStorage.getItem("admin-token");
+      const admin = await getAdmin(d);
+
+      const date = new Date(admin?.date);
+      const now = new Date();
+      const diff = now.getTime() - date.getTime();
+      const diffDays = Math.ceil(diff / (1000 * 3600 * 24));
+      if (diffDays > 1) {
+        localStorage.removeItem("admin-token");
+        localStorage.removeItem("token");
+        setLogin(false);
+        return;
       }
-      const d = localStorage.getItem("token");
-      getSqls(d);
-      getQuestions(d);
-      getBlogs(d);
-      getMcqs(d);
+      if (admin?.role.toLowerCase() !== "admin") {
+        setLogin(false);
+        localStorage.removeItem("admin-token");
+      } else if (admin?.role.toLowerCase() === "admin") {
+        setLogin(true);
+      }
     })();
+    const admintoken = localStorage.getItem("admin-token");
+    getSqls(admintoken);
+    getQuestions(admintoken);
+    getBlogs(admintoken);
+    getMcqs(admintoken);
   }, []);
-  // console.log(sqls);
+
   useEffect(() => {
-    const d = localStorage.getItem("token");
-    if (!d) {
+    const admintoken = localStorage.getItem("admin-token");
+    if (admintoken === undefined || admintoken === null) {
       setLogin(false);
-      navigate("/");
-      return;
+      localStorage.removeItem("admin-token");
     }
-
-    const date = new Date(parseInt(d));
-    const now = new Date();
-    const diff = now.getTime() - date.getTime();
-    const diffDays = Math.ceil(diff / (1000 * 3600 * 24));
-    if (diffDays > 1) {
-      localStorage.removeItem("token");
-      setLogin(false);
-      return;
-    }
-    setLogin(true);
-  }, []);
-
-  const handleLogin = () => {
-    if (form.username === "admin" && form.password === "admin") {
-      localStorage.setItem("token", new Date().getTime());
-      swal({ title: "Login Successfull", icon: "success", button: "Ok" });
-      setForm({ username: "", password: "" });
+    if (adminData?.status === true) {
+      localStorage.setItem("admin-token", adminData.token);
       setLogin(true);
-      return;
+      console.log(adminData);
     }
-    swal({ title: "Login Failed", icon: "error", button: "Ok" });
+    getSqls(admintoken);
+    getQuestions(admintoken);
+    getBlogs(admintoken);
+    getMcqs(admintoken);
+  }, [adminData]);
+
+  const handleLogin = async () => {
+    const email = form.email.trim();
+    const password = form.password;
+    const admin = await adminLogin({ email, password });
+    if (admin?.status === true) {
+      console.log("hey");
+      swal({
+        title: "Admin logged in successfully",
+        icon: "success",
+        button: "Ok",
+      });
+      setForm({ email: "", password: "" });
+    } else {
+      swal({ title: admin?.message, icon: "error", button: "Ok" });
+      console.log(admin);
+    }
   };
 
   const Card = ({ topic }) => {
@@ -139,11 +156,11 @@ const Admin = () => {
             <div className="w-10/12 flex flex-col flex-grow">
               {" "}
               <AdminTopBar />{" "}
-              {sqls?.length >= 0 && (
+              {sqls?.length > 0 && (
                 <div className="">
                   <div className="grid grid-cols-3 mt-10 w-[90%] mx-auto gap-4">
                     {topics.map((topic) => (
-                      <Card topic={topic} />
+                      questions?.length>0&&<Card topic={topic} />
                     ))}
                   </div>
                 </div>
@@ -167,13 +184,13 @@ const Admin = () => {
               </div>
               <div className="flex flex-col w-full justify-center items-center">
                 <div className="flex flex-col w-full">
-                  <label className={lableStyle}> Username </label>
+                  <label className={lableStyle}> Email Id </label>
                   <input
                     className={inputStyle}
                     type="text"
-                    value={form.username}
+                    value={form.email}
                     onChange={(e) =>
-                      setForm({ ...form, username: e.target.value })
+                      setForm({ ...form, email: e.target.value })
                     }
                   />
                   <label className={lableStyle}> Password </label>

@@ -11,7 +11,6 @@ import codeContext from "../context/CodeContext";
 
 function Navbar({ question }) {
   const [open, setOpen] = useState(false);
-  const usrToken = localStorage.getItem("token");
   const [loggedIn, setLoggedIn] = useState(false);
   function logout() {
     swal({
@@ -28,10 +27,11 @@ function Navbar({ question }) {
       }
     });
   }
-
+  
   const [login, setLogin] = useState(false);
   const navigate = useNavigate();
   const { usrData, getRole } = useContext(codeContext);
+  const usrToken = localStorage.getItem("token");
 
   useEffect(() => {
     // console.log(usrData);
@@ -149,12 +149,12 @@ function Navbar({ question }) {
                 onClick={logout}
               />
             )}
-            <BiShieldQuarter
+            {/* <BiShieldQuarter
               className="text-[#BDA9A9] text-2xl hover:text-white cursor-pointer"
               onClick={() => {
                 handleAdminClick();
               }}
-            />
+            /> */}
           </ul>
         </div>
         <div className="w-full flex justify-end items-center px-4 sm:hidden">

@@ -48,10 +48,10 @@ const App = () => {
 					<Route path="/sql/:id" element={<SqlQuestion />} />
 					<Route path="/Table" element={<Table />} />
 					<Route path="/programming/:id" element={<Question />} />
-					<Route path="/admin" element={<Admin />} />
+					<Route path="/admin/:id" element={<Admin />} />
 					<Route path="/login" element={<Login />} />
 					<Route path="/technews" element={<TechNews />} />
-					<Route path="/technews/:id" element={<TechNew />} />
+					<Route path="/technews/q1w2e3r4t528032023" element={<TechNew />} />
 					<Route path="/admin/programming" element={<AdminProgramming_2 />} />
 					<Route path="/admin/blogs" element={<AdminBlogs />} />
 					<Route path="/admin/createBlog" element={<CreateBlog />} />

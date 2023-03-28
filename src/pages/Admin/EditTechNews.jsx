@@ -13,15 +13,25 @@ const EditTechNews = () => {
   const [editData, setEditData] = useState(undefined);
   const { id } = useParams();
 
-  const { editTechNew, getTechNew, techNew, getRole } = useContext(codeContext);
+  const { editTechNew, getTechNew, techNew, getAdmin } = useContext(codeContext);
   useEffect(() => {
     (async () => {
-      const id = localStorage.getItem("role");
-      const role = await getRole(id);
-      console.log(role);
-      if (role !== "admin") {
-        navigate("/");
+      const d = localStorage.getItem("admin-token");
+      const admin = await getAdmin(d);
+
+      const date = new Date(admin?.date);
+      const now = new Date();
+      const diff = now.getTime() - date.getTime();
+      const diffDays = Math.ceil(diff / (1000 * 3600 * 24));
+      if (diffDays > 1) {
+        localStorage.removeItem("admin-token");
+        localStorage.removeItem("token");
+        navigate('/admin/randomurl')
       }
+      if (admin?.role.toLowerCase() !== "admin") {
+        localStorage.removeItem("admin-token");
+        navigate('/admin/randomurl')
+      } 
     })();
     const d = localStorage.getItem("token");
     getTechNew(id, d);

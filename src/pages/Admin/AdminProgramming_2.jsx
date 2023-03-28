@@ -27,7 +27,8 @@ const AdminProgramming = () => {
     editQuestion,
     setLogin,
     deleteQuestion,
-	getRole
+    getAdmin,
+    adminData
   } = useContext(codeContext);
   const [data, setData] = React.useState([]);
   const [editData, setEditData] = React.useState({});
@@ -64,35 +65,45 @@ const AdminProgramming = () => {
 
   useEffect(() => {
     (async () => {
-      const id = localStorage.getItem("role");
-      const role = await getRole(id);
-    //   console.log(role);
-      if (role !== "admin") {
-        navigate("/");
+      const d = localStorage.getItem("admin-token");
+      const admin = await getAdmin(d);
+
+      const date = new Date(admin?.date);
+      const now = new Date();
+      const diff = now.getTime() - date.getTime();
+      const diffDays = Math.ceil(diff / (1000 * 3600 * 24));
+      if (diffDays > 1) {
+        localStorage.removeItem("admin-token");
+        localStorage.removeItem("token");
+        setLogin(false);
+        return;
+      }
+      if (admin?.role.toLowerCase() !== "admin") {
+        setLogin(false);
+        localStorage.removeItem("admin-token");
+      } else if (admin?.role.toLowerCase() === "admin") {
+        setLogin(true);
       }
     })();
+    const admintoken = localStorage.getItem("admin-token");
+    getQuestions(admintoken);
   }, []);
 
   useEffect(() => {
-    const d = localStorage.getItem("token");
-    if (!d) {
+    const admintoken = localStorage.getItem("admin-token");
+    if (admintoken === undefined || admintoken === null) {
       setLogin(false);
-      navigate("/admin");
-      return;
+      localStorage.removeItem("admin-token");
+      navigate('/admin/randomurl');
+    }
+    if (adminData?.status === true) {
+      localStorage.setItem("admin-token", adminData.token);
+      setLogin(true);
     }
 
-    const date = new Date(parseInt(d));
-    const now = new Date();
-    const diff = now.getTime() - date.getTime();
-    const diffDays = Math.ceil(diff / (1000 * 3600 * 24));
-    if (diffDays > 1) {
-      localStorage.removeItem("token");
-      setLogin(false);
-      navigate("/admin");
-      return;
-    }
-    setLogin(true);
-  }, []);
+    getQuestions(admintoken);
+
+  }, [adminData]);
 
   useEffect(() => {
     const updatedSolution = {

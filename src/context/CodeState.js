@@ -28,6 +28,10 @@ const CodeState = (props) => {
 
   const [email, setEmail] = useState("");
 
+  const [adminData, setAdminData] = useState("");
+  const [adminLoggedIn, setAdmingLoggedIn] = useState(false);
+  const [adminId,setAdminId] = useState('');
+
   const addUploadImage = async (image) => {
     const res = await api.post("/cloudinary/upload", {
       image: image,
@@ -58,13 +62,13 @@ const CodeState = (props) => {
     setLoading(false);
   };
 
-  const getQuestion = async (id,token) => {
+  const getQuestion = async (id, token) => {
     try {
       setLoading(true);
       const res = await api.get(`/problems/${id}`, {
         headers: {
-          "auth-token": token
-        }
+          "auth-token": token,
+        },
       });
       setQuestion(res.data);
       setLoading(false);
@@ -117,8 +121,8 @@ const CodeState = (props) => {
       setLoading(true);
       const res = await api.get("/blogs", {
         headers: {
-          "auth-token": token
-        }
+          "auth-token": token,
+        },
       });
       setBlogs(res.data);
       setLoading(false);
@@ -128,13 +132,13 @@ const CodeState = (props) => {
     setLoading(false);
   };
 
-  const getBlog = async (id,token) => {
+  const getBlog = async (id, token) => {
     try {
       setLoading(true);
       const res = await api.get(`/blogs/${id}`, {
         headers: {
-          "auth-token": token
-        }
+          "auth-token": token,
+        },
       });
       setBlog(res.data);
       setLoading(false);
@@ -184,8 +188,8 @@ const CodeState = (props) => {
       setLoading(true);
       const res = await api.get("/technews", {
         headers: {
-          "auth-token": token
-        }
+          "auth-token": token,
+        },
       });
       setTechNews(res.data);
       setLoading(false);
@@ -195,13 +199,13 @@ const CodeState = (props) => {
     setLoading(false);
   };
 
-  const getTechNew = async (id,token) => {
+  const getTechNew = async (id, token) => {
     try {
       setLoading(true);
       const res = await api.get(`/technews/${id}`, {
         headers: {
-          "auth-token": token
-        }
+          "auth-token": token,
+        },
       });
       setTechNew(res.data);
       setLoading(false);
@@ -254,8 +258,8 @@ const CodeState = (props) => {
       setLoading(true);
       const res = await api.get("/mcqs", {
         headers: {
-          "auth-token": token
-        }
+          "auth-token": token,
+        },
       });
       setMcqs(res.data);
       setLoading(false);
@@ -265,13 +269,13 @@ const CodeState = (props) => {
     setLoading(false);
   };
 
-  const getMcq = async (id,token) => {
+  const getMcq = async (id, token) => {
     try {
       setLoading(true);
       const res = await api.get(`/mcqs/${id}`, {
         headers: {
-          "auth-token": token
-        }
+          "auth-token": token,
+        },
       });
       setMcq(res.data);
 
@@ -322,8 +326,8 @@ const CodeState = (props) => {
       setLoading(true);
       const res = await api.get("/sql", {
         headers: {
-          "auth-token": token
-        }
+          "auth-token": token,
+        },
       });
       setSqls(res.data);
       setLoading(false);
@@ -332,13 +336,13 @@ const CodeState = (props) => {
     }
     setLoading(false);
   };
-  const getSql = async (id,token) => {
+  const getSql = async (id, token) => {
     try {
       setLoading(true);
       const res = await api.get(`/sql/${id}`, {
         headers: {
-          "auth-token": token
-        }
+          "auth-token": token,
+        },
       });
       setSql(res.data);
       setLoading(false);
@@ -390,7 +394,7 @@ const CodeState = (props) => {
       const res = await api.post("/auth/sendotp", { email });
       setToken(res.data);
       setLoading(false);
-      return (res.data);
+      return res.data;
     } catch (err) {
       swal({ title: err.response.data.msg, icon: "error", button: "Ok" });
     }
@@ -402,7 +406,7 @@ const CodeState = (props) => {
       const res = await api.post("/auth/verifyotp", { token, otp });
       setMsg(res.data.msg);
       setLoading(false);
-      return res.data.msg
+      return res.data.msg;
     } catch (err) {
       console.log(err);
       swal({ title: err.response.data.msg, icon: "error", button: "Ok" });
@@ -419,7 +423,7 @@ const CodeState = (props) => {
     } catch (err) {
       console.log(err);
       swal({ title: err.response.data.msg, icon: "error", button: "Ok" });
-      return undefined
+      return undefined;
     }
   };
 
@@ -458,32 +462,55 @@ const CodeState = (props) => {
     }
   };
 
-  const getRole = async(id)=>{
+  const getRole = async (token) => {
     try {
       setLoading(true);
-      const res = await api.post('/auth/getUser',{id:id});
-      console.log(id);
+      const res = await api.post("/auth/getRole", { id: token });
       console.log(res.data);
       setLoading(false);
-      return res.data.user.role;
+      return res.data.role;
     } catch (error) {
       console.log(error);
-      
-      return {role:"none",error:error.response.data}
-    }
-  }
 
-  const getUser = async(id)=>{
+      return { role: "none", error: error.response.data };
+    }
+  };
+
+  const getUser = async (id) => {
     try {
       setLoading(true);
-      const res = await api.post('/auth/getUser',{id:id});
+      const res = await api.post("/auth/getUser", { id: id });
       console.log(res.data);
       setLoading(false);
       return res.data.user;
     } catch (error) {
       console.log(error);
+
+      return { role: "none", error: error.response.data };
+    }
+  };
+
+  const adminLogin = async (admin) => {
+    try {
+      setLoading(true);
+      const res = await api.post("/auth/adminLogin", admin);
+      setAdminData(res.data); 
+      setLoading(false);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getAdmin = async(token)=>{
+    try {
+      setLoading(true);
+      const res = await api.post('auth/getAdminData',{token:token});
+      setAdminData(res.data.data);
+      setLoading(false);
+      return res.data.data;
+    } catch (error) {
       
-      return {role:"none",error:error.response.data}
     }
   }
 
@@ -506,6 +533,9 @@ const CodeState = (props) => {
           msg,
           token,
           usrData,
+          adminLoggedIn,
+          adminData,
+          adminId,
           setLogin,
           contactForm,
           addUploadImage,
@@ -534,6 +564,7 @@ const CodeState = (props) => {
           addSql,
           editSql,
           deleteSql,
+          setAdmingLoggedIn,
           sendOtp,
           verifyOtp,
           changePassword,
@@ -541,7 +572,9 @@ const CodeState = (props) => {
           Register,
           logout,
           getRole,
-          getUser
+          getUser,
+          adminLogin,
+          getAdmin
         }}
       >
         {props.children}
