@@ -33,11 +33,11 @@ const CreateBlog = () => {
       if (diffDays > 1) {
         localStorage.removeItem("admin-token");
         localStorage.removeItem("token");
-        navigate('/admin/randomurl')
+        navigate('/admin/q1w2e3r4t528032023')
       }
       if (admin?.role.toLowerCase() !== "admin") {
         localStorage.removeItem("admin-token");
-        navigate('/admin/randomurl')
+        navigate('/admin/randq1w2e3r4t528032023omurl')
       } 
     })();
 
@@ -47,7 +47,7 @@ const CreateBlog = () => {
     const admintoken = localStorage.getItem("admin-token");
     if (admintoken === undefined || admintoken === null) {
       localStorage.removeItem("admin-token");
-      navigate('/admin/randomurl');
+      navigate('/admin/q1w2e3r4t528032023');
     }
     if (adminData?.status === true) {
       localStorage.setItem("admin-token", adminData.token);

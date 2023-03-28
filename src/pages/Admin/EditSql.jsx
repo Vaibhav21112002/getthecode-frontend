@@ -19,7 +19,7 @@ const EditSql = () => {
   const [editTableData, setEditTableData] = useState({});
   const [editIndex, setEditIndex] = useState(undefined);
   const [editData, setEditData] = useState(undefined);
-  const { getSql, sql, editSql,getAdmin } = useContext(codeContext);
+  const { getSql, sql, editSql,getAdmin,adminData } = useContext(codeContext);
   const [newTableData, setNewTableData] = useState({
     numRows: 1,
     numCols: 2,
@@ -46,11 +46,11 @@ const EditSql = () => {
       if (diffDays > 1) {
         localStorage.removeItem("admin-token");
         localStorage.removeItem("token");
-        navigate('/admin/randomurl')
+        navigate('/admin/q1w2e3r4t528032023')
       }
       if (admin?.role.toLowerCase() !== "admin") {
         localStorage.removeItem("admin-token");
-        navigate('/admin/randomurl')
+        navigate('/admin/q1w2e3r4t528032023')
       } 
     })();
     const d = localStorage.getItem("token");
@@ -60,6 +60,18 @@ const EditSql = () => {
     setEditData(sql);
     setTables(editData?.tables);
   }, [sql]);
+
+  useEffect(() => {
+    const admintoken = localStorage.getItem("admin-token");
+    if (admintoken === undefined || admintoken === null) {
+      localStorage.removeItem("admin-token");
+      navigate("/admin/q1w2e3r4t528032023");
+    }
+    if (adminData?.status === true) {
+      localStorage.setItem("admin-token", adminData.token);
+    }
+
+  }, [adminData]);
  
 
   const handleNumRowsChange = (event, edit = false) => {

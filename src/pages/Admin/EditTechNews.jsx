@@ -13,7 +13,8 @@ const EditTechNews = () => {
   const [editData, setEditData] = useState(undefined);
   const { id } = useParams();
 
-  const { editTechNew, getTechNew, techNew, getAdmin } = useContext(codeContext);
+  const { editTechNew, getTechNew, techNew, getAdmin, adminData } =
+    useContext(codeContext);
   useEffect(() => {
     (async () => {
       const d = localStorage.getItem("admin-token");
@@ -26,12 +27,12 @@ const EditTechNews = () => {
       if (diffDays > 1) {
         localStorage.removeItem("admin-token");
         localStorage.removeItem("token");
-        navigate('/admin/randomurl')
+        navigate("/admin/q1w2e3r4t528032023");
       }
       if (admin?.role.toLowerCase() !== "admin") {
         localStorage.removeItem("admin-token");
-        navigate('/admin/randomurl')
-      } 
+        navigate("/admin/q1w2e3r4t528032023");
+      }
     })();
     const d = localStorage.getItem("token");
     getTechNew(id, d);
@@ -39,6 +40,16 @@ const EditTechNews = () => {
   useEffect(() => {
     setEditData(techNew[0]);
   }, [techNew]);
+  useEffect(() => {
+    const admintoken = localStorage.getItem("admin-token");
+    if (admintoken === undefined || admintoken === null) {
+      localStorage.removeItem("admin-token");
+      navigate("/admin/q1w2e3r4t528032023");
+    }
+    if (adminData?.status === true) {
+      localStorage.setItem("admin-token", adminData.token);
+    }
+  }, [adminData]);
 
   const handleUpload = () => {
     if (

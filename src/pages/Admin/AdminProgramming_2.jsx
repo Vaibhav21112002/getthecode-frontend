@@ -94,7 +94,7 @@ const AdminProgramming = () => {
     if (admintoken === undefined || admintoken === null) {
       setLogin(false);
       localStorage.removeItem("admin-token");
-      navigate('/admin/randomurl');
+      navigate('/admin/q1w2e3r4t528032023');
     }
     if (adminData?.status === true) {
       localStorage.setItem("admin-token", adminData.token);

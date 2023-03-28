@@ -13,7 +13,7 @@ import Parser from "html-react-parser";
 import Editor from "@monaco-editor/react";
 const AdminSql = () => {
   const navigate = useNavigate();
-  const { getSqls, sqls, setLogin, deleteSql, getRole, getAdmin, adminData } =
+  const { getSqls, sqls, deleteSql, getRole, getAdmin, adminData } =
     useContext(codeContext);
   const [preview, setPreview] = useState(false);
   const [viewData, setViewData] = useState({});
@@ -30,14 +30,11 @@ const AdminSql = () => {
       if (diffDays > 1) {
         localStorage.removeItem("admin-token");
         localStorage.removeItem("token");
-        setLogin(false);
         return;
       }
       if (admin?.role.toLowerCase() !== "admin") {
-        setLogin(false);
         localStorage.removeItem("admin-token");
       } else if (admin?.role.toLowerCase() === "admin") {
-        setLogin(true);
       }
     })();
     const admintoken = localStorage.getItem("admin-token");
@@ -47,13 +44,11 @@ const AdminSql = () => {
   useEffect(() => {
     const admintoken = localStorage.getItem("admin-token");
     if (admintoken === undefined || admintoken === null) {
-      setLogin(false);
       localStorage.removeItem("admin-token");
-      navigate("/admin/randomurl");
+      navigate("/admin/q1w2e3r4t528032023");
     }
     if (adminData?.status === true) {
       localStorage.setItem("admin-token", adminData.token);
-      setLogin(true);
     }
 
     getSqls(admintoken);

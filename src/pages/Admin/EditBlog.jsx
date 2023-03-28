@@ -13,7 +13,7 @@ const EditBlog = () => {
   const [editData, setEditData] = useState(undefined);
   const { id } = useParams();
 
-  const { editBlog, getBlog, blog,getAdmin } = useContext(codeContext);
+  const { editBlog, getBlog, blog,getAdmin,adminData } = useContext(codeContext);
   useEffect(() => {
     (async () => {
       const d = localStorage.getItem("admin-token");
@@ -26,16 +26,28 @@ const EditBlog = () => {
       if (diffDays > 1) {
         localStorage.removeItem("admin-token");
         localStorage.removeItem("token");
-        navigate('/admin/randomurl')
+        navigate('/admin/q1w2e3r4t528032023')
       }
       if (admin?.role.toLowerCase() !== "admin") {
         localStorage.removeItem("admin-token");
-        navigate('/admin/randomurl')
+        navigate('/admin/q1w2e3r4t528032023')
       } 
     })();
     const d = localStorage.getItem("token");
     getBlog(id,d)
   }, []);
+
+  useEffect(() => {
+    const admintoken = localStorage.getItem("admin-token");
+    if (admintoken === undefined || admintoken === null) {
+      localStorage.removeItem("admin-token");
+      navigate("/admin/q1w2e3r4t528032023");
+    }
+    if (adminData?.status === true) {
+      localStorage.setItem("admin-token", adminData.token);
+    }
+
+  }, [adminData]);
   useEffect(() => {
     setEditData(blog[0]);
   }, [blog]);
