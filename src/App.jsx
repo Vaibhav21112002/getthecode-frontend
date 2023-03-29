@@ -13,7 +13,9 @@ import {
 	Test,
 	Login,
 	TechNews,
-	TechNew
+	TechNew,
+	// Login,
+	Signup,
 } from "./pages";
 import {
 	Admin,
@@ -39,6 +41,8 @@ const App = () => {
 			<Router>
 				<Routes>
 					<Route path="/" exact element={<Home />} />
+					<Route path="/signup" element={<Signup />} />
+					{/* <Route path="/login" element={<Login />} /> */}
 					<Route path="/programming" element={<Programming />} />
 					<Route path="/blogs" element={<Blogs />} />
 					<Route path="/mcqs" element={<MCQ />} />
@@ -52,7 +56,10 @@ const App = () => {
 					<Route path="/login" element={<Login />} />
 					<Route path="/technews" element={<TechNews />} />
 					<Route path="/technews/:id" element={<TechNew />} />
-					<Route path="/admin/programming" element={<AdminProgramming_2 />} />
+					<Route
+						path="/admin/programming"
+						element={<AdminProgramming_2 />}
+					/>
 					<Route path="/admin/blogs" element={<AdminBlogs />} />
 					<Route path="/admin/createBlog" element={<CreateBlog />} />
 					<Route path="/admin/blogs/:id" element={<EditBlog />} />
@@ -63,8 +70,14 @@ const App = () => {
 					<Route path="/admin/createSql" element={<CreateSql />} />
 					<Route path="/admin/profile" element={<Profile />} />
 					<Route path="/admin/technews" element={<AdminTechNews />} />
-					<Route path="/admin/createTechNews" element={<CreateTechNews />} />
-					<Route path="/admin/technews/:id" element={<EditTechNews />} />
+					<Route
+						path="/admin/createTechNews"
+						element={<CreateTechNews />}
+					/>
+					<Route
+						path="/admin/technews/:id"
+						element={<EditTechNews />}
+					/>
 					<Route path="/test" element={<Test />} />
 				</Routes>
 			</Router>
