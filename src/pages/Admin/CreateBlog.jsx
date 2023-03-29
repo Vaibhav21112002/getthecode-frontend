@@ -19,18 +19,41 @@ const CreateBlog = () => {
     image: "",
   });
 
-  const { addBlog, addUploadImage, getRole } = useContext(codeContext);
+  const { addBlog, addUploadImage, getAdmin,adminData } = useContext(codeContext);
 
   useEffect(() => {
     (async () => {
-      const id = localStorage.getItem("role");
-      const role = await getRole(id);
-      console.log(role);
-      if (role !== "admin") {
-        navigate("/");
+      const d = localStorage.getItem("admin-token");
+      const admin = await getAdmin(d);
+
+      const date = new Date(admin?.date);
+      const now = new Date();
+      const diff = now.getTime() - date.getTime();
+      const diffDays = Math.ceil(diff / (1000 * 3600 * 24));
+      if (diffDays > 1) {
+        localStorage.removeItem("admin-token");
+        localStorage.removeItem("token");
+        navigate('/admin/q1w2e3r4t528032023')
       }
+      if (admin?.role.toLowerCase() !== "admin") {
+        localStorage.removeItem("admin-token");
+        navigate('/admin/randq1w2e3r4t528032023omurl')
+      } 
     })();
+
   }, []);
+
+  useEffect(() => {
+    const admintoken = localStorage.getItem("admin-token");
+    if (admintoken === undefined || admintoken === null) {
+      localStorage.removeItem("admin-token");
+      navigate('/admin/q1w2e3r4t528032023');
+    }
+    if (adminData?.status === true) {
+      localStorage.setItem("admin-token", adminData.token);
+    }
+
+  }, [adminData]);
 
   const handleUpload = async () => {
     console.log(uploadData);

@@ -14,15 +14,17 @@ import { AiOutlineConsoleSql } from "react-icons/ai";
 
 const AdminNav = () => {
   const [name, setName] = useState("");
-  const { usrData, getRole,getUser } = useContext(codeContext);
+  const { usrData, getRole,getUser,getAdmin } = useContext(codeContext);
   const usrToken = localStorage.getItem("token");
 
   useEffect(() => {
     (async () => {
-      const id = localStorage.getItem("role");
-      const user = await getUser(id);
+      const adminToken = localStorage.getItem("admin-token");
+      const admin = await getAdmin(adminToken);
+      setName(admin.name)
+      // const user = await getUser(id);
       // console.log(role);
-      setName(user.name);
+      // setName(user.name);
     })();
   }, []);
 

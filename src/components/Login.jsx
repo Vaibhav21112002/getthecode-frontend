@@ -264,7 +264,6 @@ const Login = () => {
 											{" "}
 											Login{" "}
 										</button>
-
 										<button
 											className="min-w-[40%] h-[40px] bg-[#33343B] text-white rounded-md mt-2 px-4 hover:bg-[#222629] transition duration-300 ease-in-out	 focus:outline-none "
 											onClick={() => {
@@ -647,7 +646,7 @@ const Login = () => {
 				</div>
 			</div>
 		</div>
-	);
+	)
 };
 
 export default Login;

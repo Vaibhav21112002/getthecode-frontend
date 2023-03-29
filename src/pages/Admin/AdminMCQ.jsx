@@ -22,7 +22,8 @@ const AdminMCQ = () => {
 		addUploadImage,
 		loading,
 		setLogin,
-		getRole
+		getAdmin,
+		adminData
 	} = useContext(CodeContext);
 	const [editData, setEditData] = React.useState({});
 	const [uploadOpen, setUploadOpen] = React.useState(false);
@@ -39,6 +40,48 @@ const AdminMCQ = () => {
 		answer: [],
 		topicTag: "",
 	});
+	
+	useEffect(() => {
+		(async () => {
+		  const d = localStorage.getItem("admin-token");
+		  const admin = await getAdmin(d);
+	
+		  const date = new Date(admin?.date);
+		  const now = new Date();
+		  const diff = now.getTime() - date.getTime();
+		  const diffDays = Math.ceil(diff / (1000 * 3600 * 24));
+		  if (diffDays > 1) {
+			localStorage.removeItem("admin-token");
+			localStorage.removeItem("token");
+			setLogin(false);
+			return;
+		  }
+		  if (admin?.role.toLowerCase() !== "admin") {
+			setLogin(false);
+			localStorage.removeItem("admin-token");
+		  } else if (admin?.role.toLowerCase() === "admin") {
+			  setLogin(true);
+			}
+		})();
+		const admintoken = localStorage.getItem("admin-token");
+		getMcqs(admintoken);
+	  }, []);
+	
+	  useEffect(() => {
+		const admintoken = localStorage.getItem("admin-token");
+		if (admintoken === undefined || admintoken === null) {
+		  setLogin(false);
+		  localStorage.removeItem("admin-token");
+		  navigate('/admin/q1w2e3r4t528032023');
+		}
+		if (adminData?.status === true) {
+		  localStorage.setItem("admin-token", adminData.token);
+		  setLogin(true);
+		}
+	
+		getMcqs(admintoken);
+	
+	  }, [adminData]);
 	const TableComponent = ({ item, index }) => {
 		return (
 			<tr className="bg-white dark:bg-gray-800 text-[0.76rem]">
@@ -102,40 +145,6 @@ const AdminMCQ = () => {
 	const divStyle = `flex w-full flex-col sm:px-12 px-4 gap-2 text-[#202128] py-2`;
 	const labelStyle = ``;
 	const inputStyle = `w-full border rounded-md p-2`;
-	useEffect(() => {
-		(async () => {
-			const id = localStorage.getItem("role");
-			const role = await getRole(id);
-			// console.log(role);
-			if (role !== "admin") {
-			  navigate("/");
-			}
-		})();
-		const d = localStorage.getItem("token");
-		getMcqs(d);
-		// eslint-disable-next-line
-	}, []);
-
-	useEffect(() => {
-		const d = localStorage.getItem("token");
-		if (!d) {
-			setLogin(false);
-			navigate("/admin");
-			return;
-		}
-
-		const date = new Date(parseInt(d));
-		const now = new Date();
-		const diff = now.getTime() - date.getTime();
-		const diffDays = Math.ceil(diff / (1000 * 3600 * 24));
-		if (diffDays > 1) {
-			localStorage.removeItem("token");
-			setLogin(false);
-			navigate("/admin");
-			return;
-		}
-		setLogin(true);
-	}, []);
 	const handleUpload = async () => {
 		// console.log(uploadData);
 		if (
