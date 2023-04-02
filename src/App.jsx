@@ -14,8 +14,6 @@ import {
 	Login,
 	TechNews,
 	TechNew,
-	// Login,
-	Signup,
 } from "./pages";
 import {
 	Admin,
@@ -41,8 +39,6 @@ const App = () => {
 			<Router>
 				<Routes>
 					<Route path="/" exact element={<Home />} />
-					<Route path="/signup" element={<Signup />} />
-					{/* <Route path="/login" element={<Login />} /> */}
 					<Route path="/programming" element={<Programming />} />
 					<Route path="/blogs" element={<Blogs />} />
 					<Route path="/mcqs" element={<MCQ />} />

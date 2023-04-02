@@ -2,9 +2,6 @@ import React, { useState, useContext, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AiOutlineClose, AiOutlineMenu, AiOutlineHome } from "react-icons/ai";
 import { BiArrowBack, BiLogOut } from "react-icons/bi";
-import { BiShieldQuarter } from "react-icons/bi";
-import Login from "./Login";
-import Modal from "react-awesome-modal";
 import { BsFillPersonFill } from "react-icons/bs";
 import swal from "sweetalert";
 import codeContext from "../context/CodeContext";
@@ -138,7 +135,7 @@ function Navbar({ question }) {
                       button: "Ok",
                     });
                   } else {
-                    setLogin(true);
+                    navigate("/login");
                   }
                 }}
               />
@@ -189,15 +186,6 @@ function Navbar({ question }) {
           </div>
         )}
       </div>
-      <Modal
-        visible={login}
-        onClickAway={() => setLogin(false)}
-        title="Solution"
-        width="40%"
-        height="90%"
-      >
-        <Login />
-      </Modal>
       <div className="flex w-full justify-center">
         <div className="w-[90%] h-[0.5px] bg-[#33343B]"></div>
       </div>
