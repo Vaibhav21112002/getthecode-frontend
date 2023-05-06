@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AiOutlineClose, AiOutlineMenu, AiOutlineHome } from "react-icons/ai";
-import { BiArrowBack, BiLogOut } from "react-icons/bi";
+import { BiArrowBack, BiLogOut,BiShieldQuarter } from "react-icons/bi";
 import { BsFillPersonFill } from "react-icons/bs";
 import swal from "sweetalert";
 import codeContext from "../context/CodeContext";
