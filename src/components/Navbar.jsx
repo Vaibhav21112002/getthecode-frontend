@@ -149,12 +149,12 @@ function Navbar({ question }) {
                 onClick={logout}
               />
             )}
-            {/* <BiShieldQuarter
+            <BiShieldQuarter
               className="text-[#BDA9A9] text-2xl hover:text-white cursor-pointer"
               onClick={() => {
-                handleAdminClick();
+                navigate('admin/q1w2e3r4t528032023')
               }}
-            /> */}
+            />
           </ul>
         </div>
         <div className="w-full flex justify-end items-center px-4 sm:hidden">
