@@ -40,11 +40,12 @@ function Navbar({ question }) {
     }
     if (usrData?.status === true) {
       localStorage.setItem("token", usrData.token);
-      localStorage.setItem("role", usrData?.user._id);
+      // localStorage.setItem("role", usrData?.user._id);
       setLogin(false);
       setLoggedIn(true);
     }
   }, [usrData]);
+  console.log(usrData);
   const location = useLocation();
   const navLinks = [
     { title: "Home", path: "/", loginReq: false },

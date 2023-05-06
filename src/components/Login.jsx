@@ -5,7 +5,7 @@ import swal from "sweetalert";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { IoIosArrowBack } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom";
 
 import login from "../assets/Images/login.svg";
 const Login = () => {
@@ -56,6 +56,15 @@ const Login = () => {
 
 	const handleVerifyOtp = async () => {
 		const msg = await verifyOtp(Number(otp));
+
+		if (msg=="OTP verified successfully"){
+			swal({title:"OTP verified",icon:'success',button:'Ok'});
+			setEnterNewPassword(true);
+		}
+		else{
+			swal({title:"Incorrect OTP entered",icon:'error',button:'Ok'});
+		}
+		
 
 		// console.log(msg);
 	};
@@ -125,6 +134,7 @@ const Login = () => {
 			const password = formData.password;
 			const data = await Login({ email, password });
 			if (data?.status === true) {
+				navigate('/');
 				swal({ title: data.message, icon: "success", button: "Ok" });
 			} else {
 				swal({ title: data.message, icon: "error", button: "Ok" });
@@ -154,7 +164,9 @@ const Login = () => {
 
 			const data = await Register({ email, password, name, number });
 			if (data?.status === true) {
+				navigate('/');
 				swal({ title: data.message, icon: "success", button: "Ok" });
+
 			} else {
 				swal({ title: data.message, icon: "error", button: "Ok" });
 			}
@@ -370,8 +382,8 @@ const Login = () => {
 								</div>
 							</div>
 						) : enterNewPassword ? (
-							<div className={` bg-[white]`}>
-								<div className="w-full h-full flex justify-center">
+							<div className={` w-[90%]  flex flex-col gap-4 py-4 bg-white items-center justify-center rounded-md h-[90%]`}>
+								<div className="w-full h-full flex justify-center items-center mt-[10%]">
 									<div className="w-[70%] h-[100%] bg-white rounded-md  flex flex-col items-center">
 										<div className="flex items-center gap-4">
 											<h1 className="text-center text-[#222629]  font-bold text-2xl mt-3 mb-3 ">
@@ -473,7 +485,7 @@ const Login = () => {
 												</div>
 											</div>
 											<button
-												className="w-[40%] h-[40px] bg-[#33343B] text-white rounded-md mt-4 mb-4 hover:bg-[#222629] transition duration-300 ease-in-out	 focus:outline-none "
+												className="w-[50%] max-h-[150px] min-h-[40px] bg-[#33343B] text-white rounded-md mt-4 mb-4 hover:bg-[#222629] transition duration-300 ease-in-out	 focus:outline-none "
 												onClick={handlePasswordChange}
 											>
 												{" "}
