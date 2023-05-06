@@ -13,7 +13,7 @@ import {
 	Test,
 	Login,
 	TechNews,
-	TechNew
+	TechNew,
 } from "./pages";
 import {
 	Admin,
@@ -63,8 +63,14 @@ const App = () => {
 					<Route path="/admin/createSql" element={<CreateSql />} />
 					<Route path="/admin/profile" element={<Profile />} />
 					<Route path="/admin/technews" element={<AdminTechNews />} />
-					<Route path="/admin/createTechNews" element={<CreateTechNews />} />
-					<Route path="/admin/technews/:id" element={<EditTechNews />} />
+					<Route
+						path="/admin/createTechNews"
+						element={<CreateTechNews />}
+					/>
+					<Route
+						path="/admin/technews/:id"
+						element={<EditTechNews />}
+					/>
 					<Route path="/test" element={<Test />} />
 				</Routes>
 			</Router>
