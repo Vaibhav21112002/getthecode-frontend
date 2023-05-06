@@ -31,7 +31,7 @@ const AdminNav = () => {
   const navigate = useNavigate();
   const navLinks = [
     { title: "Home", path: "/", icon: <MdHomeFilled /> },
-    { title: "Dashboard", path: "/admin", icon: <MdDashboard /> },
+    { title: "Dashboard", path: "/admin/q1w2e3r4t528032023", icon: <MdDashboard /> },
     { title: "Programming", path: "/admin/programming", icon: <BsCodeSlash /> },
     { title: "Blogs", path: "/admin/blogs", icon: <BsInfoLg /> },
     { title: "MCQs", path: "/admin/mcqs", icon: <BsQuestionCircle /> },
