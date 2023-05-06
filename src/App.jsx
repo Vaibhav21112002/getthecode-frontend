@@ -31,7 +31,7 @@ import {
 	CreateTechNews,
 	EditTechNews,
 } from "./pages/Admin";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
 const App = () => {
 	return (
@@ -51,6 +51,7 @@ const App = () => {
 					<Route path="/admin/:id" element={<Admin />} />
 					<Route path="/login" element={<Login />} />
 					<Route path="/technews" element={<TechNews />} />
+					<Route path="/admin" element={<Navigate to="/admin/q1w2e3r4t528032023" />} />
 					<Route path="/technews/q1w2e3r4t528032023" element={<TechNew />} />
 					<Route path="/admin/programming" element={<AdminProgramming_2 />} />
 					<Route path="/admin/blogs" element={<AdminBlogs />} />

@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AiOutlineClose, AiOutlineMenu, AiOutlineHome } from "react-icons/ai";
-import { BiArrowBack, BiLogOut } from "react-icons/bi";
+import { BiArrowBack, BiLogOut,BiShieldQuarter } from "react-icons/bi";
 import { BsFillPersonFill } from "react-icons/bs";
 import swal from "sweetalert";
 import codeContext from "../context/CodeContext";
@@ -146,12 +146,12 @@ function Navbar({ question }) {
                 onClick={logout}
               />
             )}
-            {/* <BiShieldQuarter
+            <BiShieldQuarter
               className="text-[#BDA9A9] text-2xl hover:text-white cursor-pointer"
               onClick={() => {
-                handleAdminClick();
+                navigate('admin/q1w2e3r4t528032023')
               }}
-            /> */}
+            />
           </ul>
         </div>
         <div className="w-full flex justify-end items-center px-4 sm:hidden">
