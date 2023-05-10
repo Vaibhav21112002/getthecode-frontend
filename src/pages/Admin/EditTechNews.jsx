@@ -86,7 +86,6 @@ const EditTechNews = () => {
         buttons: true,
       }).then((res) => {
         if (res) {
-          console.log(editData);
           editTechNew(id, editData);
           swal({
             title: "Success",
@@ -109,7 +108,6 @@ const EditTechNews = () => {
         buttons: true,
       }).then((res) => {
         if (res) {
-          console.log(editData);
           editTechNew(id, editData);
           swal({
             title: "Success",

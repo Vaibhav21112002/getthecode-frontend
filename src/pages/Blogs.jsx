@@ -143,6 +143,7 @@ const Blogs = () => {
               <button
                 className="bg-[#ED8A11] px-6 py-2 rounded-lg mt-2 flex justify-center items-center hover:bg-[#F2A03F] transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 cursor-pointer"
                 onClick={() => navigate(`/blogs/${blog?._id}`)}
+                // onClick={() => console.log("clicked")}
               >
                 <h1 className="text-white text-sm font-bold">Read More</h1>
               </button>

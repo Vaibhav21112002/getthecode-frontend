@@ -77,7 +77,6 @@ const AdminSql = () => {
             onClick={() => {
               setPreview(true);
               setViewData(item);
-              console.log(viewData);
             }}
           />
         </th>

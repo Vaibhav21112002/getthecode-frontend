@@ -30,8 +30,8 @@ const AdminTopBar = () => {
                 dangerMode: true,
               }).then((willDelete) => {
                 if (willDelete) {
+                  localStorage.removeItem("admin-token");
                   localStorage.removeItem("token");
-                  localStorage.removeItem("role");
                   setLogin(false);
                   navigate("/");
                 }

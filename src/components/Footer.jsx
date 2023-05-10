@@ -2,6 +2,8 @@ import React, { useState, useContext } from "react";
 import whatsapp from "../assets/Images/whatsapp.png";
 import instagram from "../assets/Images/instagram.webp";
 import facebook from "../assets/Images/facebook.png";
+import telegram from "../assets/Images/telegram.png";
+import twitter from "../assets/Images/twitter.webp";
 import "../assets/CSS/index.css";
 import { GrFormClose, GrMail } from "react-icons/gr";
 import codeContext from "../context/CodeContext";
@@ -13,17 +15,11 @@ const Footer = () => {
 	const [open, setOpen] = useState(false);
 	const { contactForm } = useContext(codeContext);
 	const socialIcons = [
-		{
-			title: "whatsapp",
-			icon: whatsapp,
-			path: "https://wa.me/918826271548",
-		},
-		{
-			title: "instagram",
-			icon: instagram,
-			path: "https://www.instagram.com",
-		},
+		{ title: "whatsapp", icon: whatsapp, path: "https://wa.me/918826271548", },
+		{ title: "instagram", icon: instagram, path: "https://www.instagram.com", },
 		{ title: "facebook", icon: facebook, path: "https://www.facebook.com" },
+		{ title: "telegram", icon: telegram, path: "https://t.me/codetoday" },
+		{ title: "twitter", icon: twitter, path: "https://twitter.com" },
 	];
 
 	const footLinks = [

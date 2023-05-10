@@ -87,7 +87,6 @@ const EditBlog = () => {
         buttons: true,
       }).then((res) => {
         if (res) {
-          console.log(editData);
           editBlog(id, editData);
           swal({
             title: "Success",
@@ -110,7 +109,6 @@ const EditBlog = () => {
         buttons: true,
       }).then((res) => {
         if (res) {
-          console.log(editData);
           editBlog(id, editData);
           swal({
             title: "Success",

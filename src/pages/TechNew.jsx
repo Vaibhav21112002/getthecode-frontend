@@ -31,7 +31,6 @@ const TechNew = () => {
   if (data === undefined) {
     return <div>Loading.....</div>;
   }
-  console.log(data.content);
   return (
     <div className="back">
       <Navbar />

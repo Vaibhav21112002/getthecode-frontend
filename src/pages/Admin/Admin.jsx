@@ -37,10 +37,8 @@ const Admin = () => {
       const now = new Date();
       const diff = now.getTime() - date.getTime();
       const diffDays = Math.ceil(diff / (1000 * 3600 * 24));
-      console.log(admin,diffDays);
       if (diffDays > 1) {
         localStorage.removeItem("admin-token");
-        console.log('removing admin token')
         localStorage.removeItem("token");
         setLogin(false);
         return;
@@ -70,7 +68,6 @@ const Admin = () => {
       localStorage.setItem("admin-token", adminData.token);
       // localStorage.setItem("token", adminData.token);
       setLogin(true);
-      console.log(adminData);
     }
     getSqls(admintoken);
     getQuestions(admintoken);
@@ -83,7 +80,6 @@ const Admin = () => {
     const password = form.password;
     const admin = await adminLogin({ email, password });
     if (admin?.status === true) {
-      console.log("hey");
       swal({
         title: "Admin logged in successfully",
         icon: "success",
@@ -92,7 +88,6 @@ const Admin = () => {
       setForm({ email: "", password: "" });
     } else {
       swal({ title: admin?.message, icon: "error", button: "Ok" });
-      console.log(admin);
     }
   };
 

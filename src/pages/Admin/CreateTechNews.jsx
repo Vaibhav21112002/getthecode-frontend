@@ -55,12 +55,10 @@ const CreateTechNews = () => {
   }, [adminData]);
 
   const handleUpload = async () => {
-    console.log(uploadData);
     if (uploadData.image != "") {
       const url = await addUploadImage(uploadData.image);
       setUploadData({ ...uploadData, image: url });
     }
-    console.log(uploadData);
     if (
       uploadData.title === "" ||
       uploadData.tag === "" ||

@@ -151,7 +151,12 @@ const CodeState = (props) => {
   const addBlog = async (blog) => {
     try {
       setLoading(true);
-      const res = await api.post("/blogs", blog);
+      const admToken = localStorage.getItem("admin-token");
+      const res = await api.post("/blogs", blog, {
+        headers: {
+          "auth-token": admToken,
+        },
+      });
       setBlogs([...blogs, res.data]);
       setLoading(false);
     } catch (err) {
@@ -162,7 +167,12 @@ const CodeState = (props) => {
   const editBlog = async (id, question) => {
     try {
       setLoading(true);
-      const res = await api.put(`/blogs/${id}`, question);
+      const admToken = localStorage.getItem("admin-token");
+      const res = await api.put(`/blogs/${id}`, question, {
+        headers: {
+          "auth-token" : admToken,
+        }
+      });
       setBlogs(blogs.map((blog) => (blog._id === id ? res.data : blog)));
       setLoading(false);
     } catch (err) {
@@ -174,7 +184,12 @@ const CodeState = (props) => {
   const deleteBlog = async (id) => {
     try {
       setLoading(true);
-      await api.delete(`/blogs/${id}`);
+      const admToken = localStorage.getItem("admin-token");
+      await api.delete(`/blogs/${id}`, {
+        headers: {
+          "auth-token" : admToken
+        }
+      });
       setBlogs(blogs.filter((blog) => blog._id !== id));
       setLoading(false);
     } catch (err) {
@@ -354,7 +369,12 @@ const CodeState = (props) => {
   const addSql = async (question) => {
     try {
       setLoading(true);
-      const res = await api.post("/sql", question);
+      const admToken = localStorage.getItem("admin-token");
+      const res = await api.post("/sql", question, {
+        headers : {
+          "auth-token" : admToken
+        }
+      });
       setSqls([...sqls, res.data]);
       setLoading(false);
     } catch (err) {
@@ -366,7 +386,12 @@ const CodeState = (props) => {
   const editSql = async (id, question) => {
     try {
       setLoading(true);
-      const res = await api.put(`/sql/${id}`, question);
+      const admToken = localStorage.getItem("admin-token");
+      const res = await api.put(`/sql/${id}`, question, {
+        headers : {
+          "auth-token" : admToken
+        }
+      });
       setSqls(
         sqls.map((question) => (question._id === id ? res.data : question))
       );
@@ -379,7 +404,8 @@ const CodeState = (props) => {
   const deleteSql = async (id) => {
     try {
       setLoading(true);
-      await api.delete(`/sql/${id}`);
+      const admToken = localStorage.getItem("admin-token");
+      await api.delete(`/sql/${id}`, { headers : { "auth-token" : admToken }});
       setSqls(questions.filter((sql) => sql._id !== id));
       setLoading(false);
     } catch (err) {
@@ -432,7 +458,6 @@ const CodeState = (props) => {
       setLoading(true);
       const res = await api.post("/auth/login", user);
       setUsrData(res.data);
-      console.log(res.data);
       setLoading(false);
       return res.data;
     } catch (err) {
@@ -466,7 +491,6 @@ const CodeState = (props) => {
     try {
       setLoading(true);
       const res = await api.post("/auth/getRole", { id: token });
-      console.log(res.data);
       setLoading(false);
       return res.data.role;
     } catch (error) {

@@ -263,7 +263,6 @@ const CreateSql = () => {
         numCols: 2,
         tableData: Array.from({ length: 1 }, (_, rowIndex) =>
           Array.from({ length: 2 }, (_, colIndex) => {
-            console.log("new table");
             return rowIndex === 0 && colIndex === 0
               ? "Heading 1"
               : rowIndex === 0 && colIndex === 1
@@ -277,7 +276,6 @@ const CreateSql = () => {
     }
   };
 
-  console.log(uploadData);
   const handleRemoveTable = (tableIndex) => {
     setTables((prevTables) =>
       prevTables.filter((table, index) => index !== tableIndex)
@@ -312,7 +310,6 @@ const CreateSql = () => {
       return;
     } else {
       addSql(uploadData);
-      console.log(uploadData);
       swal({
         title: "Success",
         text: "Question added successfully",

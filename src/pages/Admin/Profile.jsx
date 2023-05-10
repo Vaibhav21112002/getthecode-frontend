@@ -10,7 +10,6 @@ const Profile = () => {
     (async () => {
       const id = localStorage.getItem("role");
       const role = await getRole(id);
-      console.log(role);
       if (role !== "admin") {
         navigate("/");
       }

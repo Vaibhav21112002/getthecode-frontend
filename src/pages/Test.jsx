@@ -13,7 +13,6 @@ const Test = () => {
                 `hi
                 sdfjs;kj`
                 "
-				onChange={(value) => console.log(value)}
 			/>
 		</div>
 	);

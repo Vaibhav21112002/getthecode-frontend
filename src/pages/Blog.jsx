@@ -15,7 +15,7 @@ const Blog = () => {
     const usrToken = localStorage.getItem("token");
     const adminToken = localStorage.getItem("admin-token");
 
-    if ((usrToken === undefined || usrToken === null)&&(adminToken === undefined || adminToken === null)) {
+    if ((usrToken === undefined || usrToken === null)  && (adminToken === undefined || adminToken === null)) {
       navigate("/");
       return;
     }
@@ -25,6 +25,7 @@ const Blog = () => {
   useEffect(() => {
     setData(blog[0]);
     setAllBlogs(blogs);
+    console.log(blog);
   }, [blog]);
 
   if (data === undefined) {
@@ -46,6 +47,9 @@ const Blog = () => {
                 data.tag === "Interview Experiences" &&
                 ":" + data.company + " "}
             </span>
+          </div>
+          <div className = "w-full flex justify-center my-8">
+            <img src={data.image} alt="blog" className="w-64" />
           </div>
           <div className="ml-1 mt-10">{Parser(data.content)}</div>
         </div>

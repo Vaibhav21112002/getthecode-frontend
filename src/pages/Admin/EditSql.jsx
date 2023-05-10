@@ -305,7 +305,6 @@ const EditSql = () => {
       return;
     } else {
       editSql(id, editData);
-      console.log(editData);
       swal({
         title: "Success",
         text: "Question edited successfully",
