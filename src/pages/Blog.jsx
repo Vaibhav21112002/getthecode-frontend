@@ -13,13 +13,14 @@ const Blog = () => {
   const navigate = useNavigate();
   useEffect(() => {
     const usrToken = localStorage.getItem("token");
-    if (usrToken === undefined||usrToken===null) {
-      alert("Login First to view this content");
+    const adminToken = localStorage.getItem("admin-token");
+
+    if ((usrToken === undefined || usrToken === null)&&(adminToken === undefined || adminToken === null)) {
       navigate("/");
-    } 
-    
-    getBlogs(usrToken);
-    getBlog(id,usrToken);
+      return;
+    }
+    getBlogs(usrToken||adminToken);
+    getBlog(id,usrToken||adminToken);
   }, []);
   useEffect(() => {
     setData(blog[0]);

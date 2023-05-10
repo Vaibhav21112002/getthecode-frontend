@@ -37,14 +37,17 @@ const Admin = () => {
       const now = new Date();
       const diff = now.getTime() - date.getTime();
       const diffDays = Math.ceil(diff / (1000 * 3600 * 24));
+      console.log(admin,diffDays);
       if (diffDays > 1) {
         localStorage.removeItem("admin-token");
+        console.log('removing admin token')
         localStorage.removeItem("token");
         setLogin(false);
         return;
       }
       if (admin?.role.toLowerCase() !== "admin") {
         setLogin(false);
+
         localStorage.removeItem("admin-token");
       } else if (admin?.role.toLowerCase() === "admin") {
         setLogin(true);
@@ -65,6 +68,7 @@ const Admin = () => {
     }
     if (adminData?.status === true) {
       localStorage.setItem("admin-token", adminData.token);
+      // localStorage.setItem("token", adminData.token);
       setLogin(true);
       console.log(adminData);
     }
@@ -172,7 +176,7 @@ const Admin = () => {
         <div
           className={`w-full flex min-h-[100vh] bg-[${darkTheme.bgPrimary}]`}
         >
-          <Navbar />
+          {/* <Navbar /> */}
           <div className="w-full h-full flex justify-center items-center my-auto">
             <div className="w-[70%] h-[70%] bg-white rounded-md shadow-[0_50px_25px_-24px_rgb(0,0,0,0.3)] flex flex-col items-center">
               <div className="flex items-center gap-4">

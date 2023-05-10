@@ -18,10 +18,14 @@ const SqlQuestion = () => {
 
   useEffect(() => {
     const usrToken = localStorage.getItem("token");
-    if (usrToken === undefined||usrToken===null) {
+    const adminToken = localStorage.getItem("admin-token");
+
+    if ((usrToken === undefined || usrToken === null)&&(adminToken === undefined || adminToken === null)) {
       navigate("/");
-    } 
-    getSql(id,usrToken);
+      return;
+    }
+
+    getSql(id,usrToken||adminToken);
     // eslint-disable-next-line
   }, []);
 

@@ -16,10 +16,14 @@ const SqlQuestions = () => {
   const [solutionOpen, setSolutionOpen] = useState(false);
   useEffect(() => {
     const usrToken = localStorage.getItem("token");
-    if (usrToken === undefined||usrToken===null) {
+    const adminToken = localStorage.getItem("admin-token");
+
+    if ((usrToken === undefined || usrToken === null)&&(adminToken === undefined || adminToken === null)) {
       navigate("/");
+      return;
     }
-    getSqls(usrToken); // eslint-disable-next-line
+    getSqls(usrToken||adminToken);
+    // eslint-disable-next-line
 
   }, []);
 

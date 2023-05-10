@@ -61,12 +61,13 @@ const Blogs = () => {
 
   useEffect(() => {
     const usrToken = localStorage.getItem("token");
+    const adminToken = localStorage.getItem("admin-token");
 
-    if (usrToken === undefined || usrToken === null) {
+    if ((usrToken === undefined || usrToken === null)&&(adminToken === undefined || adminToken === null)) {
       navigate("/");
       return;
     }
-    getBlogs(usrToken);
+    getBlogs(usrToken||adminToken);
   }, [usrData]);
 
   useEffect(() => {

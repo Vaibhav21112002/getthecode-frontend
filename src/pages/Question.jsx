@@ -20,10 +20,13 @@ const Question = () => {
     "w-36 py-2  border rounded-lg text-white bg-[#E97500] border border-[#E97500] hover:bg-[#202128] hover:text-[white] text-sm";
   useEffect(() => {
     const usrToken = localStorage.getItem("token");
-    if (usrToken === undefined||usrToken===null) {
-      navigate("/programming");
+    const adminToken = localStorage.getItem("admin-token");
+
+    if ((usrToken === undefined || usrToken === null)&&(adminToken === undefined || adminToken === null)) {
+      navigate("/");
+      return;
     }
-    getQuestion(id,usrToken);
+    getQuestion(id,usrToken||adminToken);
     // eslint-disable-next-line
   }, []);
 

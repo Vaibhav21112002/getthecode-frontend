@@ -29,10 +29,11 @@ function Navbar({ question }) {
   const navigate = useNavigate();
   const { usrData, getRole } = useContext(codeContext);
   const usrToken = localStorage.getItem("token");
+  const adminToken = localStorage.getItem("admin-token");
 
   useEffect(() => {
     // console.log(usrData);
-    if (usrToken !== undefined && usrToken !== null) {
+    if ((usrToken !== undefined && usrToken !== null)||(adminToken !== undefined && adminToken !== null)) {
       setLoggedIn(true);
     } else if (usrData === null) {
       setLoggedIn(false);

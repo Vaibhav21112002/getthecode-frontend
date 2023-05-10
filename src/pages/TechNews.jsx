@@ -60,10 +60,13 @@ const TechNews = () => {
 
 	useEffect(() => {
 		const usrToken = localStorage.getItem("token");
-	  if (usrToken === undefined||usrToken===null) {
-		navigate("/");
-	  }
-    getTechNews(usrToken);
+    const adminToken = localStorage.getItem("admin-token");
+
+    if ((usrToken === undefined || usrToken === null)&&(adminToken === undefined || adminToken === null)) {
+      navigate("/");
+      return;
+    }
+    getTechNews(usrToken||adminToken);
 	}, []);
 
 	useEffect(() => {
@@ -118,7 +121,7 @@ const TechNews = () => {
 					<div className="relative w-[16rem] h-[12rem]  mt-[26px] right-[-6rem]  z-[1]">
 						<img
 							src={techNew.image}
-							className="w-full h-full rounded-md"
+							className="w-full h-full rounded-md border-2 border-black"
 							alt="techNew"
 						/>
 					</div>

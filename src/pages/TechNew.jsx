@@ -14,11 +14,14 @@ const TechNew = () => {
   const navigate = useNavigate();
   useEffect(() => {
     const usrToken = localStorage.getItem("token");
-    if (usrToken === undefined||usrToken===null) {
+    const adminToken = localStorage.getItem("admin-token");
+
+    if ((usrToken === undefined || usrToken === null)&&(adminToken === undefined || adminToken === null)) {
       navigate("/");
-    } 
-    getTechNew(id,usrToken);
-    getTechNews(usrToken);
+      return;
+    }
+    getTechNew(id,usrToken||adminToken);
+    getTechNews(usrToken||adminToken);
   }, []);
   useEffect(() => {
     setData(techNew[0]);
