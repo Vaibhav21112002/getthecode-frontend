@@ -29,10 +29,11 @@ function Navbar({ question }) {
   const navigate = useNavigate();
   const { usrData, getRole } = useContext(codeContext);
   const usrToken = localStorage.getItem("token");
+  const adminToken = localStorage.getItem("admin-token");
 
   useEffect(() => {
     // console.log(usrData);
-    if (usrToken !== undefined && usrToken !== null) {
+    if ((usrToken !== undefined && usrToken !== null)||(adminToken !== undefined && adminToken !== null)) {
       setLoggedIn(true);
     } else if (usrData === null) {
       setLoggedIn(false);
@@ -40,7 +41,7 @@ function Navbar({ question }) {
     }
     if (usrData?.status === true) {
       localStorage.setItem("token", usrData.token);
-      localStorage.setItem("role", usrData?.user._id);
+      // localStorage.setItem("role", usrData?.user._id);
       setLogin(false);
       setLoggedIn(true);
     }
@@ -78,14 +79,19 @@ function Navbar({ question }) {
     } else navigate("/admin");
   }
 
+
+
   const NavLink = ({ link, index }) => {
+    
     return (
       <li key={index}>
         <button
           className="w-full px-4 py-2 text-[white] hover:bg-[#BDA9A9] hover:text-[#202128] rounded-md text-sm"
           onClick={() => {
+            console.log(link.path)
+            console.log(loggedIn);
             if (link.loginReq === true && loggedIn === false) {
-              setLogin(true);
+             swal({title:`Please login first to access ${link.title}`,icon:'warning',buttons:'Ok'})
             } else navigate(`${link.path}`);
           }}
         >

@@ -14,10 +14,13 @@ const MCQ = () => {
 
   useEffect(() => {
 	  const usrToken = localStorage.getItem("token");
-	  if (usrToken === undefined||usrToken===null) {
-		navigate("/");
-	  }
-    getMcqs(usrToken);
+    const adminToken = localStorage.getItem("admin-token");
+
+    if ((usrToken === undefined || usrToken === null)&&(adminToken === undefined || adminToken === null)) {
+      navigate("/");
+      return;
+    }
+    getMcqs(usrToken||adminToken);
   }, []);
 
   useEffect(() => {
