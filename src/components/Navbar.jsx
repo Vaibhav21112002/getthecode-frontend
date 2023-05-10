@@ -45,7 +45,6 @@ function Navbar({ question }) {
       setLoggedIn(true);
     }
   }, [usrData]);
-  console.log(usrData);
   const location = useLocation();
   const navLinks = [
     { title: "Home", path: "/", loginReq: false },
@@ -79,14 +78,19 @@ function Navbar({ question }) {
     } else navigate("/admin");
   }
 
+
+
   const NavLink = ({ link, index }) => {
+    
     return (
       <li key={index}>
         <button
           className="w-full px-4 py-2 text-[white] hover:bg-[#BDA9A9] hover:text-[#202128] rounded-md text-sm"
           onClick={() => {
+            console.log(link.path)
+            console.log(loggedIn);
             if (link.loginReq === true && loggedIn === false) {
-              setLogin(true);
+             swal({title:`Please login first to access ${link.title}`,icon:'warning',buttons:'Ok'})
             } else navigate(`${link.path}`);
           }}
         >
