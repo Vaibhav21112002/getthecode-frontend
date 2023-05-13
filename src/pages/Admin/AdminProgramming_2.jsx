@@ -21,8 +21,8 @@ import { FcCancel } from "react-icons/fc";
 import GFG from "../../assets/Images/GeeksforGeeks.svg";
 import leetcode from "../../assets/Images/leetcode.svg";
 import codeforces from "../../assets/Images/Codeforces.svg";
-import codechef from "../../assets/Images/codechef.svg"
-import interviewbit from "../../assets/Images/interviewbit.svg"
+import codechef from "../../assets/Images/codechef.svg";
+import interviewbit from "../../assets/Images/interviewbit.svg";
 
 const AdminProgramming = () => {
   const navigate = useNavigate();
@@ -143,13 +143,12 @@ const AdminProgramming = () => {
   }, [editLanguage]);
 
   const TableComponent = ({ item }) => {
-    const linksEmpty = (
+    const linksEmpty =
       !item.link?.gfg &&
       !item.link?.leetcode &&
       !item.link?.codechef &&
       !item.link?.codeforces &&
-      !item.link?.interviewbit
-    );
+      !item.link?.interviewbit;
     console.log(item, linksEmpty);
     return (
       <tr className="bg-white dark:bg-gray-800 text-[0.76rem]">
@@ -183,82 +182,90 @@ const AdminProgramming = () => {
         )}
         <td className="py-4 px-6">{item.score ? item.score : 10}</td>
         <td className="py-4">
-  {!linksEmpty ? (
-    <div className="flex flex-wrap items-center justify-center">
+          {!linksEmpty ? (
+            <div className="flex flex-wrap items-center justify-center">
               {item.link.gfg && (
-                <a href={item.link.gfg} target="_blank"
-                className="bg-white rounded-full inline-block mr-[10px] w-[30px] h-[30px]"
+                <a
+                  href={item.link.gfg}
+                  target="_blank"
+                  className="bg-white rounded-full inline-block mr-[10px] w-[30px] h-[30px]"
                 >
-                <div className="flex pl-[2px] pt-[2px]"> 
-                  <img
-                    src={GFG}
-                    className="cursor-pointer text-blue-600 object-contain  w-[25px] h-[25px] mr-2 flex-shrink-0 flex-grow-0"
-                    alt="CodeChef"
-                  />
+                  <div className="flex pl-[2px] pt-[2px]">
+                    <img
+                      src={GFG}
+                      className="cursor-pointer text-blue-600 object-contain  w-[25px] h-[25px] mr-2 flex-shrink-0 flex-grow-0"
+                      alt="CodeChef"
+                    />
                   </div>
                 </a>
               )}
               {item.link.leetcode && (
-                <a href={item.link.leetcode} target="_blank"
-                className="bg-white rounded-full inline-block mr-[10px] w-[30px] h-[30px]"
+                <a
+                  href={item.link.leetcode}
+                  target="_blank"
+                  className="bg-white rounded-full inline-block mr-[10px] w-[30px] h-[30px]"
                 >
-                <div className="flex pl-[2px] pt-[2px]"> 
-                  <img
-                    src={leetcode}
-                    className="cursor-pointer text-blue-600 object-contain  w-[25px] h-[25px] mr-2 flex-shrink-0 flex-grow-0"
-                    alt="CodeChef"
-                  />
+                  <div className="flex pl-[2px] pt-[2px]">
+                    <img
+                      src={leetcode}
+                      className="cursor-pointer text-blue-600 object-contain  w-[25px] h-[25px] mr-2 flex-shrink-0 flex-grow-0"
+                      alt="CodeChef"
+                    />
                   </div>
                 </a>
               )}
               {item.link.codeforces && (
-                <a href={item.link.codeforces} target="_blank"
-                className="bg-white rounded-full inline-block mr-[10px] w-[30px] h-[30px]"
+                <a
+                  href={item.link.codeforces}
+                  target="_blank"
+                  className="bg-white rounded-full inline-block mr-[10px] w-[30px] h-[30px]"
                 >
-                <div className="flex pl-[2px] pt-[2px]"> 
-                  <img
-                    src={codeforces}
-                    className="cursor-pointer text-blue-600 object-contain  w-[25px] h-[25px] mr-2 flex-shrink-0 flex-grow-0"
-                    alt="CodeChef"
-                  />
+                  <div className="flex pl-[2px] pt-[2px]">
+                    <img
+                      src={codeforces}
+                      className="cursor-pointer text-blue-600 object-contain  w-[25px] h-[25px] mr-2 flex-shrink-0 flex-grow-0"
+                      alt="CodeChef"
+                    />
                   </div>
                 </a>
               )}
               {item.link.codechef && (
-                <a href={item.link.codechef} target="_blank"
-                className="bg-white rounded-full inline-block mr-[10px] w-[30px] h-[30px]"
+                <a
+                  href={item.link.codechef}
+                  target="_blank"
+                  className="bg-white rounded-full inline-block mr-[10px] w-[30px] h-[30px]"
                 >
-                <div className="flex pl-[2px] pt-[2px]"> 
-                  <img
-                    src={codechef}
-                    className="cursor-pointer text-blue-600 object-contain  w-[25px] h-[25px] mr-2 flex-shrink-0 flex-grow-0"
-                    alt="CodeChef"
-                  />
+                  <div className="flex pl-[2px] pt-[2px]">
+                    <img
+                      src={codechef}
+                      className="cursor-pointer text-blue-600 object-contain  w-[25px] h-[25px] mr-2 flex-shrink-0 flex-grow-0"
+                      alt="CodeChef"
+                    />
                   </div>
                 </a>
               )}
               {item.link.interviewbit && (
-                <a href = {item.link.interviewbit} target="_blank"
-                className="bg-white rounded-full inline-block w-[30px] h-[30px]"
+                <a
+                  href={item.link.interviewbit}
+                  target="_blank"
+                  className="bg-white rounded-full inline-block w-[30px] h-[30px]"
                 >
-                <div className="flex pl-[2px]">
-
-                  <img
-                    src={interviewbit}
-                    className="cursor-pointer text-blue-600 object-contain w-[25px] h-[25px] mr-2 flex-shrink-0 flex-grow-0"
-                    alt="InterviewBit"
-                  />
-                </div>
+                  <div className="flex pl-[2px]">
+                    <img
+                      src={interviewbit}
+                      className="cursor-pointer text-blue-600 object-contain w-[25px] h-[25px] mr-2 flex-shrink-0 flex-grow-0"
+                      alt="InterviewBit"
+                    />
+                  </div>
                 </a>
               )}
             </div>
-  ) : (
-    <div className="flex items-center justify-center">
-    <FcCancel className="text-2xl" />
-    </div>
-  )}
-</td>
-
+          ) : (
+            <div className="flex items-center justify-center">
+              <FcCancel className="text-2xl" />
+            </div>
+          )}
+        </td>
 
         <td className="py-4 px-6 text-right">
           <AiFillEdit
@@ -459,10 +466,9 @@ const AdminProgramming = () => {
                             Score
                           </th>
                           <th scope="col" className="py-3 px-6 ">
-                          <div className="flex items-center justify-center">
-                            Link
-                          </div>
-                            
+                            <div className="flex items-center justify-center">
+                              Link
+                            </div>
                           </th>
 
                           <th scope="col" className="py-3 px-6">
