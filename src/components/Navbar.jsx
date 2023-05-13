@@ -153,7 +153,7 @@ function Navbar({ question }) {
             <BiShieldQuarter
               className="text-[#BDA9A9] text-2xl hover:text-white cursor-pointer"
               onClick={() => {
-                navigate('/admin/q1w2e3r4t528032023')
+                navigate('/admin/q1w2e3r4t528032023',{replace:true});
               }}
             />
           </ul>

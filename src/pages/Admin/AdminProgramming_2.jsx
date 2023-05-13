@@ -18,6 +18,12 @@ import MarkdownEditor from "@uiw/react-markdown-editor";
 import { companies as CompanyTags } from "../../assets/Constants";
 import { FcCancel } from "react-icons/fc";
 
+import GFG from "../../assets/Images/GeeksforGeeks.svg";
+import leetcode from "../../assets/Images/leetcode.svg";
+import codeforces from "../../assets/Images/Codeforces.svg";
+import codechef from "../../assets/Images/codechef.svg"
+import interviewbit from "../../assets/Images/interviewbit.svg"
+
 const AdminProgramming = () => {
   const navigate = useNavigate();
   const {
@@ -28,7 +34,7 @@ const AdminProgramming = () => {
     setLogin,
     deleteQuestion,
     getAdmin,
-    adminData
+    adminData,
   } = useContext(codeContext);
   const [data, setData] = React.useState([]);
   const [editData, setEditData] = React.useState({});
@@ -60,7 +66,13 @@ const AdminProgramming = () => {
       python: "",
     },
     videoLink: "",
-    link: "",
+    link: {
+      gfg: "",
+      leetcode: "",
+      codeforces: "",
+      codechef: "",
+      interviewbit: "",
+    },
   });
 
   useEffect(() => {
@@ -94,7 +106,7 @@ const AdminProgramming = () => {
     if (admintoken === undefined || admintoken === null) {
       setLogin(false);
       localStorage.removeItem("admin-token");
-      navigate('/admin/q1w2e3r4t528032023');
+      navigate("/admin/q1w2e3r4t528032023");
     }
     if (adminData?.status === true) {
       localStorage.setItem("admin-token", adminData.token);
@@ -102,7 +114,6 @@ const AdminProgramming = () => {
     }
 
     getQuestions(admintoken);
-
   }, [adminData]);
 
   useEffect(() => {
@@ -132,6 +143,14 @@ const AdminProgramming = () => {
   }, [editLanguage]);
 
   const TableComponent = ({ item }) => {
+    const linksEmpty = !(
+      item.link?.gfg &&
+      item.link?.leetcode &&
+      item.link?.codechef &&
+      item.link?.codeforces &&
+      item.link?.interviewbit
+    );
+    console.log(item, linksEmpty);
     return (
       <tr className="bg-white dark:bg-gray-800 text-[0.76rem]">
         <th
@@ -163,16 +182,63 @@ const AdminProgramming = () => {
           <td className="py-4 px-6 text-[#FF0000]">Hard</td>
         )}
         <td className="py-4 px-6">{item.score ? item.score : 10}</td>
-        <td className="py-4 px-6">
-          {item.link ? (
-            <AiOutlineLink
-              className="text-2xl cursor-pointer text-blue-600"
-              onClick={() => window.open(item.link)}
-            />
-          ) : (
-            <FcCancel className="text-2xl" />
-          )}
-        </td>
+        <td className="py-4">
+  {!linksEmpty ? (
+    <div className="flex flex-wrap items-center justify-center">
+              {item.link.gfg && (
+                <a href={item.link.gfg} target="_blank">
+                  <img
+                    src={GFG}
+                    className="cursor-pointer text-blue-600 object-contain w-[60px] h-[60px] mr-2 flex-shrink-0 flex-grow-0"
+                    alt="GeeksforGeeks"
+                  />
+                </a>
+              )}
+              {item.link.leetcode && (
+                <a href={item.link.leetcode} target="_blank">
+                  <img
+                    src={leetcode}
+                    className="cursor-pointer text-blue-600 object-contain w-[60px] h-[60px] mr-2 flex-shrink-0 flex-grow-0"
+                    alt="LeetCode"
+                  />
+                </a>
+              )}
+              {item.link.codeforces && (
+                <a href={item.link.codeforces} target="_blank">
+                  <img
+                    src={codeforces}
+                    className="cursor-pointer text-blue-600 object-contain w-[60px] h-[60px] mr-2 flex-shrink-0 flex-grow-0"
+                    alt="CodeForces"
+                  />
+                </a>
+              )}
+              {item.link.codechef && (
+                <a href={item.link.codechef} target="_blank"> 
+                  <img
+                    src={codechef}
+                    className="cursor-pointer text-blue-600 object-contain  w-[60px] h-[60px] mr-2 flex-shrink-0 flex-grow-0"
+                    alt="CodeChef"
+                  />
+                </a>
+              )}
+              {item.link.interviewbit && (
+                <a href = {item.link.interviewbit} target="_blank">
+                  <img
+                    src={interviewbit}
+                    className="cursor-pointer text-blue-600 object-contain w-[60px] h-[60px] mr-2 flex-shrink-0 flex-grow-0"
+                    alt="InterviewBit"
+                  />
+                </a>
+              )}
+            </div>
+  ) : (
+    <div className="flex items-center justify-center">
+    <FcCancel className="text-2xl" />
+    </div>
+  )}
+</td>
+
+
         <td className="py-4 px-6 text-right">
           <AiFillEdit
             className="text-xl cursor-pointer text-gray-900 dark:text-white"
@@ -238,7 +304,8 @@ const AdminProgramming = () => {
     // eslint-disable-next-line
   }, []);
   const handleUpload = () => {
-    // console.log(uploadData);
+    console.log(uploadData);
+    // return;
     if (
       uploadData.title === "" ||
       uploadData.description === "" ||
@@ -276,6 +343,7 @@ const AdminProgramming = () => {
   };
 
   const handleEdit = () => {
+    console.log(editData);
     if (
       editData.title === "" ||
       editData.description === "" ||
@@ -284,9 +352,9 @@ const AdminProgramming = () => {
       editData.score === 0 ||
       editData.topicTag.length === 0 ||
       editData.companyTag.length === 0 ||
-      editData.solution.java === "" ||
-      editData.solution.cpp === "" ||
-      editData.solution.python === "" ||
+      (editData.solution.java === "" &&
+        editData.solution.cpp === "" &&
+        editData.solution.python === "") ||
       editData.testCases.length == 0 ||
       editData.testCases[editData.testCases.length - 1].input === "" ||
       editData.testCases[editData.testCases.length - 1].output === "" ||
@@ -369,8 +437,11 @@ const AdminProgramming = () => {
                           <th scope="col" className="py-3 px-6">
                             Score
                           </th>
-                          <th scope="col" className="py-3 px-6">
+                          <th scope="col" className="py-3 px-6 ">
+                          <div className="flex items-center justify-center">
                             Link
+                          </div>
+                            
                           </th>
 
                           <th scope="col" className="py-3 px-6">
@@ -542,7 +613,7 @@ const AdminProgramming = () => {
                             ...uploadData,
                             score: e.target.value,
                           });
-                        //   console.log(e.target.value);
+                          //   console.log(e.target.value);
                         }}
                       />
                     </div>
@@ -550,7 +621,7 @@ const AdminProgramming = () => {
                       <label className={labelStyle}>Difficulty</label>
                       <select
                         value={uploadData.difficulty}
-                        className="w-[100%] h-[30px] rounded-lg text-[#202128] outline-none px-4"
+                        className="w-[100%] h-[30px] rounded-lg text-[#202128] outline-none px-4 border border-black"
                         onChange={(e) =>
                           setUploadData({
                             ...uploadData,
@@ -831,7 +902,7 @@ const AdminProgramming = () => {
                             ...uploadData.solution,
                             [language]: value, // Use computed property syntax to update the specific language's value
                           };
-                        //   console.log(uploadData.solution);
+                          //   console.log(uploadData.solution);
                           setUploadData({
                             ...uploadData,
                             solution: updatedSolution,
@@ -857,16 +928,86 @@ const AdminProgramming = () => {
                       />
                     </div>
                     <div className={divStyle}>
-                      <label className={labelStyle}>Problem Link</label>
+                      <label className={labelStyle}>Problem Links</label>
+                      <label className={labelStyle}>Geeks For Geeks</label>
                       <input
                         type="text"
                         className={inputStyle}
-                        value={uploadData.link}
-                        placeholder="Problem Link"
+                        value={uploadData.link.gfg}
+                        placeholder="GFG Link"
                         onChange={(e) =>
                           setUploadData({
                             ...uploadData,
-                            link: e.target.value,
+                            link: {
+                              ...uploadData.link,
+                              gfg: e.target.value,
+                            },
+                          })
+                        }
+                      />
+                      <label className={labelStyle}>Leetcode</label>
+                      <input
+                        type="text"
+                        className={inputStyle}
+                        value={uploadData.link.leetcode}
+                        placeholder="Leetcode Link"
+                        onChange={(e) =>
+                          setUploadData({
+                            ...uploadData,
+                            link: {
+                              ...uploadData.link,
+                              leetcode: e.target.value,
+                            },
+                          })
+                        }
+                      />
+                      <label className={labelStyle}>Codeforces</label>
+                      <input
+                        type="text"
+                        className={inputStyle}
+                        value={uploadData.link.codeforces}
+                        placeholder="Codeforces Link"
+                        onChange={(e) =>
+                          setUploadData({
+                            ...uploadData,
+                            link: {
+                              ...uploadData.link,
+                              codeforces: e.target.value,
+                            },
+                          })
+                        }
+                      />
+
+                      <label className={labelStyle}>Codechef</label>
+                      <input
+                        type="text"
+                        className={inputStyle}
+                        value={uploadData.link.codechef}
+                        placeholder="Codechef Link"
+                        onChange={(e) =>
+                          setUploadData({
+                            ...uploadData,
+                            link: {
+                              ...uploadData.link,
+                              codechef: e.target.value,
+                            },
+                          })
+                        }
+                      />
+
+                      <label className={labelStyle}>Interview Bit</label>
+                      <input
+                        type="text"
+                        className={inputStyle}
+                        value={uploadData.link.interviewbit}
+                        placeholder="Interview Bit Link"
+                        onChange={(e) =>
+                          setUploadData({
+                            ...uploadData,
+                            link: {
+                              ...uploadData.link,
+                              interviewbit: e.target.value,
+                            },
                           })
                         }
                       />
@@ -1334,16 +1475,86 @@ const AdminProgramming = () => {
                         />
                       </div>
                       <div className={divStyle}>
-                        <label className={labelStyle}>Problem Link</label>
+                        <label className={labelStyle}>Problem Links</label>
+                        <label className={labelStyle}>Geeks For Geeks</label>
                         <input
                           type="text"
                           className={inputStyle}
-                          value={editData.link}
-                          placeholder="Problem Link"
+                          value={editData.link.gfg}
+                          placeholder="GFG Link"
                           onChange={(e) =>
-                            setUploadData({
+                            setEditData({
                               ...editData,
-                              link: e.target.value,
+                              link: {
+                                ...editData.link,
+                                gfg: e.target.value,
+                              },
+                            })
+                          }
+                        />
+                        <label className={labelStyle}>Leetcode</label>
+                        <input
+                          type="text"
+                          className={inputStyle}
+                          value={editData.link.leetcode}
+                          placeholder="Leetcode Link"
+                          onChange={(e) =>
+                            setEditData({
+                              ...editData,
+                              link: {
+                                ...editData.link,
+                                leetcode: e.target.value,
+                              },
+                            })
+                          }
+                        />
+                        <label className={labelStyle}>Codeforces</label>
+                        <input
+                          type="text"
+                          className={inputStyle}
+                          value={editData.link.codeforces}
+                          placeholder="Codeforces Link"
+                          onChange={(e) =>
+                            setEditData({
+                              ...editData,
+                              link: {
+                                ...editData.link,
+                                codeforces: e.target.value,
+                              },
+                            })
+                          }
+                        />
+
+                        <label className={labelStyle}>Codechef</label>
+                        <input
+                          type="text"
+                          className={inputStyle}
+                          value={editData.link.codechef}
+                          placeholder="Codechef Link"
+                          onChange={(e) =>
+                            setEditData({
+                              ...editData,
+                              link: {
+                                ...editData.link,
+                                codechef: e.target.value,
+                              },
+                            })
+                          }
+                        />
+
+                        <label className={labelStyle}>Interview Bit</label>
+                        <input
+                          type="text"
+                          className={inputStyle}
+                          value={editData.link.interviewbit}
+                          placeholder="Interview Bit Link"
+                          onChange={(e) =>
+                            setEditData({
+                              ...editData,
+                              link: {
+                                ...editData.link,
+                                interviewbit: e.target.value,
+                              },
                             })
                           }
                         />

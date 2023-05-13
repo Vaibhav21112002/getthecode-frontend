@@ -16,6 +16,12 @@ import {
 } from "../assets/Constants";
 import swal from "sweetalert";
 
+import GFG from "../assets/Images/GeeksforGeeks.svg";
+import leetcode from "../assets/Images/leetcode.svg";
+import codeforces from "../assets/Images/Codeforces.svg";
+import codechef from "../assets/Images/codechef.svg"
+import interviewbit from "../assets/Images/interviewbit.svg"
+
 const Programming = () => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
@@ -27,6 +33,7 @@ const Programming = () => {
   const [activeFilter, setActiveFilter] = useState("All Questions");
   const [language, setLanguage] = useState("java");
   const totalPages = Math.ceil(data.length / qpp);
+
   const handleTopicFilter = (topic) => {
     if (activeFilter === topic) return;
     setActiveFilter(topic);
@@ -74,23 +81,34 @@ const Programming = () => {
     // eslint-disable-next-line
   }, []);
 
-//   console.log(editData);
+  //   console.log(editData);
   useEffect(() => {
     if (activeFilter !== "All Questions") return;
     setData(questions);
   }, [questions]);
   const TableComponent = ({ item }) => {
+    const linksEmpty = !(
+      item.link?.gfg &&
+      item.link?.leetcode &&
+      item.link?.codechef &&
+      item.link?.codeforces &&
+      item.link?.interviewbit
+    );
     return (
       <tr className="bg-white border-b dark:bg-gray-800 text-[0.76rem]">
         <th
           scope="row"
           className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white hover:text-blue-600 dark:hover:text-blue-500 cursor-pointer"
           onClick={() => {
-			const d = localStorage.getItem("token");
-			if(!d){
-				swal({title:"Please log in to access the question",icon:"error",buttons:"ok"});
-				return;
-			}
+            const d = localStorage.getItem("token");
+            if (!d) {
+              swal({
+                title: "Please log in to access the question",
+                icon: "error",
+                buttons: "ok",
+              });
+              return;
+            }
             navigate("/programming/" + item._id);
           }}
         >
@@ -116,13 +134,58 @@ const Programming = () => {
         )}
         <td className="py-4 px-6">{item.score}</td>
         <td className="py-4 px-6">
-          {item.link ? (
-            <AiOutlineLink
-              className="text-2xl cursor-pointer text-blue-600"
-              onClick={() => window.open(item.link)}
-            />
+          {!linksEmpty ? (
+            <div className="flex flex-wrap items-center justify-center">
+              {item.link.gfg && (
+                <a href={item.link.gfg} target="_blank">
+                  <img
+                    src={GFG}
+                    className="cursor-pointer text-blue-600 object-contain w-[60px] h-[60px] mr-2 flex-shrink-0 flex-grow-0"
+                    alt="GeeksforGeeks"
+                  />
+                </a>
+              )}
+              {item.link.leetcode && (
+                <a href={item.link.leetcode} target="_blank">
+                  <img
+                    src={leetcode}
+                    className="cursor-pointer text-blue-600 object-contain w-[60px] h-[60px] mr-2 flex-shrink-0 flex-grow-0"
+                    alt="LeetCode"
+                  />
+                </a>
+              )}
+              {item.link.codeforces && (
+                <a href={item.link.codeforces} target="_blank">
+                  <img
+                    src={codeforces}
+                    className="cursor-pointer text-blue-600 object-contain w-[60px] h-[60px] mr-2 flex-shrink-0 flex-grow-0"
+                    alt="CodeForces"
+                  />
+                </a>
+              )}
+              {item.link.codechef && (
+                <a href={item.link.codechef} target="_blank"> 
+                  <img
+                    src={codechef}
+                    className="cursor-pointer text-blue-600 object-contain  w-[60px] h-[60px] mr-2 flex-shrink-0 flex-grow-0"
+                    alt="CodeChef"
+                  />
+                </a>
+              )}
+              {item.link.interviewbit && (
+                <a href = {item.link.interviewbit} target="_blank">
+                  <img
+                    src={interviewbit}
+                    className="cursor-pointer text-blue-600 object-contain w-[60px] h-[60px] mr-2 flex-shrink-0 flex-grow-0"
+                    alt="InterviewBit"
+                  />
+                </a>
+              )}
+            </div>
           ) : (
-            <FcCancel className="text-2xl" />
+            <div className="flex items-center justify-center">
+              <FcCancel className="text-2xl" />
+            </div>
           )}
         </td>
       </tr>
@@ -275,7 +338,9 @@ const Programming = () => {
                       Score
                     </th>
                     <th scope="col" className="py-3 px-6">
+                    <div className="flex items-center justify-center">
                       Link
+                    </div>
                     </th>
                   </tr>
                 </thead>
