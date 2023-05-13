@@ -143,12 +143,12 @@ const AdminProgramming = () => {
   }, [editLanguage]);
 
   const TableComponent = ({ item }) => {
-    const linksEmpty = !(
-      item.link?.gfg &&
-      item.link?.leetcode &&
-      item.link?.codechef &&
-      item.link?.codeforces &&
-      item.link?.interviewbit
+    const linksEmpty = (
+      !item.link?.gfg &&
+      !item.link?.leetcode &&
+      !item.link?.codechef &&
+      !item.link?.codeforces &&
+      !item.link?.interviewbit
     );
     console.log(item, linksEmpty);
     return (
@@ -186,48 +186,69 @@ const AdminProgramming = () => {
   {!linksEmpty ? (
     <div className="flex flex-wrap items-center justify-center">
               {item.link.gfg && (
-                <a href={item.link.gfg} target="_blank">
+                <a href={item.link.gfg} target="_blank"
+                className="bg-white rounded-full inline-block mr-[10px] w-[30px] h-[30px]"
+                >
+                <div className="flex pl-[2px] pt-[2px]"> 
                   <img
                     src={GFG}
-                    className="cursor-pointer text-blue-600 object-contain w-[60px] h-[60px] mr-2 flex-shrink-0 flex-grow-0"
-                    alt="GeeksforGeeks"
+                    className="cursor-pointer text-blue-600 object-contain  w-[25px] h-[25px] mr-2 flex-shrink-0 flex-grow-0"
+                    alt="CodeChef"
                   />
+                  </div>
                 </a>
               )}
               {item.link.leetcode && (
-                <a href={item.link.leetcode} target="_blank">
+                <a href={item.link.leetcode} target="_blank"
+                className="bg-white rounded-full inline-block mr-[10px] w-[30px] h-[30px]"
+                >
+                <div className="flex pl-[2px] pt-[2px]"> 
                   <img
                     src={leetcode}
-                    className="cursor-pointer text-blue-600 object-contain w-[60px] h-[60px] mr-2 flex-shrink-0 flex-grow-0"
-                    alt="LeetCode"
+                    className="cursor-pointer text-blue-600 object-contain  w-[25px] h-[25px] mr-2 flex-shrink-0 flex-grow-0"
+                    alt="CodeChef"
                   />
+                  </div>
                 </a>
               )}
               {item.link.codeforces && (
-                <a href={item.link.codeforces} target="_blank">
+                <a href={item.link.codeforces} target="_blank"
+                className="bg-white rounded-full inline-block mr-[10px] w-[30px] h-[30px]"
+                >
+                <div className="flex pl-[2px] pt-[2px]"> 
                   <img
                     src={codeforces}
-                    className="cursor-pointer text-blue-600 object-contain w-[60px] h-[60px] mr-2 flex-shrink-0 flex-grow-0"
-                    alt="CodeForces"
+                    className="cursor-pointer text-blue-600 object-contain  w-[25px] h-[25px] mr-2 flex-shrink-0 flex-grow-0"
+                    alt="CodeChef"
                   />
+                  </div>
                 </a>
               )}
               {item.link.codechef && (
-                <a href={item.link.codechef} target="_blank"> 
+                <a href={item.link.codechef} target="_blank"
+                className="bg-white rounded-full inline-block mr-[10px] w-[30px] h-[30px]"
+                >
+                <div className="flex pl-[2px] pt-[2px]"> 
                   <img
                     src={codechef}
-                    className="cursor-pointer text-blue-600 object-contain  w-[60px] h-[60px] mr-2 flex-shrink-0 flex-grow-0"
+                    className="cursor-pointer text-blue-600 object-contain  w-[25px] h-[25px] mr-2 flex-shrink-0 flex-grow-0"
                     alt="CodeChef"
                   />
+                  </div>
                 </a>
               )}
               {item.link.interviewbit && (
-                <a href = {item.link.interviewbit} target="_blank">
+                <a href = {item.link.interviewbit} target="_blank"
+                className="bg-white rounded-full inline-block w-[30px] h-[30px]"
+                >
+                <div className="flex pl-[2px]">
+
                   <img
                     src={interviewbit}
-                    className="cursor-pointer text-blue-600 object-contain w-[60px] h-[60px] mr-2 flex-shrink-0 flex-grow-0"
+                    className="cursor-pointer text-blue-600 object-contain w-[25px] h-[25px] mr-2 flex-shrink-0 flex-grow-0"
                     alt="InterviewBit"
                   />
+                </div>
                 </a>
               )}
             </div>

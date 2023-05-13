@@ -87,12 +87,12 @@ const Programming = () => {
     setData(questions);
   }, [questions]);
   const TableComponent = ({ item }) => {
-    const linksEmpty = !(
-      item.link?.gfg &&
-      item.link?.leetcode &&
-      item.link?.codechef &&
-      item.link?.codeforces &&
-      item.link?.interviewbit
+    const linksEmpty = (
+      !item.link?.gfg &&
+      !item.link?.leetcode &&
+      !item.link?.codechef &&
+      !item.link?.codeforces &&
+      !item.link?.interviewbit
     );
     return (
       <tr className="bg-white border-b dark:bg-gray-800 text-[0.76rem]">
