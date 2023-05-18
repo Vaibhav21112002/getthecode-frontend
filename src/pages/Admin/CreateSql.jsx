@@ -77,8 +77,9 @@ const CreateSql = () => {
     }
   }, [adminData]);
 
+  console.log(editTableData, newTableData);
   const handleNumRowsChange = (event, edit = false) => {
-    const numRows = parseInt(event.target.value);
+    const numRows = parseInt(event.target.value) || 0;
     if (edit == true) {
       setEditTableData((prevTableData) => {
         const newTableData = {
@@ -129,13 +130,13 @@ const CreateSql = () => {
     } else {
       setNewTableData((prevTableData) => {
         const newTabledata = { ...prevTableData, name: name };
-        return newTableData;
+        return newTabledata;
       });
     }
   };
 
   const handleNumColsChange = (event, edit = false) => {
-    const numCols = parseInt(event.target.value);
+    const numCols = parseInt(event.target.value) || 0;
     if (edit === true) {
       setEditTableData((prevTableData) => {
         const newTableData = {
@@ -261,6 +262,7 @@ const CreateSql = () => {
       setNewTableData({
         numRows: 1,
         numCols: 2,
+        name: "",
         tableData: Array.from({ length: 1 }, (_, rowIndex) =>
           Array.from({ length: 2 }, (_, colIndex) => {
             return rowIndex === 0 && colIndex === 0
@@ -572,6 +574,20 @@ const CreateSql = () => {
                       buttons: true,
                     }).then((res) => {
                       if (res) {
+                        setNewTableData({
+                          numRows: 1,
+                          numCols: 2,
+                          name: "",
+                          tableData: Array.from({ length: 1 }, (_, rowIndex) =>
+                            Array.from({ length: 2 }, (_, colIndex) => {
+                              return rowIndex === 0 && colIndex === 0
+                                ? "Heading 1"
+                                : rowIndex === 0 && colIndex === 1
+                                ? "Heading 2"
+                                : "";
+                            })
+                          ),
+                        });
                         setNewTable(false);
                       }
                     });
@@ -587,6 +603,22 @@ const CreateSql = () => {
                           buttons: true,
                         }).then((res) => {
                           if (res) {
+                            setNewTableData({
+                              numRows: 1,
+                              numCols: 2,
+                              name: "",
+                              tableData: Array.from(
+                                { length: 1 },
+                                (_, rowIndex) =>
+                                  Array.from({ length: 2 }, (_, colIndex) => {
+                                    return rowIndex === 0 && colIndex === 0
+                                      ? "Heading 1"
+                                      : rowIndex === 0 && colIndex === 1
+                                      ? "Heading 2"
+                                      : "";
+                                  })
+                              ),
+                            });
                             setNewTable(false);
                           }
                         });
@@ -603,7 +635,11 @@ const CreateSql = () => {
                           <input
                             type="number"
                             id={`newTableRow`}
-                            value={newTableData.numRows}
+                            value={
+                              newTableData.numRows === 0
+                                ? ""
+                                : newTableData.numRows
+                            }
                             onChange={(event) => {
                               handleNumRowsChange(event);
                             }}
@@ -617,11 +653,15 @@ const CreateSql = () => {
                           <input
                             type="number"
                             id={`newTableCol`}
-                            value={newTableData.numCols}
+                            value={
+                              newTableData.numCols === 0
+                                ? ""
+                                : newTableData.numCols
+                            }
                             onChange={(event) => handleNumColsChange(event)}
                             className="text-black px-3 border-black border"
                           />
-                          <div className="mb-3">
+                          <div className="mb-3 mt-3">
                             <label htmlFor={`newTableName`} className="mr-3">
                               Name of Table:
                             </label>
@@ -702,6 +742,7 @@ const CreateSql = () => {
                         buttons: true,
                       }).then((res) => {
                         if (res) {
+                          setEditTableData({});
                           setEditTable(false);
                         }
                       });
@@ -717,6 +758,7 @@ const CreateSql = () => {
                             buttons: true,
                           }).then((res) => {
                             if (res) {
+                          setEditTableData({});
                               setEditTable(false);
                             }
                           });
@@ -733,7 +775,11 @@ const CreateSql = () => {
                             <input
                               type="number"
                               id={`newTableRow`}
-                              value={editTableData.numRows}
+                              value={
+                                editTableData.numRows === 0
+                                  ? ""
+                                  : editTableData.numRows
+                              }
                               onChange={(event) => {
                                 handleNumRowsChange(event, true);
                               }}
@@ -747,14 +793,18 @@ const CreateSql = () => {
                             <input
                               type="number"
                               id={`newTableCol`}
-                              value={editTableData.numCols}
+                              value={
+                                editTableData.numCols === 0
+                                  ? ""
+                                  : editTableData.numCols
+                              }
                               onChange={(event) =>
                                 handleNumColsChange(event, true)
                               }
                               className="text-black px-3 border-black border"
                             />
                           </div>
-                          <div className="mb-3">
+                          <div className="mb-3 mt-3">
                             <label htmlFor={`newTableName`} className="mr-3">
                               Name of Table:
                             </label>
