@@ -42,6 +42,7 @@ const Home = () => {
                     <div
                       key={index}
                       className="bg-[#263A42] px-8 py-2 rounded-full cursor-pointer hover:bg-[#FF9424] hover:text-[#222629]"
+                      onClick = {()=>navigate(`/programming/${item.split(" ")[0].toLowerCase()}`)}
                     >
                       <h1 className="text-white font-bold text-xl">{item}</h1>
                     </div>
@@ -54,6 +55,7 @@ const Home = () => {
                     <div
                       key={index}
                       className="bg-[#263A42] px-8 py-2 rounded-full cursor-pointer hover:bg-[#FF9424] hover:text-[#222629]"
+                      onClick = {()=>navigate(`/programming/${item.split(" ")[0].toLowerCase()}`)}
                     >
                       <h1 className="text-white font-bold text-xl">{item}</h1>
                     </div>

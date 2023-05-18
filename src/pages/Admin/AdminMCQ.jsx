@@ -368,6 +368,7 @@ const AdminMCQ = () => {
 																	index={
 																		index
 																	}
+																	key = {index}
 																/>
 															),
 														)}
@@ -733,7 +734,7 @@ const AdminMCQ = () => {
 												{editData.options &&
 													editData.options.map(
 														(item, index) => (
-															<div>
+															<div key = {index}>
 																<div
 																	className={`flex gap-2 items-center text-[0.9rem]`}
 																>

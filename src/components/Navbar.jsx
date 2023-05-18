@@ -17,10 +17,9 @@ function Navbar({ question }) {
       dangerMode: true,
     }).then((willDelete) => {
       if (willDelete) {
-        localStorage.removeItem("token");
-        localStorage.removeItem("role");
+        localStorage.clear();
         setLoggedIn(false);
-        navigate("/");
+        navigate("/")
       }
     });
   }
@@ -32,24 +31,31 @@ function Navbar({ question }) {
   const adminToken = localStorage.getItem("admin-token");
 
   useEffect(() => {
-    // console.log(usrData);
-    if ((usrToken !== undefined && usrToken !== null)||(adminToken !== undefined && adminToken !== null)) {
-      setLoggedIn(true);
-    } else if (usrData === null) {
+    // // console.log(usrData);
+    // if ((usrToken !== undefined && usrToken !== null)||(adminToken !== undefined && adminToken !== null)) {
+    //   setLoggedIn(true);
+    // } else if (usrData === null) {
+    //   setLoggedIn(false);
+    //   localStorage.removeItem("token");
+    // }
+    // if (usrData?.status === true) {
+    //   localStorage.setItem("token", usrData.token);
+    //   // localStorage.setItem("role", usrData?.user._id);
+    //   setLogin(false);
+    //   setLoggedIn(true);
+    // }
+    if(!usrToken && !adminToken){
       setLoggedIn(false);
-      localStorage.removeItem("token");
-    }
-    if (usrData?.status === true) {
-      localStorage.setItem("token", usrData.token);
-      // localStorage.setItem("role", usrData?.user._id);
       setLogin(false);
+    }else{
       setLoggedIn(true);
+      setLogin(true);
     }
   }, [usrData]);
   const location = useLocation();
   const navLinks = [
     { title: "Home", path: "/", loginReq: false },
-    { title: "Programming", path: "/programming", loginReq: false },
+    { title: "Programming", path: "/programming/all", loginReq: false },
     { title: "Blogs", path: "/blogs", loginReq: true },
     { title: "MCQs", path: "/mcqs", loginReq: true },
     { title: "SQL", path: "/sql", loginReq: true },

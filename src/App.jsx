@@ -39,7 +39,7 @@ const App = () => {
 			<Router>
 				<Routes>
 					<Route path="/" exact element={<Home />} />
-					<Route path="/programming" element={<Programming />} />
+					<Route path="/programming/:topic" element={<Programming />} />
 					<Route path="/blogs" element={<Blogs />} />
 					<Route path="/mcqs" element={<MCQ />} />
 					<Route path="/blogs/:id" element={<Blog />} />

@@ -149,7 +149,6 @@ const AdminProgramming = () => {
       !item.link?.codechef &&
       !item.link?.codeforces &&
       !item.link?.interviewbit;
-    console.log(item, linksEmpty);
     return (
       <tr className="bg-white dark:bg-gray-800 text-[0.76rem]">
         <th

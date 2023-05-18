@@ -78,6 +78,20 @@ const CodeState = (props) => {
     setLoading(false);
   };
 
+  const getQuestionsBySubstring = async(topic) =>{
+    try {
+      setLoading(true);
+      const res = await api.post(`/problems/search/all`, {
+        topic : topic
+      });
+      setQuestions(res.data);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+    setLoading(false);
+  }
+
   const addQuestion = async (question) => {
     const adminToken = localStorage.getItem("admin-token");
     try {
@@ -577,6 +591,7 @@ const CodeState = (props) => {
           addUploadImage,
           getQuestions,
           getQuestion,
+          getQuestionsBySubstring,
           addQuestion,
           editQuestion,
           deleteQuestion,

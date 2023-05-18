@@ -134,6 +134,7 @@ const Login = () => {
 			const password = formData.password;
 			const data = await Login({ email, password });
 			if (data?.status === true) {
+				localStorage.setItem("token", data?.token)
 				navigate('/');
 				swal({ title: data.message, icon: "success", button: "Ok" });
 			} else {

@@ -158,8 +158,8 @@ const Admin = () => {
               {sqls?.length > 0 && (
                 <div className="">
                   <div className="grid grid-cols-3 mt-10 w-[90%] mx-auto gap-4">
-                    {topics.map((topic) => (
-                      questions?.length>0&&<Card topic={topic} />
+                    {topics.map((topic, index) => (
+                      questions?.length>0&&<Card topic={topic} key = {index}/>
                     ))}
                   </div>
                 </div>

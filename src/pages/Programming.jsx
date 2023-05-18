@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Navbar, Footer } from "../components";
 import { BsFileEarmarkSpreadsheet } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "../assets/CSS/index.css";
 import CodeContext from "../context/CodeContext";
 import Void from "../assets/Images/Void.svg";
@@ -23,11 +23,12 @@ import codechef from "../assets/Images/codechef.svg"
 import interviewbit from "../assets/Images/interviewbit.svg"
 
 const Programming = () => {
+  const { topic } = useParams()
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [editData, setEditData] = useState({});
   const [solutionOpen, setSolutionOpen] = useState(false);
-  const { questions, getQuestions } = useContext(CodeContext);
+  const { questions, getQuestionsBySubstring } = useContext(CodeContext);
   const [qpp, setQpp] = useState(10);
   const [page, setPage] = useState(1);
   const [activeFilter, setActiveFilter] = useState("All Questions");
@@ -77,7 +78,7 @@ const Programming = () => {
   };
 
   useEffect(() => {
-    getQuestions();
+    getQuestionsBySubstring(topic);
     // eslint-disable-next-line
   }, []);
 
