@@ -110,7 +110,7 @@ const Programming = () => {
               });
               return;
             }
-            navigate("/programming/" + item._id);
+            navigate("/question/" + item._id);
           }}
         >
           {item.title}

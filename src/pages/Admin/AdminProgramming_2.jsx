@@ -156,7 +156,7 @@ const AdminProgramming = () => {
           className="py-4 px-6 font-medium  whitespace-nowrap  text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-500 cursor-pointer"
           //redirect to new page
           onClick={() => {
-            navigate(`/programming/${item._id}`);
+            navigate(`/question/${item._id}`);
           }}
         >
           {item.title ? item.title : "Two Sum"}
