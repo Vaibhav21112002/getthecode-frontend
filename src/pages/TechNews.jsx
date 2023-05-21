@@ -11,7 +11,7 @@ const TechNews = () => {
 	const [page, setPage] = useState(1);
 	const [data, setData] = useState([]);
 	const [activeFilter, setActiveFilter] = useState("All Tech News");
-	const { getTechNews, techNews,getRole } = useContext(codeContext);
+	const { getTechNews, techNews,getRole, loading } = useContext(codeContext);
 	const [companies, setCompanies] = useState([]);
 	const [inputValue, setInputValue] = useState("");
 	const [filteredCompanies, setFilteredCompanies] = useState(companies);
@@ -259,13 +259,13 @@ const TechNews = () => {
 							)}
 						</div>
 					)}
-					<div className="py-1 flex flex-wrap gap-16">
+					{!loading ? <div className="py-1 flex flex-wrap gap-16">
 						{data
 							.slice((page - 1) * qpp, page * qpp)
 							.map((techNew, index) => (
 								<TechNewsCard techNew={techNew} key={index} />
 							))}
-					</div>
+					</div> : <h1 className="text-center py-12 text-white text-2xl font-bold">Tech News Loading ...</h1>}
 					<div className="w-full flex justify-between items-center mt-4 gap-4">
 						<div className="w-full flex justify-center items-center mt-4 gap-4">
 							<select

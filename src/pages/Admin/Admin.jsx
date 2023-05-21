@@ -23,6 +23,7 @@ const Admin = () => {
       adminLogin,
       adminData,
       getAdmin,
+      loading
     } = useContext(codeContext);
 
   const lableStyle = "text-[#33343B] font-bold mx-auto text-sm mb-2  ";
@@ -206,8 +207,7 @@ const Admin = () => {
                   className="w-[40%] h-[40px] bg-[#33343B] text-white rounded-md mt-4 mb-4 hover:bg-[#222629] transition duration-300 ease-in-out	 focus:outline-none "
                   onClick={handleLogin}
                 >
-                  {" "}
-                  Login{" "}
+                  {loading ? "Loading...." : "Login"}
                 </button>
               </div>
             </div>

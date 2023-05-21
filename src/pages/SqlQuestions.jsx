@@ -10,7 +10,7 @@ import Editor from "@monaco-editor/react";
 import { AiOutlineClose } from "react-icons/ai";
 
 const SqlQuestions = () => {
-  const { sqls, getSqls } = useContext(CodeContext);
+  const { sqls, getSqls, loading } = useContext(CodeContext);
   const navigate = useNavigate();
   const [editData, setEditData] = useState({});
   const [solutionOpen, setSolutionOpen] = useState(false);
@@ -69,7 +69,7 @@ const SqlQuestions = () => {
           <h1 className="text-center text-[white] text-2xl font-bold px-4 py-12">
             SQL Questions
           </h1>
-          <div className="w-[90%]">
+          {!loading ? <div className="w-[90%]">
             <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
               <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead
@@ -117,7 +117,7 @@ const SqlQuestions = () => {
                 </h1>
               </div>
             )}
-          </div>
+          </div> : <h1 className="text-center py-12 text-white text-2xl font-bold">{loading ? "SQL Loading..." : "No SQL Found"}</h1>}
           {/* Solution Modal */}
           <Modal
             visible={solutionOpen}

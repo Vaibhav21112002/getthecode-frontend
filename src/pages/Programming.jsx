@@ -28,7 +28,7 @@ const Programming = () => {
   const [data, setData] = useState([]);
   const [editData, setEditData] = useState({});
   const [solutionOpen, setSolutionOpen] = useState(false);
-  const { questions, getQuestionsBySubstring } = useContext(CodeContext);
+  const { questions, getQuestionsBySubstring, loading } = useContext(CodeContext);
   const [qpp, setQpp] = useState(10);
   const [page, setPage] = useState(1);
   const [activeFilter, setActiveFilter] = useState("All Questions");

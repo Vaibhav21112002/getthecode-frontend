@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 const MCQ = () => {
   const [data, setData] = useState([]);
-  const { getMcqs, mcqs } = useContext(codeContext);
+  const { getMcqs, mcqs, loading } = useContext(codeContext);
   const [selected, setSelected] = useState([]);
   const navigate = useNavigate();
 
@@ -72,7 +72,7 @@ const MCQ = () => {
             })}
           </div>
           <div className="flex flex-col w-full mt-8">
-            {data.map((mcq, index) => {
+            {data[0] ? data.map((mcq, index) => {
               return (
                 <div className=" text-black w-full p-4 bg-white rounded-md shadow-lg mb-4 flex flex-col">
                   <div className=" px-10 rounded-[16px]flex" key={index}>
@@ -183,7 +183,7 @@ const MCQ = () => {
                   </div>
                 </div>
               );
-            })}
+            }) : <h1 className="text-center py-12 text-white text-2xl font-bold">{loading ? "MCQs Loading..." : "No MCQs Found"}</h1>}
           </div>
           {data.length == 0 && (
             <div className="flex flex-col justify-center items-center">

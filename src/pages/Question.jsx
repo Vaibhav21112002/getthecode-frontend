@@ -11,7 +11,7 @@ import "../assets/CSS/index.css";
 import { useNavigate } from "react-router-dom";
 
 const Question = () => {
-  const { question, getQuestion } = useContext(CodeContext);
+  const { question, getQuestion, loading } = useContext(CodeContext);
   const { id } = useParams();
   const [sol, setSol] = useState(0);
   const [language, setLanguage] = useState(``);
@@ -34,6 +34,7 @@ const Question = () => {
   const QuestionComponent = ({ question }) => {
     return (
       <div>
+      {!loading ? <div>
         <h1 className="text-4xl font-bold text-[white]  ">
           {question.title ? question.title : "Two Sum"}
         </h1>
@@ -117,6 +118,7 @@ const Question = () => {
             )}
           </div>
         )}
+      </div> : <h1 className="text-center py-12 text-white text-2xl font-bold">Question Loading ...</h1>}
       </div>
     );
   };

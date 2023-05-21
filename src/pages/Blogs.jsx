@@ -11,7 +11,7 @@ const Blogs = () => {
   const [page, setPage] = useState(1);
   const [data, setData] = useState([]);
   const [activeFilter, setActiveFilter] = useState("All Blogs");
-  const { getBlogs, blogs, usrData } = useContext(codeContext);
+  const { getBlogs, blogs, usrData, loading } = useContext(codeContext);
   const [companies, setCompanies] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [filteredCompanies, setFilteredCompanies] = useState(companies);
@@ -242,9 +242,9 @@ const Blogs = () => {
             </div>
           )}
           <div className="py-1 flex flex-wrap gap-16">
-            {data.slice((page - 1) * qpp, page * qpp).map((blog, index) => (
+            {data[0] ? data.slice((page - 1) * qpp, page * qpp).map((blog, index) => (
               <BlogCard blog={blog} key={index} />
-            ))}
+            )) : <h1 className="text-center py-12 text-white text-2xl font-bold">{loading ? "Blogs Loading..." : "No Blogs Found"}</h1>}
           </div>
           <div className="w-full flex justify-between items-center mt-4 gap-4">
             <div className="w-full flex justify-center items-center mt-4 gap-4">

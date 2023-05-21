@@ -3,7 +3,7 @@ import "../assets/CSS/index.css";
 import codeContext from "../context/CodeContext";
 import swal from "sweetalert";
 import { MdAdminPanelSettings } from "react-icons/md";
-import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import { AiFillEye, AiFillEyeInvisible,AiOutlineLoading } from "react-icons/ai";
 import { IoIosArrowBack } from "react-icons/io";
 import { redirect, useNavigate } from "react-router-dom";
 
@@ -286,9 +286,9 @@ const Login = () => {
 									<button
 										className="min-w-[40%] h-[40px] bg-[#33343B] text-white rounded-md mt-2 px-4 hover:bg-[#222629] transition duration-300 ease-in-out	 focus:outline-none "
 										onClick={handleLogin}
+										disabled={loading}
 									>
-										{" "}
-										Login{" "}
+										{loading ? "Loading...." : "Login"}
 									</button>
 									<h1 className="mt-4">
 										Don't have an account?

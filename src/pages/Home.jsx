@@ -10,10 +10,10 @@ const Home = () => {
   return (
     <div className="bg-[#222629] min-h-[100vh] w-full">
       <Navbar />
-      <div className="min-h-[100vh] w-full pt-12">
+      <div className="min-h-[100vh] w-full pt-16">
         <div className="px-8 flex gap-4 items-center">
           <div className="w-[2px] h-[2rem] bg-[#FF9424]"></div>
-          <h1 className="text-[#FF9424] font-bold">Code - today</h1>
+          <h1 className="text-[#FF9424] font-bold">Job Codes</h1>
         </div>
         <div className="w-full h-full flex items-center py-12 mt-4">
           <div className="w-1/2 p-4 flex justify-center items-center">
