@@ -33,7 +33,7 @@ const Blog = () => {
   }
   return (
     <div className="back">
-      <Navbar />
+      <Navbar question/>
       <div className="w-full flex bg-[#25272E]">
         <div className="w-12/12 flex flex-col py-8 text-[white] px-20">
           <h1 className="text-7xl my-10 text-center font-bold text-[white]">

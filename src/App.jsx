@@ -51,6 +51,7 @@ const App = () => {
 					<Route path="/admin/:id" element={<Admin />} />
 					<Route path="/login" element={<Login />} />
 					<Route path="/technews" element={<TechNews />} />
+					<Route path="/technews/:id" element={<TechNew />} />
 					<Route path="/admin" element={<Navigate to="/admin/q1w2e3r4t528032023" />} />
 					<Route path="/technews/q1w2e3r4t528032023" element={<TechNew />} />
 					<Route path="/admin/programming" element={<AdminProgramming_2 />} />

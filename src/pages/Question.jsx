@@ -22,11 +22,14 @@ const Question = () => {
     const usrToken = localStorage.getItem("token");
     const adminToken = localStorage.getItem("admin-token");
 
-    if ((usrToken === undefined || usrToken === null)&&(adminToken === undefined || adminToken === null)) {
+    if (
+      (usrToken === undefined || usrToken === null) &&
+      (adminToken === undefined || adminToken === null)
+    ) {
       navigate("/");
       return;
     }
-    getQuestion(id,usrToken||adminToken);
+    getQuestion(id, usrToken || adminToken);
     // eslint-disable-next-line
   }, []);
 
@@ -34,104 +37,111 @@ const Question = () => {
   const QuestionComponent = ({ question }) => {
     return (
       <div>
-      {!loading ? <div>
-        <h1 className="text-4xl font-bold text-[white]  ">
-          {question.title ? question.title : "Two Sum"}
-        </h1>
-        <br />
-        <div className="markdown">
-          <MarkdownEditor.Markdown
-            source={question.description}
-            className="text-white text-sm bg-[#222629]"
-          />
-        </div>
-        <h1 className="font-bold mt-8 text-xl">Test Case</h1>
-        <br />
-        {question.testCases &&
-          question.testCases.map((testCase, index) => (
-            <>
-              <div>
-                <h1 className="text-base">Example {index + 1}</h1>
-                <div className={testStyle}>
-                  <div className={testStyle}>
-                    <h1 className="font-bold text-xl">Input </h1>
-                    <h1 className="input">{testCase.input}</h1>
-                  </div>
-                  <div className={testStyle}>
-                    <h1 className="font-bold text-xl">Output </h1>
-                    <h1 className="output">{testCase.output}</h1>
-                  </div>
-                  <div className={`${testStyle} mt-4`}>
-                    <h1 className="font-bold text-xl">Explaination</h1>
-                    <h1>{Parser(testCase.explaination)}</h1>
-                  </div>
-                </div>
-              </div>
-              <br />
-            </>
-          ))}
-
-        <br />
-        {question.hints && (
+        {!loading ? (
           <div>
-            <h1 className="font-bold text-lg">Hints</h1>
+            <h1 className="text-4xl font-bold text-[white]  ">
+              {question.title ? question.title : "Two Sum"}
+            </h1>
             <br />
-            {question.hints.hint1 != "" && (
+            <div className="markdown">
+              <MarkdownEditor.Markdown
+                source={question.description}
+                className="text-white text-sm bg-[#222629]"
+              />
+            </div>
+            <h1 className="font-bold mt-8 text-xl">Test Case</h1>
+            <br />
+            {question.testCases &&
+              question.testCases.map((testCase, index) => (
+                <>
+                  <div>
+                    <h1 className="text-base">Example {index + 1}</h1>
+                    <div className={testStyle}>
+                      <div className={testStyle}>
+                        <h1 className="font-bold text-xl">Input </h1>
+                        <h1 className="input">{testCase.input}</h1>
+                      </div>
+                      <div className={testStyle}>
+                        <h1 className="font-bold text-xl">Output </h1>
+                        <h1 className="output">{testCase.output}</h1>
+                      </div>
+                      <div className={`${testStyle} mt-4`}>
+                        <h1 className="font-bold text-xl">Explaination</h1>
+                        <h1>{Parser(testCase.explaination)}</h1>
+                      </div>
+                    </div>
+                  </div>
+                  <br />
+                </>
+              ))}
+
+            <br />
+            {question.hints && (
               <div>
-                <Accordian
-                  title={"Hint 1"}
-                  description={question.hints.hint1}
-                />
-              </div>
-            )}
-            {question.hints.hint2 != "" && (
-              <div className="mt-2">
-                <Accordian
-                  title={"Hint 2"}
-                  description={question.hints.hint2}
-                />
-              </div>
-            )}
-            {question.hints.hint3 != "" && (
-              <div className="mt-2">
-                <Accordian
-                  title={"Hint 3"}
-                  description={question.hints.hint3}
-                />
-              </div>
-            )}
-            {question.hints.hint4 != "" && (
-              <div className="mt-2">
-                <Accordian
-                  title={"Hint 4"}
-                  description={question.hints.hint4}
-                />
-              </div>
-            )}
-            {question.hints.hint5 != "" && (
-              <div className="mt-2">
-                <Accordian
-                  title={"Hint 5"}
-                  description={question.hints.hint5}
-                />
+                <h1 className="font-bold text-lg">Hints</h1>
+                <br />
+                {question.hints.hint1 != "" && (
+                  <div>
+                    <Accordian
+                      title={"Hint 1"}
+                      description={question.hints.hint1}
+                    />
+                  </div>
+                )}
+                {question.hints.hint2 != "" && (
+                  <div className="mt-2">
+                    <Accordian
+                      title={"Hint 2"}
+                      description={question.hints.hint2}
+                    />
+                  </div>
+                )}
+                {question.hints.hint3 != "" && (
+                  <div className="mt-2">
+                    <Accordian
+                      title={"Hint 3"}
+                      description={question.hints.hint3}
+                    />
+                  </div>
+                )}
+                {question.hints.hint4 != "" && (
+                  <div className="mt-2">
+                    <Accordian
+                      title={"Hint 4"}
+                      description={question.hints.hint4}
+                    />
+                  </div>
+                )}
+                {question.hints.hint5 != "" && (
+                  <div className="mt-2">
+                    <Accordian
+                      title={"Hint 5"}
+                      description={question.hints.hint5}
+                    />
+                  </div>
+                )}
               </div>
             )}
           </div>
+        ) : (
+          <h1 className="text-center py-12 text-white text-2xl font-bold">
+            Question Loading ...
+          </h1>
         )}
-      </div> : <h1 className="text-center py-12 text-white text-2xl font-bold">Question Loading ...</h1>}
       </div>
     );
   };
   const SolutionComponent = ({ question }) => {
-    setLanguage(
-      `${
-        question.solution.java !== ""
-          ? "java"
-          : question.solution.cpp !== ""
-          ? "cpp"
-          : "python"
-      }`
-    );
+    if (language == "")
+      setLanguage(
+        `${
+          question.solution.java !== ""
+            ? "java"
+            : question.solution.cpp !== ""
+            ? "cpp"
+            : "python"
+        }`
+      );
     return (
       <div className="bg-[#25272E] w-full rounded-xl text-[0.76rem] p-4 mt-2">
         <div className="flex justify-between">
@@ -141,6 +151,8 @@ const Question = () => {
               <select
                 value={language}
                 onChange={(e) => {
+                  console.log(e.target.value);
+                  console.log(question.solution);
                   setLanguage(e.target.value);
                 }}
                 className="block appearance-none w-[40%] float-right text-center justify-between border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline text-black"

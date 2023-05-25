@@ -120,7 +120,7 @@ const SqlQuestion = () => {
   };
   return (
     <div className="back ">
-      <Navbar sql />
+      <Navbar question />
       <div className="w-full flex bg-[#222629]">
         <div className="w-9/12 flex flex-col py-8 text-[white] px-20">
           <div className="flex justify-start">

@@ -692,25 +692,35 @@ const AdminProgramming = () => {
                       </div>
                     </div>
                     <div className={divStyle}>
-                      <label className={labelStyle}>Company Tags</label>
-                      <div className="flex flex-wrap w-full gap-4">
-                        <select
-                          value={uploadData.companyTag}
-                          className="w-[100%] rounded-lg text-[#202128] outline-none px-4"
-                          multiple
-                          onChange={(e) =>
-                            setUploadData({
-                              ...uploadData,
-                              companyTag: e.target.value,
-                            })
-                          }
-                        >
-                          <option value="none">None</option>
+                    <label className={labelStyle}>Company Tags</label>
+                        <div className="flex flex-wrap w-full gap-4">
                           {CompanyTags.map((tag) => (
-                            <option value={tag}>{tag}</option>
+                            <div
+                              className={
+                                uploadData.companyTag.includes(tag)
+                                  ? activeClass
+                                  : unactiveClass
+                              }
+                              onClick={() => {
+                                if (uploadData.companyTag.includes(tag)) {
+                                  setUploadData({
+                                    ...uploadData,
+                                    companyTag: uploadData.companyTag.filter(
+                                      (t) => t !== tag
+                                    ),
+                                  });
+                                } else {
+                                  setUploadData({
+                                    ...uploadData,
+                                    companyTag: [...uploadData.companyTag, tag],
+                                  });
+                                }
+                              }}
+                            >
+                              {tag}
+                            </div>
                           ))}
-                        </select>
-                      </div>
+                        </div>
                     </div>
                     <div className={divStyle}>
                       <label className={labelStyle}>Hints</label>
@@ -1506,7 +1516,7 @@ const AdminProgramming = () => {
                         <input
                           type="text"
                           className={inputStyle}
-                          value={editData.link.gfg}
+                          value={editData.link?.gfg}
                           placeholder="GFG Link"
                           onChange={(e) =>
                             setEditData({
@@ -1522,7 +1532,7 @@ const AdminProgramming = () => {
                         <input
                           type="text"
                           className={inputStyle}
-                          value={editData.link.leetcode}
+                          value={editData.link?.leetcode}
                           placeholder="Leetcode Link"
                           onChange={(e) =>
                             setEditData({
@@ -1538,7 +1548,7 @@ const AdminProgramming = () => {
                         <input
                           type="text"
                           className={inputStyle}
-                          value={editData.link.codeforces}
+                          value={editData.link?.codeforces}
                           placeholder="Codeforces Link"
                           onChange={(e) =>
                             setEditData({
@@ -1555,7 +1565,7 @@ const AdminProgramming = () => {
                         <input
                           type="text"
                           className={inputStyle}
-                          value={editData.link.codechef}
+                          value={editData.link?.codechef}
                           placeholder="Codechef Link"
                           onChange={(e) =>
                             setEditData({
@@ -1572,7 +1582,7 @@ const AdminProgramming = () => {
                         <input
                           type="text"
                           className={inputStyle}
-                          value={editData.link.interviewbit}
+                          value={editData.link?.interviewbit}
                           placeholder="Interview Bit Link"
                           onChange={(e) =>
                             setEditData({

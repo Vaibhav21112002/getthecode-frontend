@@ -690,10 +690,10 @@ const CreateSql = () => {
                                         type="text"
                                         className={`text-black px-3 ${
                                           rowIndex === 0
-                                            ? "bg-white border-b-black border-2 font-extrabold border-t-0 border-x-0"
+                                            ? "bg-white border-black border-2 font-extrabold"
                                             : rowIndex % 2 === 0
-                                            ? "bg-[#d6efe1]"
-                                            : "bg-white"
+                                            ? "bg-[#d6efe1] border-b-black border-2"
+                                            : "bg-white border-b-black border-2"
                                         }`}
                                         value={cell}
                                         defaultValue={`${

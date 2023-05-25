@@ -16,19 +16,22 @@ import {
 } from "../assets/Constants";
 import swal from "sweetalert";
 
+import Select from "react-select";
+
 import GFG from "../assets/Images/GeeksforGeeks.svg";
 import leetcode from "../assets/Images/leetcode.svg";
 import codeforces from "../assets/Images/Codeforces.svg";
-import codechef from "../assets/Images/codechef.svg"
-import interviewbit from "../assets/Images/interviewbit.svg"
+import codechef from "../assets/Images/codechef.svg";
+import interviewbit from "../assets/Images/interviewbit.svg";
 
 const Programming = () => {
-  const { topic } = useParams()
+  const { topic } = useParams();
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [editData, setEditData] = useState({});
   const [solutionOpen, setSolutionOpen] = useState(false);
-  const { questions, getQuestionsBySubstring, loading } = useContext(CodeContext);
+  const { questions, getQuestionsBySubstring, loading } =
+    useContext(CodeContext);
   const [qpp, setQpp] = useState(10);
   const [page, setPage] = useState(1);
   const [activeFilter, setActiveFilter] = useState("All Questions");
@@ -88,13 +91,12 @@ const Programming = () => {
     setData(questions);
   }, [questions]);
   const TableComponent = ({ item }) => {
-    const linksEmpty = (
+    const linksEmpty =
       !item.link?.gfg &&
       !item.link?.leetcode &&
       !item.link?.codechef &&
       !item.link?.codeforces &&
-      !item.link?.interviewbit
-    );
+      !item.link?.interviewbit;
     return (
       <tr className="bg-white border-b dark:bg-gray-800 text-[0.76rem]">
         <th
@@ -135,7 +137,7 @@ const Programming = () => {
         )}
         <td className="py-4 px-6">{item.score}</td>
         <td className="py-4 px-6">
-        {!linksEmpty ? (
+          {!linksEmpty ? (
             <div className="flex flex-wrap items-center justify-center">
               {item.link.gfg && (
                 <a
@@ -238,8 +240,8 @@ const Programming = () => {
           <div className="w-full flex  px-16 gap-4 ">
             <div className="w-full flex flex-wrap gap-4">
               <div
-                className="h-10 
-							relative inline-flex rounded-md shadow-sm"
+                className="h-10
+    					relative inline-flex rounded-md shadow-sm"
               >
                 <select
                   className={dropdownClass}
@@ -270,8 +272,8 @@ const Programming = () => {
                 </select>
               </div>
               <div
-                className="h-10 
-							relative inline-flex rounded-md shadow-sm"
+                className="h-10
+    					relative inline-flex rounded-md shadow-sm"
               >
                 <select
                   className={dropdownClass}
@@ -294,18 +296,27 @@ const Programming = () => {
                     return (
                       <option
                         key={index}
-                        value={topic.title}
+                        value={topic.value}
                         className="text-[#000]"
                       >
-                        {topic.title}
+                        {topic.label}
                       </option>
                     );
                   })}
                 </select>
+                {/* <Select
+                  defaultValue={"All companies"}
+                  isMulti
+                  name="companies"
+                  options={companies}
+                  className={`${dropdownClass} max-w-9/12`}
+                  classNamePrefix="select"
+                  onChange={(e)=>console.log(e)}
+                /> */}
               </div>
               <div
-                className="h-10 
-							relative inline-flex rounded-md shadow-sm"
+                className="h-10
+    					relative inline-flex rounded-md shadow-sm"
               >
                 <select
                   className={dropdownClass}
@@ -369,9 +380,9 @@ const Programming = () => {
                       Score
                     </th>
                     <th scope="col" className="py-3 px-6">
-                    <div className="flex items-center justify-center">
-                      Link
-                    </div>
+                      <div className="flex items-center justify-center">
+                        Link
+                      </div>
                     </th>
                   </tr>
                 </thead>
@@ -410,8 +421,8 @@ const Programming = () => {
             <div className="w-full flex justify-center items-center mt-4 gap-4">
               <select
                 className="
-								w-36 h-8 px-4 text-sm text-gray-500  border rounded-lg focus:shadow-outline placeholder-[#E97500] border-[#E97500] focus:outline-none focus:border-[#E97500] 
-								"
+    						w-36 h-8 px-4 text-sm text-gray-500  border rounded-lg focus:shadow-outline placeholder-[#E97500] border-[#E97500] focus:outline-none focus:border-[#E97500]
+    						"
                 onChange={(e) => setQpp(e.target.value)}
               >
                 {pagination.map((item, index) => {
@@ -503,6 +514,7 @@ const Programming = () => {
           </Modal>
         </div>
       </div>
+
       <Footer />
     </div>
   );

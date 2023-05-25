@@ -132,7 +132,11 @@ const CodeState = (props) => {
     const adminToken = localStorage.getItem("admin-token");
     try {
       setLoading(true);
-      await api.delete(`/problems/${id}`);
+      await api.delete(`/problems/${id}`,{
+        headers:{
+          'auth-token':adminToken
+        }
+      });
       setQuestions(questions.filter((question) => question._id !== id),{
         headers:{
           'auth-token':adminToken

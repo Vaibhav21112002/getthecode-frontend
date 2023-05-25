@@ -124,7 +124,7 @@ function Navbar({ question }) {
             {question && (
               <BiArrowBack
                 className="text-[white] text-[1.6rem] mr-3 cursor-pointer"
-                onClick={() => navigate("/programming")}
+                onClick={() => navigate(-1)}
               />
             )}
             <AiOutlineHome
