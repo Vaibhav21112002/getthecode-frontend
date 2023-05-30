@@ -145,32 +145,17 @@ const MCQ = () => {
                           {(answersVisible[index] ? "Hide" : "Show") +
                             " Answer"}{" "}
                         </button>
-                        {answersVisible[index] && (
+                        {/* {answersVisible[index] && (
                           <div className=" mt-3">
                             <span className="font-bold"> Answer : </span>
-                            {mcq.options.map((option, index) => {
-                              if (option.no === mcq.answer) {
+                            {mcq.answer.map((ans, index) => {
+                              console.log(index,mcq.answer)
                                 return (
-                                  <div>
-                                    <span className="text-sm mb-3 " key={index}>
-                                      {" "}
-                                      {`${option.no}. ${option.text}`}{" "}
-                                    </span>
-                                    {option.image && option.image != "" && (
-                                      <div>
-                                        <img
-                                          src={option.image}
-                                          className="w-[100px] h-[100px] mt-2 pl-4"
-                                          alt="images"
-                                        />
-                                      </div>
-                                    )}
-                                  </div>
+                                  <span>{index!==mcq.answer.size-1?`${ans},`:{ans}}</span>
                                 );
-                              }
                             })}
                           </div>
-                        )}
+                        )} */}
                       </div>
                       {mcq.topicTag && mcq.topicTag != "" && (
                         <span

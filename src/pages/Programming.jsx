@@ -38,6 +38,9 @@ const Programming = () => {
   const [language, setLanguage] = useState("java");
   const totalPages = Math.ceil(data.length / qpp);
 
+  const [selectedCompanies, setSelectedCompanies] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+
   const handleTopicFilter = (topic) => {
     if (activeFilter === topic) return;
     setActiveFilter(topic);
@@ -46,6 +49,46 @@ const Programming = () => {
     } else {
       const newData = questions.filter((item) => item.topicTag.includes(topic));
       setData(newData);
+    }
+  };
+
+  useEffect(()=>{
+    if(selectedCompanies.length===0&&questions?.length!==0){
+      setData(questions);
+    }
+  },[selectedCompanies])
+
+  const multiSelect = ({ type }) => {
+    if (type === "company") {
+      const handleToggle = () => {
+        setIsOpen(!isOpen);
+      };
+
+      const handleItemClick = (item) => {
+        const selectedIndex = selectedCompanies.indexOf(item);
+
+        let newSelectedItems = [];
+
+        if (selectedIndex === -1) {
+          newSelectedItems = [...selectedCompanies, item];
+        } else {
+          newSelectedItems = [
+            ...selectedCompanies.slice(0, selectedIndex),
+            ...selectedCompanies.slice(selectedIndex + 1),
+          ];
+        }
+
+        selectedCompanies(newSelectedItems);
+
+        const newData = questions.map((question) => {
+          const containsSelectedCompany = newSelectedItems.some(
+            (selectedItem) => question.companyTag.includes(selectedItem.value)
+          );
+          return containsSelectedCompany;
+        });
+
+        setData(newData);
+      };
     }
   };
 
