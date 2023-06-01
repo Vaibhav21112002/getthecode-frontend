@@ -16,8 +16,6 @@ import {
 } from "../assets/Constants";
 import swal from "sweetalert";
 
-import Select from "react-select";
-
 import GFG from "../assets/Images/GeeksforGeeks.svg";
 import leetcode from "../assets/Images/leetcode.svg";
 import codeforces from "../assets/Images/Codeforces.svg";
@@ -39,7 +37,9 @@ const Programming = () => {
   const totalPages = Math.ceil(data.length / qpp);
 
   const [selectedCompanies, setSelectedCompanies] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
+  const [selectedTopics, setSelectedTopics] = useState([]);
+  const [isOpenCompany, setIsOpenCompany] = useState(false);
+  const [isOpenTopic, setIsOpenTopic] = useState(false);
 
   const handleTopicFilter = (topic) => {
     if (activeFilter === topic) return;
@@ -52,16 +52,45 @@ const Programming = () => {
     }
   };
 
-  useEffect(()=>{
-    if(selectedCompanies.length===0&&questions?.length!==0){
-      setData(questions);
-    }
-  },[selectedCompanies])
+  console.log(questions, selectedCompanies.length);
 
-  const multiSelect = ({ type }) => {
+  useEffect(() => {
+    if (selectedCompanies.length == 0 && questions?.length != 0) {
+      console.log("hello world");
+      setData(questions);
+      return;
+    }
+    const containsSelectedCompany = questions.filter((question) =>
+      selectedCompanies.some((company) => question.companyTag.includes(company))
+    );
+
+    setData(containsSelectedCompany);
+  }, [selectedCompanies]);
+  useEffect(() => {
+    if (selectedTopics.length == 0 && questions?.length != 0) {
+      console.log("hello world");
+      setData(questions);
+      return;
+    }
+    const containsSelectedTopics = questions.filter((question) =>
+      selectedTopics.some((topic) => question.topicTag.includes(topic))
+    );
+
+    setData(containsSelectedTopics);
+  }, [selectedTopics]);
+
+  useEffect(() => {
+    if (isOpenCompany||isOpenTopic) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+  }, [isOpenCompany,isOpenTopic]);
+
+  const MultiSelect = ({ type }) => {
     if (type === "company") {
       const handleToggle = () => {
-        setIsOpen(!isOpen);
+        setIsOpenCompany(!isOpenCompany);
       };
 
       const handleItemClick = (item) => {
@@ -78,17 +107,107 @@ const Programming = () => {
           ];
         }
 
-        selectedCompanies(newSelectedItems);
-
-        const newData = questions.map((question) => {
-          const containsSelectedCompany = newSelectedItems.some(
-            (selectedItem) => question.companyTag.includes(selectedItem.value)
-          );
-          return containsSelectedCompany;
-        });
-
-        setData(newData);
+        setSelectedCompanies(newSelectedItems);
       };
+      return (
+        <div className="">
+          <div
+            className="border p-2 cursor-pointer bg-white rounded-lg min-w-[150px] max-w-[200px]"
+            onClick={handleToggle}
+          >
+            <ul className="text-sm">
+              {selectedCompanies.length > 0 ? (
+                <>
+                  <input type="checkbox" checked={true} />
+
+                  {` ${selectedCompanies.length} selected`}
+                </>
+              ) : (
+                <span className="text-gray-500">Companies</span>
+              )}
+            </ul>
+          </div>
+
+          {isOpenCompany && (
+            <div className="absolute mt-2 bg-white border rounded shadow-md max-h-80 overflow-y-auto z-50">
+              {companies.map((item) => (
+                <div
+                  key={item.value}
+                  className="p-2 cursor-pointer hover:bg-gray-100"
+                  onClick={() => handleItemClick(item.value)}
+                >
+                  <input
+                    type="checkbox"
+                    checked={selectedCompanies.includes(item.value)}
+                    readOnly
+                  />
+                  <span className="ml-2">{item.value}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      );
+    } else if(type==="topic") {
+      const handleToggle = () => {
+        setIsOpenTopic(!isOpenTopic);
+      };
+
+      const handleItemClick = (item) => {
+        const selectedIndex = selectedTopics.indexOf(item);
+
+        let newSelectedItems = [];
+
+        if (selectedIndex === -1) {
+          newSelectedItems = [...selectedTopics, item];
+        } else {
+          newSelectedItems = [
+            ...selectedTopics.slice(0, selectedIndex),
+            ...selectedTopics.slice(selectedIndex + 1),
+          ];
+        }
+
+        setSelectedTopics(newSelectedItems);
+      };
+      return (
+        <div className="">
+          <div
+            className="border p-2 cursor-pointer bg-white rounded-lg min-w-[150px] max-w-[200px]"
+            onClick={handleToggle}
+          >
+            <ul className="text-sm">
+              {selectedTopics.length > 0 ? (
+                <>
+                  <input type="checkbox" checked={true} />
+
+                  {` ${selectedTopics.length} selected`}
+                </>
+              ) : (
+                <span className="text-gray-500">Topics</span>
+              )}
+            </ul>
+          </div>
+
+          {isOpenTopic && (
+            <div className="absolute mt-2 bg-white border rounded shadow-md max-h-80 overflow-y-auto z-50">
+              {topics.map((item) => (
+                <div
+                  key={item.value}
+                  className="p-2 cursor-pointer hover:bg-gray-100"
+                  onClick={() => handleItemClick(item.title)}
+                >
+                  <input
+                    type="checkbox"
+                    checked={selectedTopics.includes(item.title)}
+                    readOnly
+                  />
+                  <span className="ml-2">{item.title}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      );
     }
   };
 
@@ -100,17 +219,6 @@ const Programming = () => {
     } else {
       const newData = questions.filter(
         (item) => item.difficulty === difficulty
-      );
-      setData(newData);
-    }
-  };
-
-  const companyFilter = (company) => {
-    if (company === "All Questions") {
-      setData(questions);
-    } else {
-      const newData = questions.filter((item) =>
-        item.companyTag.includes(company)
       );
       setData(newData);
     }
@@ -318,35 +426,7 @@ const Programming = () => {
                 className="h-10
     					relative inline-flex rounded-md shadow-sm"
               >
-                <select
-                  className={dropdownClass}
-                  onChange={(e) => companyFilter(e.target.value)}
-                  placeholder="Companies"
-                >
-                  <option
-                    value="All Questions"
-                    className="text-[#000]"
-                    disabled
-                    selected
-                    hidden
-                  >
-                    Companies
-                  </option>
-                  <option value="All Questions" className="text-[#000]">
-                    All Questions
-                  </option>
-                  {companies.map((topic, index) => {
-                    return (
-                      <option
-                        key={index}
-                        value={topic.value}
-                        className="text-[#000]"
-                      >
-                        {topic.label}
-                      </option>
-                    );
-                  })}
-                </select>
+                <MultiSelect type="company" />
                 {/* <Select
                   defaultValue={"All companies"}
                   isMulti
@@ -361,7 +441,9 @@ const Programming = () => {
                 className="h-10
     					relative inline-flex rounded-md shadow-sm"
               >
-                <select
+
+<MultiSelect type="topic" />
+                {/* <select
                   className={dropdownClass}
                   onChange={(e) => handleTopicFilter(e.target.value)}
                   placeholder="Topics"
@@ -386,7 +468,7 @@ const Programming = () => {
                       </option>
                     );
                   })}
-                </select>
+                </select> */}
               </div>
             </div>
             <div className="w-full flex ">

@@ -114,7 +114,7 @@ function Navbar({ question }) {
     );
   };
   return (
-    <div className="mb-10">
+    <div className="mb-10 z-50">
       <div
         style={{ position: "fixed" }}
         className="flex w-full bg-[#222629] z-[10] border-b border-[#33343B]"
